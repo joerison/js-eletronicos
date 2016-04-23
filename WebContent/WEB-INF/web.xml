@@ -1,0 +1,11 @@
+<!DOCTYPE xml>
+<web-app>
+	<servlet>
+		<servlet-name>clienteController</servlet-name>
+		<servlet-class>controller.ClienteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>clienteController</servlet-name>
+		<url-pattern>/cliente</url-pattern>
+	</servlet-mapping>
+</web-app>
