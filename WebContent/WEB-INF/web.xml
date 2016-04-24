@@ -1,5 +1,6 @@
 <!DOCTYPE xml>
 <web-app>
+
 	<servlet>
 		<servlet-name>clienteController</servlet-name>
 		<servlet-class>controller.ClienteController</servlet-class>
@@ -8,4 +9,24 @@
 		<servlet-name>clienteController</servlet-name>
 		<url-pattern>/cliente</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>UserCheckFilter</filter-name>
+		<filter-class>controller.UserCheckFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>UserCheckFilter</filter-name>
+		<url-pattern>/corporativo/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>userValidator</servlet-name>
+		<servlet-class>controller.UserValidator</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userValidator</servlet-name>
+		<url-pattern>/userValidator</url-pattern>
+	</servlet-mapping>
+
 </web-app>
