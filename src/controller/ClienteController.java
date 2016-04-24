@@ -38,7 +38,6 @@ public class ClienteController extends HttpServlet {
 			} else if (operacao.equals("alterar")) {
 				Cliente cliente = clienteDao.obterClientePorId(Integer.parseInt(req.getParameter("clienteId")));
 				req.getSession().setAttribute("cliente", cliente);
-
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
 				clienteDao.remover(Integer.parseInt(req.getParameter("clienteId")));

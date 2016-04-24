@@ -4,13 +4,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Login</title>
+        <title>Autenticação</title>
     </head>
     <body>
-        <form action="/exercicio/validacaoDeAcesso" method="post">
-            Name: <input type="text" name="name"/>
-            Password: <input type="password" name="password"/>
-            <input type="submit" value="LogIn"/>
+        <form action="/projetoltpiv/validacaoDeAcesso" method="post">
+	        <label for="login">Login: </label>
+	        <input type="text" id="login" name="login"/>
+	        <label for="senha">Login: </label>
+	        <input type="password" id="senha" name="senha"/> <br />
+	        <input type="submit" value="Logar"/>
         </form>
     </body>
 </html>

@@ -1,25 +1,21 @@
 <!DOCTYPE xml>
 <web-app>
-
 	<servlet>
 		<servlet-name>clienteController</servlet-name>
 		<servlet-class>controller.ClienteController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>clienteController</servlet-name>
-		<url-pattern>/cliente</url-pattern>
+		<url-pattern>/corporativo/cliente</url-pattern>
 	</servlet-mapping>
-
 	<filter>
 		<filter-name>filtroSeguranca</filter-name>
 		<filter-class>controller.FiltroSeguranca</filter-class>
 	</filter>
-
 	<filter-mapping>
 		<filter-name>filtroSeguranca</filter-name>
 		<url-pattern>/corporativo/*</url-pattern>
 	</filter-mapping>
-
 	<servlet>
 		<servlet-name>validacaoDeAcesso</servlet-name>
 		<servlet-class>controller.ValidacaoDeAcesso</servlet-class>
@@ -28,7 +24,6 @@
 		<servlet-name>validacaoDeAcesso</servlet-name>
 		<url-pattern>/validacaoDeAcesso</url-pattern>
 	</servlet-mapping>
-
 	<servlet>
 		<servlet-name>login</servlet-name>
 		<jsp-file>/login.jsp</jsp-file>
@@ -37,5 +32,4 @@
 		<servlet-name>login</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
-
 </web-app>

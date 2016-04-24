@@ -21,6 +21,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		log.debug("chamando doGet");
+		invalidarSessao(req, res);
 		doPost(req, res);
 	}
 
@@ -28,19 +29,30 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		log.debug("chamando doPost");
 		RequestDispatcher rd;
 
-		String name = req.getParameter("name");
-		String password = req.getParameter("password");
+		String login = req.getParameter("login");
+		String senha = req.getParameter("senha");
 
-		Usuario usuario = validateLogin(name, password);
+		Usuario usuario = validateLogin(login, senha);
 
 		if (usuario == null) {
-			rd = req.getRequestDispatcher("/loginErro.jsp");
+			log.debug("o login e senha informados nao foram capazes de gerar um objeto Usuario");
+			rd = req.getRequestDispatcher("/login.jsp");
 		} else {
+			log.debug("Acesso permitido, o usuario sera atribuido na sessao corrente");
 			HttpSession session = req.getSession();
 			session.setAttribute("usuario", usuario);
-			rd = req.getRequestDispatcher("/corporativo/loginSucesso.jsp");
+			rd = req.getRequestDispatcher("/corporativo/index.jsp");
 		}
 		rd.forward(req, res);
+	}
+
+	public void invalidarSessao(HttpServletRequest req, HttpServletResponse res) {
+		String logout = (String) req.getParameter("logout");
+		if ("true".equals(logout)) {
+			req.getSession().invalidate();
+			log.debug("invalidado sessão do usuario");
+			req.getRequestDispatcher("/login.jsp");
+		}
 	}
 
 	private Usuario validateLogin(String login, String senha) {
@@ -50,7 +62,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 		Usuario usuario = null;
 		UsuarioDao usuarioDao = new UsuarioDao();
-		
+
 		log.debug("validando o login");
 		usuario = usuarioDao.obterUsuarioPorLogin(login);
 
