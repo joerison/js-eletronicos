@@ -11,22 +11,22 @@
 	</servlet-mapping>
 
 	<filter>
-		<filter-name>UserCheckFilter</filter-name>
-		<filter-class>controller.UserCheckFilter</filter-class>
+		<filter-name>filtroSeguranca</filter-name>
+		<filter-class>controller.FiltroSeguranca</filter-class>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>UserCheckFilter</filter-name>
+		<filter-name>filtroSeguranca</filter-name>
 		<url-pattern>/corporativo/*</url-pattern>
 	</filter-mapping>
 
 	<servlet>
-		<servlet-name>userValidator</servlet-name>
-		<servlet-class>controller.UserValidator</servlet-class>
+		<servlet-name>validacaoDeAcesso</servlet-name>
+		<servlet-class>controller.ValidacaoDeAcesso</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>userValidator</servlet-name>
-		<url-pattern>/userValidator</url-pattern>
+		<servlet-name>validacaoDeAcesso</servlet-name>
+		<url-pattern>/validacaoDeAcesso</url-pattern>
 	</servlet-mapping>
 
 </web-app>

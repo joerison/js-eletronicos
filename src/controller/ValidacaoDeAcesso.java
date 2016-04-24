@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,26 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.User;
+import dao.UsuarioDao;
+import model.Usuario;
 
 @SuppressWarnings("serial")
-public class UserValidator extends HttpServlet {
-	private static final List<User> users = getUsers();
-
-	private static List<User> getUsers() {
-
-		List<User> users = new ArrayList<User>();
-
-		User userOne = new User("joe", "joe");
-		User userTwo = new User("aaa", "aaa");
-
-		users.add(userOne);
-		users.add(userTwo);
-
-		System.out.println("obtendo lista de usuarios");
-
-		return users;
-	}
+public class ValidacaoDeAcesso extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("validando login... doGet");
@@ -46,39 +29,36 @@ public class UserValidator extends HttpServlet {
 
 		System.out.println("nome: " + name);
 		System.out.println("senha: " + password);
-		User user = validateLogin(name, password);
+		Usuario user = validateLogin(name, password);
 
 		if (user == null) {
-			rd = req.getRequestDispatcher("/loginError.jsp");
+			rd = req.getRequestDispatcher("/loginErro.jsp");
 		} else {
 			HttpSession session = req.getSession();
 			session.setAttribute("user", user);
-			rd = req.getRequestDispatcher("/corporativo/loginSuccess.jsp");
+			rd = req.getRequestDispatcher("/corporativo/loginSucesso.jsp");
 		}
 
 		rd.forward(req, res);
 	}
 
-	private User validateLogin(String name, String password) {
-		// All parameters must be valid
+	private Usuario validateLogin(String login, String senha) {
 		System.out.println("validando login...validateLogin");
-		if (name == null || password == null) {
+		if (login == null || senha == null) {
 			return null;
 		}
 
-		// Get a user by key
-		User userLocalizado = null;
-		for (User user : users) {
-			if (user.getName().equals(name)) {
-				userLocalizado = user;
-			}
-		}
+		Usuario userLocalizado = null;
+
+		UsuarioDao usuarioDao = new UsuarioDao();
+
+		userLocalizado = usuarioDao.obterUsuarioPorLogin(login);
 
 		if (userLocalizado == null) {
 			return null;
 		}
 
-		if (!userLocalizado.getPassword().equals(password.trim())) {
+		if (!userLocalizado.getSenha().equals(senha.trim())) {
 			return null;
 		}
 

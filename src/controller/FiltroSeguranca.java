@@ -12,7 +12,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class UserCheckFilter implements Filter {
+import model.Usuario;
+
+public class FiltroSeguranca implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
@@ -24,7 +26,7 @@ public class UserCheckFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
+		Usuario user = (Usuario) session.getAttribute("user");
 		if (user == null) {
 			RequestDispatcher rd = req.getRequestDispatcher("/login.jsp");
 			rd.forward(request, response);
