@@ -23,6 +23,7 @@ public class UsuarioDao {
 	}
 
 	public void adicionar(Usuario usuario) {
+		log.debug("adicionando usuario" + usuario.getLogin());
 		String sql = "INSERT INTO usuario (nome, senha) values (?, ?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -31,11 +32,13 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao adicionar usuario" + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void remover(int id) {
+		log.debug("excluindo usuario id " + id);
 		String sql = "DELETE FROM usuario where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -43,13 +46,14 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao excluir usuario id " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void atualizar(Usuario usuario) {
-		String sql = "UPDATE usuario set nome = ?, idade= ? where id = ?";
 		log.debug("atualizando usuario: " + usuario.getId() + " - " + usuario.getLogin());
+		String sql = "UPDATE usuario set nome = ?, idade= ? where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, usuario.getLogin());
@@ -58,11 +62,13 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao atualizar usuario: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public Usuario obterUsuarioPorId(int id) {
+		log.debug("obtendo usuario id " + id);
 		Usuario usuario = new Usuario();
 		try {
 			String sql = "SELECT * FROM usuario where id = ?";
@@ -78,12 +84,13 @@ public class UsuarioDao {
 			stmt.close();
 			return usuario;
 		} catch (SQLException e) {
+			log.error("erro ao obter usuario: "  + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public Usuario obterUsuarioPorLogin(String login) {
-		log.debug("localizando usuario: " + login);
+		log.debug("obtendo usuario login " + login);
 		Usuario usuario = null;
 		try {
 			String sql = "SELECT * FROM usuario where login = ?";
@@ -103,11 +110,13 @@ public class UsuarioDao {
 			stmt.close();
 			return usuario;
 		} catch (SQLException e) {
+			log.error("erro ao obter usuario login: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public List<Usuario> listar() {
+		log.debug("listando todos usuarios");
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		try {
 			String sql = "SELECT * FROM usuario";
@@ -124,6 +133,7 @@ public class UsuarioDao {
 			stmt.close();
 			return usuarios;
 		} catch (SQLException e) {
+			log.error("erro ao listar todos usuarios: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

@@ -9,59 +9,59 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import dao.UsuarioDao;
 import model.Usuario;
 
 @SuppressWarnings("serial")
 public class ValidacaoDeAcesso extends HttpServlet {
 
+	private static Logger log = Logger.getLogger(ValidacaoDeAcesso.class);
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("validando login... doGet");
+		log.debug("chamando doGet");
 		doPost(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("validando login... doPost");
+		log.debug("chamando doPost");
 		RequestDispatcher rd;
 
 		String name = req.getParameter("name");
 		String password = req.getParameter("password");
 
-		System.out.println("nome: " + name);
-		System.out.println("senha: " + password);
-		Usuario user = validateLogin(name, password);
+		Usuario usuario = validateLogin(name, password);
 
-		if (user == null) {
+		if (usuario == null) {
 			rd = req.getRequestDispatcher("/loginErro.jsp");
 		} else {
 			HttpSession session = req.getSession();
-			session.setAttribute("user", user);
+			session.setAttribute("usuario", usuario);
 			rd = req.getRequestDispatcher("/corporativo/loginSucesso.jsp");
 		}
-
 		rd.forward(req, res);
 	}
 
 	private Usuario validateLogin(String login, String senha) {
-		System.out.println("validando login...validateLogin");
 		if (login == null || senha == null) {
 			return null;
 		}
 
-		Usuario userLocalizado = null;
-
+		Usuario usuario = null;
 		UsuarioDao usuarioDao = new UsuarioDao();
+		
+		log.debug("validando o login");
+		usuario = usuarioDao.obterUsuarioPorLogin(login);
 
-		userLocalizado = usuarioDao.obterUsuarioPorLogin(login);
-
-		if (userLocalizado == null) {
+		if (usuario == null) {
 			return null;
 		}
 
-		if (!userLocalizado.getSenha().equals(senha.trim())) {
+		log.debug("validando a senha");
+		if (!usuario.getSenha().equals(senha.trim())) {
 			return null;
 		}
-
-		return userLocalizado;
+		return usuario;
 	}
 }

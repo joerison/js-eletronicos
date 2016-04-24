@@ -6,6 +6,14 @@ public class Cliente {
 	private String nome;
 	private String idade;
 
+	public Cliente() {
+	}
+
+	public Cliente(String nome, String idade) {
+		this.nome = nome;
+		this.idade = idade;
+	}
+
 	public int getId() {
 		return id;
 	}

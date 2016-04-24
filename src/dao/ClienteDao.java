@@ -23,6 +23,7 @@ public class ClienteDao {
 	}
 
 	public void adicionar(Cliente cliente) {
+		log.debug("adicionando cliente" + cliente.getNome());
 		String sql = "INSERT INTO cliente (nome, idade) values (?, ?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -31,11 +32,13 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao adicionar cliente: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void remover(int id) {
+		log.debug("excluindo cliente id " + id);
 		String sql = "DELETE FROM cliente where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -43,13 +46,14 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao excluir cliente id " + id);
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void atualizar(Cliente cliente) {
-		String sql = "UPDATE cliente set nome = ?, idade= ? where id = ?";
 		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
+		String sql = "UPDATE cliente set nome = ?, idade= ? where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, cliente.getNome());
@@ -58,11 +62,13 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
+			log.error("erro ao atualizar cliente: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public Cliente obterClientePorId(int id) {
+		log.debug("obtendo cliente id " + id);
 		Cliente cliente = new Cliente();
 		try {
 			String sql = "SELECT * FROM cliente where id = ?";
@@ -78,11 +84,13 @@ public class ClienteDao {
 			stmt.close();
 			return cliente;
 		} catch (SQLException e) {
+			log.error("erro ao obter por id: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public List<Cliente> listar() {
+		log.debug("listando todos clientes");
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		try {
 			String sql = "SELECT * FROM cliente";
@@ -99,6 +107,7 @@ public class ClienteDao {
 			stmt.close();
 			return clientes;
 		} catch (SQLException e) {
+			log.error("erro ao listar todos clientes: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

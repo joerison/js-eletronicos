@@ -7,7 +7,7 @@
         <title>Login</title>
     </head>
     <body>
-        <form action="validacaoDeAcesso" method="post">
+        <form action="/exercicio/validacaoDeAcesso" method="post">
             Name: <input type="text" name="name"/>
             Password: <input type="password" name="password"/>
             <input type="submit" value="LogIn"/>
