@@ -8,6 +8,14 @@
 		<servlet-name>clienteController</servlet-name>
 		<url-pattern>/corporativo/cliente</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>usuarioController</servlet-name>
+		<servlet-class>controller.UsuarioController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>usuarioController</servlet-name>
+		<url-pattern>/corporativo/usuario</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>filtroSeguranca</filter-name>
 		<filter-class>controller.FiltroSeguranca</filter-class>

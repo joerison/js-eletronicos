@@ -24,7 +24,7 @@ public class UsuarioDao {
 
 	public void adicionar(Usuario usuario) {
 		log.debug("adicionando usuario" + usuario.getLogin());
-		String sql = "INSERT INTO usuario (nome, senha) values (?, ?)";
+		String sql = "INSERT INTO usuario (login, senha) values (?, ?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, usuario.getLogin());
@@ -32,7 +32,6 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao adicionar usuario" + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -46,14 +45,13 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao excluir usuario id " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void atualizar(Usuario usuario) {
 		log.debug("atualizando usuario: " + usuario.getId() + " - " + usuario.getLogin());
-		String sql = "UPDATE usuario set nome = ?, idade= ? where id = ?";
+		String sql = "UPDATE usuario set login = ?, senha= ? where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, usuario.getLogin());
@@ -62,7 +60,6 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao atualizar usuario: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -77,14 +74,13 @@ public class UsuarioDao {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				usuario.setId(rs.getInt("id"));
-				usuario.setLogin(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
 			}
 			rs.close();
 			stmt.close();
 			return usuario;
 		} catch (SQLException e) {
-			log.error("erro ao obter usuario: "  + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -110,7 +106,6 @@ public class UsuarioDao {
 			stmt.close();
 			return usuario;
 		} catch (SQLException e) {
-			log.error("erro ao obter usuario login: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -125,15 +120,14 @@ public class UsuarioDao {
 			while (rs.next()) {
 				Usuario usuario = new Usuario();
 				usuario.setId(rs.getInt("id"));
-				usuario.setLogin(rs.getString("nome"));
-				usuario.setSenha(rs.getString("idade"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
 				usuarios.add(usuario);
 			}
 			rs.close();
 			stmt.close();
 			return usuarios;
 		} catch (SQLException e) {
-			log.error("erro ao listar todos usuarios: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

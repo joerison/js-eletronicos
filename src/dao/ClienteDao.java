@@ -32,7 +32,6 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao adicionar cliente: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -46,7 +45,6 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao excluir cliente id " + id);
 			throw new RuntimeException(e);
 		}
 	}
@@ -62,7 +60,6 @@ public class ClienteDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			log.error("erro ao atualizar cliente: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -84,7 +81,6 @@ public class ClienteDao {
 			stmt.close();
 			return cliente;
 		} catch (SQLException e) {
-			log.error("erro ao obter por id: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
@@ -107,7 +103,6 @@ public class ClienteDao {
 			stmt.close();
 			return clientes;
 		} catch (SQLException e) {
-			log.error("erro ao listar todos clientes: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

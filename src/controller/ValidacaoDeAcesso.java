@@ -19,10 +19,16 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 	private static Logger log = Logger.getLogger(ValidacaoDeAcesso.class);
 
+	private String INDEX = "/projetoltpiv/index.jsp";
+	private String CORPORATIVO = "/corporativo/index.jsp";
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		log.debug("chamando doGet");
-		invalidarSessao(req, res);
-		doPost(req, res);
+		if (!invalidarSessao(req, res)) {
+			doPost(req, res);
+		}else{
+			res.sendRedirect(INDEX);
+		}
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -41,18 +47,19 @@ public class ValidacaoDeAcesso extends HttpServlet {
 			log.debug("Acesso permitido, o usuario sera atribuido na sessao corrente");
 			HttpSession session = req.getSession();
 			session.setAttribute("usuario", usuario);
-			rd = req.getRequestDispatcher("/corporativo/index.jsp");
+			rd = req.getRequestDispatcher(CORPORATIVO);
 		}
 		rd.forward(req, res);
 	}
 
-	public void invalidarSessao(HttpServletRequest req, HttpServletResponse res) {
+	public boolean invalidarSessao(HttpServletRequest req, HttpServletResponse res) {
 		String logout = (String) req.getParameter("logout");
 		if ("true".equals(logout)) {
 			req.getSession().invalidate();
 			log.debug("invalidado sessão do usuario");
-			req.getRequestDispatcher("/login.jsp");
-		}
+			return true;
+		} else
+			return false;
 	}
 
 	private Usuario validateLogin(String login, String senha) {

@@ -8,8 +8,10 @@
 </head>
 <body>
 	Você está logado.
-
-	<a href="/projetoltpiv/corporativo/cliente">Clientes</a>
+<br />
+	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+	<a href="/projetoltpiv/corporativo/cliente">Clientes</a> <br />
+	<a href="/projetoltpiv/corporativo/usuario">Usuario</a><br /><br />
 	<a href="/projetoltpiv/validacaoDeAcesso?logout=true">Sair</a>
 
 </body>
