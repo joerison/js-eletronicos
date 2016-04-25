@@ -1,3 +1,14 @@
 label {
 	color: red;
 }
+
+p {
+	color: red;
+	margin: 5px;
+	cursor: pointer;
+}
+
+p:hover {
+	background: yellow;
+}
+}
