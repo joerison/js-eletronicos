@@ -21,6 +21,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 	private String INDEX = "/projetoltpiv/index.jsp";
 	private String CORPORATIVO = "/corporativo/index.jsp";
+	private String LOGIN = "/login.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		log.debug("chamando doGet");
@@ -42,7 +43,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 		if (usuario == null) {
 			log.debug("o login e senha informados nao foram capazes de gerar um objeto Usuario");
-			rd = req.getRequestDispatcher("/login.jsp");
+			rd = req.getRequestDispatcher(LOGIN);
 		} else {
 			log.debug("Acesso permitido, o usuario sera atribuido na sessao corrente");
 			HttpSession session = req.getSession();

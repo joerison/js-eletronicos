@@ -19,6 +19,7 @@ import model.Usuario;
 public class FiltroSeguranca implements Filter {
 	
 	private static Logger log = Logger.getLogger(FiltroSeguranca.class);
+	private String LOGIN = "/login.jsp";
 
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
@@ -33,7 +34,7 @@ public class FiltroSeguranca implements Filter {
 		Usuario user = (Usuario) session.getAttribute("usuario");
 		log.debug("verificando se existe usuario na sessao");
 		if (user == null) {
-			RequestDispatcher rd = req.getRequestDispatcher("/login");
+			RequestDispatcher rd = req.getRequestDispatcher(LOGIN);
 			rd.forward(request, response);
 		} else {
 			chain.doFilter(request, response);
