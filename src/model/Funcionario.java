@@ -1,15 +1,15 @@
 package model;
 
-public class Usuario {
+public class Funcionario {
 	
 	private int id;
 	private String login;
 	private String senha;
 
-	public Usuario() {
+	public Funcionario() {
 	}
 
-	public Usuario(String login, String senha) {
+	public Funcionario(String login, String senha) {
 		this.login = login;
 		this.senha = senha;
 	}

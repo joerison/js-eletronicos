@@ -10,37 +10,37 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import dao.UsuarioDao;
-import model.Usuario;
+import dao.FuncionarioDao;
+import model.Funcionario;
 
 @SuppressWarnings("serial")
-public class UsuarioController extends HttpServlet {
+public class FuncionarioController extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(UsuarioController.class);
+	private static Logger log = Logger.getLogger(FuncionarioController.class);
 
-	private String INDEX = "usuario/index.jsp";
-	private String CADASTRAR = "usuario/cadastrar.jsp";
-	private String ALTERAR = "usuario/alterar.jsp";
-	private String LISTAR = "usuario/usuarios.jsp";
+	private String INDEX = "funcionario/index.jsp";
+	private String CADASTRAR = "funcionario/cadastrar.jsp";
+	private String ALTERAR = "funcionario/alterar.jsp";
+	private String LISTAR = "funcionario/funcionarios.jsp";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		UsuarioDao usuarioDao = new UsuarioDao();
-		List<Usuario> usuarios = usuarioDao.listar();
+		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		List<Funcionario> funcionarios = funcionarioDao.listar();
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("listar")) {
-				req.setAttribute("usuarios", usuarios);
+				req.setAttribute("funcionarios", funcionarios);
 				req.getRequestDispatcher(LISTAR).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Usuario usuarioEdicao = usuarioDao.obterUsuarioPorId(Integer.parseInt(req.getParameter("usuarioId")));
-				req.getSession().setAttribute("usuarioEdicao", usuarioEdicao);
+				Funcionario funcionarioEdicao = funcionarioDao.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
+				req.getSession().setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				usuarioDao.remover(Integer.parseInt(req.getParameter("usuarioId")));
+				funcionarioDao.remover(Integer.parseInt(req.getParameter("funcionarioId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -55,21 +55,21 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		UsuarioDao usuarioDao = new UsuarioDao();
+		FuncionarioDao funcionarioDao = new FuncionarioDao();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Usuario usuario = new Usuario();
-				usuario.setLogin(req.getParameter("login"));
-				usuario.setSenha(req.getParameter("senha"));
-				usuarioDao.adicionar(usuario);
+				Funcionario funcionario = new Funcionario();
+				funcionario.setLogin(req.getParameter("login"));
+				funcionario.setSenha(req.getParameter("senha"));
+				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Usuario usuario = (Usuario) req.getSession().getAttribute("usuario");
-				usuario.setLogin(req.getParameter("login"));
-				usuario.setSenha(req.getParameter("senha"));
-				usuarioDao.atualizar(usuario);
+				Funcionario funcionario = (Funcionario) req.getSession().getAttribute("funcionario");
+				funcionario.setLogin(req.getParameter("login"));
+				funcionario.setSenha(req.getParameter("senha"));
+				funcionarioDao.atualizar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

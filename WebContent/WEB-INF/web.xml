@@ -9,12 +9,12 @@
 		<url-pattern>/corporativo/cliente</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>usuarioController</servlet-name>
-		<servlet-class>controller.UsuarioController</servlet-class>
+		<servlet-name>funcionarioController</servlet-name>
+		<servlet-class>controller.FuncionarioController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>usuarioController</servlet-name>
-		<url-pattern>/corporativo/usuario</url-pattern>
+		<servlet-name>funcionarioController</servlet-name>
+		<url-pattern>/corporativo/funcionario</url-pattern>
 	</servlet-mapping>
 	<filter>
 		<filter-name>filtroSeguranca</filter-name>

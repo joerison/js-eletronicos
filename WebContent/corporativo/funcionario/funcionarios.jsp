@@ -6,27 +6,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Todos usuarios</title>
+<title>Todos funcionários</title>
 </head>
 <body>
 	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
-	<form action="usuario" method="post">
+	<form action="funcionario" method="post">
 		<table>
-			<c:forEach var="usuario" items="${usuarios}">
+			<c:forEach var="funcionario" items="${funcionarios}">
 				<tr>
-					<td colspan="1"><input type="checkbox" name="${usuario.login}"
-						value="${usuario.login}">${usuario.login}</td>
+					<td colspan="1"><input type="checkbox" name="${funcionario.login}"
+						value="${funcionario.login}">${funcionario.login}</td>
 					<td colspan="1"><a
 						href="
-						<c:url value="usuario">
+						<c:url value="funcionario">
 						<c:param name="op" value="alterar"/>
-						<c:param name="usuarioId" value="${usuario.id}"/>
+						<c:param name="funcionarioId" value="${funcionario.id}"/>
 						</c:url>">Alterar</a></td>
 					<td colspan="1"><a
 						href="
-						<c:url value="usuario">
+						<c:url value="funcionario">
 						<c:param name="op" value="excluir"/>
-						<c:param name="usuarioId" value="${usuario.id}"/>
+						<c:param name="funcionarioId" value="${funcionario.id}"/>
 						</c:url>">Excluir</a></td>
 				</tr>
 			</c:forEach>

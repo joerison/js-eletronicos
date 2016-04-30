@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import dao.UsuarioDao;
-import model.Usuario;
+import dao.FuncionarioDao;
+import model.Funcionario;
 
 @SuppressWarnings("serial")
 public class ValidacaoDeAcesso extends HttpServlet {
@@ -39,15 +39,15 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		String login = req.getParameter("login");
 		String senha = req.getParameter("senha");
 
-		Usuario usuario = validateLogin(login, senha);
+		Funcionario funcionario = validateLogin(login, senha);
 
-		if (usuario == null) {
-			log.debug("o login e senha informados nao foram capazes de gerar um objeto Usuario");
+		if (funcionario == null) {
+			log.debug("o login e senha informados nao foram capazes de gerar um objeto Funcionario");
 			rd = req.getRequestDispatcher(LOGIN);
 		} else {
-			log.debug("Acesso permitido, o usuario sera atribuido na sessao corrente");
+			log.debug("Acesso permitido, o funcionario sera atribuido na sessao corrente");
 			HttpSession session = req.getSession();
-			session.setAttribute("usuario", usuario);
+			session.setAttribute("funcionario", funcionario);
 			rd = req.getRequestDispatcher(CORPORATIVO);
 		}
 		rd.forward(req, res);
@@ -57,31 +57,31 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		String logout = (String) req.getParameter("logout");
 		if ("true".equals(logout)) {
 			req.getSession().invalidate();
-			log.debug("invalidado sessão do usuario");
+			log.debug("invalidado sessão do funcionario");
 			return true;
 		} else
 			return false;
 	}
 
-	private Usuario validateLogin(String login, String senha) {
+	private Funcionario validateLogin(String login, String senha) {
 		if (login == null || senha == null) {
 			return null;
 		}
 
-		Usuario usuario = null;
-		UsuarioDao usuarioDao = new UsuarioDao();
+		Funcionario funcionario = null;
+		FuncionarioDao funcionarioDao = new FuncionarioDao();
 
 		log.debug("validando o login");
-		usuario = usuarioDao.obterUsuarioPorLogin(login);
+		funcionario = funcionarioDao.obterFuncionarioPorLogin(login);
 
-		if (usuario == null) {
+		if (funcionario == null) {
 			return null;
 		}
 
 		log.debug("validando a senha");
-		if (!usuario.getSenha().equals(senha.trim())) {
+		if (!funcionario.getSenha().equals(senha.trim())) {
 			return null;
 		}
-		return usuario;
+		return funcionario;
 	}
 }
