@@ -21,22 +21,28 @@ public class FuncionarioController extends HttpServlet {
 	private String INDEX = "funcionario/index.jsp";
 	private String CADASTRAR = "funcionario/cadastrar.jsp";
 	private String ALTERAR = "funcionario/alterar.jsp";
-	private String LISTAR = "funcionario/funcionarios.jsp";
+	private String LISTAR = "funcionario/index.jsp";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		FuncionarioDao funcionarioDao = new FuncionarioDao();
-		List<Funcionario> funcionarios = funcionarioDao.listar();
+		
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("listar")) {
+				List<Funcionario> funcionarios = funcionarioDao.listar();
+				req.setAttribute("funcionarios", funcionarios);
+				req.getRequestDispatcher(LISTAR).forward(req, resp);
+			} else if (operacao.equals("buscar")) {
+				List<Funcionario> funcionarios = funcionarioDao.buscar(req.getParameter("busca"));
 				req.setAttribute("funcionarios", funcionarios);
 				req.getRequestDispatcher(LISTAR).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionarioEdicao = funcionarioDao.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
+				Funcionario funcionarioEdicao = funcionarioDao
+						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
 				req.getSession().setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
@@ -61,12 +67,22 @@ public class FuncionarioController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Funcionario funcionario = new Funcionario();
+				funcionario.setNome(req.getParameter("nome"));
+				funcionario.setCpf(req.getParameter("cpf"));
+				funcionario.setEmail(req.getParameter("email"));
+				funcionario.setCelular(req.getParameter("celular"));
+				funcionario.setSexo(req.getParameter("sexo"));
 				funcionario.setLogin(req.getParameter("login"));
 				funcionario.setSenha(req.getParameter("senha"));
 				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Funcionario funcionario = (Funcionario) req.getSession().getAttribute("funcionario");
+				funcionario.setNome(req.getParameter("nome"));
+				funcionario.setCpf(req.getParameter("cpf"));
+				funcionario.setEmail(req.getParameter("email"));
+				funcionario.setCelular(req.getParameter("celular"));
+				funcionario.setSexo(req.getParameter("sexo"));
 				funcionario.setLogin(req.getParameter("login"));
 				funcionario.setSenha(req.getParameter("senha"));
 				funcionarioDao.atualizar(funcionario);

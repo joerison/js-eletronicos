@@ -74,6 +74,11 @@ public class FuncionarioDao {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				funcionario.setId(rs.getInt("id"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setEmail(rs.getString("email"));
+				funcionario.setCelular(rs.getString("celular"));
+				funcionario.setSexo(rs.getString("sexo"));
 				funcionario.setLogin(rs.getString("login"));
 				funcionario.setSenha(rs.getString("senha"));
 			}
@@ -116,6 +121,29 @@ public class FuncionarioDao {
 		try {
 			String sql = "SELECT * FROM funcionario";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Funcionario funcionario = new Funcionario();
+				funcionario.setId(rs.getInt("id"));
+				funcionario.setLogin(rs.getString("login"));
+				funcionario.setSenha(rs.getString("senha"));
+				funcionarios.add(funcionario);
+			}
+			rs.close();
+			stmt.close();
+			return funcionarios;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Funcionario> buscar(String busca) {
+		log.debug("buscando funcionario: " +  busca);
+		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+		try {
+			String sql = "SELECT * FROM funcionario where login like ?";
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, busca);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Funcionario funcionario = new Funcionario();
