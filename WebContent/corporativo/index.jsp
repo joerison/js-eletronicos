@@ -7,11 +7,13 @@
 <title>Sucesso</title>
 </head>
 <body>
-	Você está logado.
 <br />
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
-	<a href="/projetoltpiv/corporativo/cliente">Clientes</a> <br />
-	<a href="/projetoltpiv/corporativo/funcionario">Funcionários</a><br /><br />
+	<a href="/projetoltpiv/index.jsp">Início</a> | 
+	<a href="/projetoltpiv/corporativo/cliente">Clientes</a> | 
+	<a href="/projetoltpiv/corporativo/funcionario">Funcionários</a> | 
+	<a href="/projetoltpiv/corporativo/produto">Produtos</a> |
+	<a href="/projetoltpiv/corporativo/produto/categoria">Categorias</a>
+	<br /><br />
 	<a href="/projetoltpiv/validacaoDeAcesso?logout=true">Sair</a>
 
 </body>
