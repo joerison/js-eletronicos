@@ -24,11 +24,16 @@ public class FuncionarioDao {
 
 	public void adicionar(Funcionario funcionario) {
 		log.debug("adicionando funcionario" + funcionario.getLogin());
-		String sql = "INSERT INTO funcionario (login, senha) values (?, ?)";
+		String sql = "INSERT INTO funcionario (nome, cpf, email, celular, sexo, login, senha) values (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, funcionario.getLogin());
-			stmt.setString(2, funcionario.getSenha());
+			stmt.setString(1, funcionario.getNome());
+			stmt.setString(2, funcionario.getCpf());
+			stmt.setString(3, funcionario.getEmail());
+			stmt.setString(4, funcionario.getCelular());
+			stmt.setString(5, funcionario.getSexo());
+			stmt.setString(6, funcionario.getLogin());
+			stmt.setString(7, funcionario.getSenha());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -51,12 +56,17 @@ public class FuncionarioDao {
 
 	public void atualizar(Funcionario funcionario) {
 		log.debug("atualizando funcionario: " + funcionario.getId() + " - " + funcionario.getLogin());
-		String sql = "UPDATE funcionario set login = ?, senha= ? where id = ?";
+		String sql = "UPDATE funcionario set nome = ?, cpf = ?, email = ?, celular = ?, sexo = ?, login = ?, senha = ? where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, funcionario.getLogin());
-			stmt.setString(2, funcionario.getSenha());
-			stmt.setInt(3, funcionario.getId());
+			stmt.setString(1, funcionario.getNome());
+			stmt.setString(2, funcionario.getCpf());
+			stmt.setString(3, funcionario.getEmail());
+			stmt.setString(4, funcionario.getCelular());
+			stmt.setString(5, funcionario.getSexo());
+			stmt.setString(6, funcionario.getLogin());
+			stmt.setString(7, funcionario.getSenha());
+			stmt.setInt(8, funcionario.getId());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -102,6 +112,11 @@ public class FuncionarioDao {
 				log.debug("funcionario: " + login + " - localizado");
 				funcionario = new Funcionario();
 				funcionario.setId(rs.getInt("id"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setEmail(rs.getString("email"));
+				funcionario.setCelular(rs.getString("celular"));
+				funcionario.setSexo(rs.getString("sexo"));
 				funcionario.setLogin(rs.getString("login"));
 				funcionario.setSenha(rs.getString("senha"));
 			} else {
@@ -115,39 +130,22 @@ public class FuncionarioDao {
 		}
 	}
 
-	public List<Funcionario> listar() {
-		log.debug("listando todos funcionarios");
-		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-		try {
-			String sql = "SELECT * FROM funcionario";
-			PreparedStatement stmt = conexao.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Funcionario funcionario = new Funcionario();
-				funcionario.setId(rs.getInt("id"));
-				funcionario.setLogin(rs.getString("login"));
-				funcionario.setSenha(rs.getString("senha"));
-				funcionarios.add(funcionario);
-			}
-			rs.close();
-			stmt.close();
-			return funcionarios;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
 	public List<Funcionario> buscar(String busca) {
-		log.debug("buscando funcionario: " +  busca);
+		log.debug("buscando funcionario: " + busca);
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		try {
-			String sql = "SELECT * FROM funcionario where login like ?";
+			String sql = "SELECT * FROM funcionario WHERE nome like ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, busca);
+			stmt.setString(1, "%" + busca + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Funcionario funcionario = new Funcionario();
 				funcionario.setId(rs.getInt("id"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setEmail(rs.getString("email"));
+				funcionario.setCelular(rs.getString("celular"));
+				funcionario.setSexo(rs.getString("sexo"));
 				funcionario.setLogin(rs.getString("login"));
 				funcionario.setSenha(rs.getString("senha"));
 				funcionarios.add(funcionario);

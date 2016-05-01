@@ -24,11 +24,14 @@ public class ClienteDao {
 
 	public void adicionar(Cliente cliente) {
 		log.debug("adicionando cliente" + cliente.getNome());
-		String sql = "INSERT INTO cliente (nome, idade) values (?, ?)";
+		String sql = "INSERT INTO cliente (nome, cpf, email, celular, sexo) values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, cliente.getNome());
-			stmt.setString(2, cliente.getIdade());
+			stmt.setString(2, cliente.getCpf());
+			stmt.setString(4, cliente.getEmail());
+			stmt.setString(3, cliente.getCelular());
+			stmt.setString(5, cliente.getSexo());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -51,12 +54,15 @@ public class ClienteDao {
 
 	public void atualizar(Cliente cliente) {
 		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
-		String sql = "UPDATE cliente set nome = ?, idade= ? where id = ?";
+		String sql = "UPDATE cliente set nome = ?, cpf= ?, email = ?, celular = ?, sexo = ? where id = ?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, cliente.getNome());
-			stmt.setString(2, cliente.getIdade());
-			stmt.setInt(3, cliente.getId());
+			stmt.setString(2, cliente.getCpf());
+			stmt.setString(4, cliente.getEmail());
+			stmt.setString(3, cliente.getCelular());
+			stmt.setString(5, cliente.getSexo());
+			stmt.setInt(6, cliente.getId());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -75,7 +81,10 @@ public class ClienteDao {
 			while (rs.next()) {
 				cliente.setId(rs.getInt("id"));
 				cliente.setNome(rs.getString("nome"));
-				cliente.setIdade(rs.getString("idade"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setCelular(rs.getString("celular"));
+				cliente.setSexo(rs.getString("sexo"));
 			}
 			rs.close();
 			stmt.close();
@@ -85,18 +94,22 @@ public class ClienteDao {
 		}
 	}
 
-	public List<Cliente> listar() {
+	public List<Cliente> buscar(String busca) {
 		log.debug("listando todos clientes");
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		try {
-			String sql = "SELECT * FROM cliente";
+			String sql = "SELECT * FROM cliente where nome like ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, "%" + busca + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Cliente cliente = new Cliente();
 				cliente.setId(rs.getInt("id"));
 				cliente.setNome(rs.getString("nome"));
-				cliente.setIdade(rs.getString("idade"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setCelular(rs.getString("celular"));
+				cliente.setSexo(rs.getString("sexo"));
 				clientes.add(cliente);
 			}
 			rs.close();

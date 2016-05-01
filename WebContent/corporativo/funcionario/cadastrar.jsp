@@ -13,8 +13,9 @@
 			<input type="text" id="email" name="email"/><br />
 			<label for="celular">Celular: </label>
 			<input type="text" id="celular" name="celular"/><br />
-			<label for="login">Sexo: </label>
-			<input type="text" id="sexo" name="sexo"/><br />
+			<label for="sexo">Sexo: </label>
+			<input type="radio" id="sexo" name="sexo" value="M">Masculino
+			<input type="radio" id="sexo"  name="sexo" value="F">Feminino<br>
 			<label for="login">Login: </label>
 			<input type="text" id="login" name="login"/><br />
 			<label for="senha">Senha: </label>

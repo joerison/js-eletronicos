@@ -32,10 +32,6 @@ public class FuncionarioController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
-			} else if (operacao.equals("listar")) {
-				List<Funcionario> funcionarios = funcionarioDao.listar();
-				req.setAttribute("funcionarios", funcionarios);
-				req.getRequestDispatcher(LISTAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
 				List<Funcionario> funcionarios = funcionarioDao.buscar(req.getParameter("busca"));
 				req.setAttribute("funcionarios", funcionarios);
