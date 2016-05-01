@@ -1,6 +1,14 @@
 <!DOCTYPE xml>
 <web-app>
 	<servlet>
+		<servlet-name>produtoController</servlet-name>
+		<servlet-class>controller.ProdutoController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>produtoController</servlet-name>
+		<url-pattern>/corporativo/produto</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>categoriaController</servlet-name>
 		<servlet-class>controller.CategoriaController</servlet-class>
 	</servlet>
