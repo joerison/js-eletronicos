@@ -20,8 +20,8 @@
 		<table>
 			<c:forEach var="funcionario" items="${funcionarios}">
 				<tr>
-					<td colspan="1"><input type="checkbox" name="${funcionario.login}"
-						value="${funcionario.login}">${funcionario.login}</td>
+					<td colspan="1"><input type="checkbox" name="checkboxFuncionario"
+						value="${funcionario.id}">${funcionario.nome}</td>
 					<td colspan="1"><a
 						href="
 						<c:url value="funcionario">

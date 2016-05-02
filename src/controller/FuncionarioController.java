@@ -73,7 +73,7 @@ public class FuncionarioController extends HttpServlet {
 				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionario = (Funcionario) req.getSession().getAttribute("funcionario");
+				Funcionario funcionario = (Funcionario) req.getSession().getAttribute("funcionarioEdicao");
 				funcionario.setNome(req.getParameter("nome"));
 				funcionario.setCpf(req.getParameter("cpf"));
 				funcionario.setEmail(req.getParameter("email"));
