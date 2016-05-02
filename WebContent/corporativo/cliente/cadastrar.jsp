@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 	<body>
-	<a href="/projetoltpiv/index.jsp">InÃ­cio</a><br /><br />
+	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 		<form action="cliente" method="post">
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome"/><br />

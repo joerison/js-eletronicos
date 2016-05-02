@@ -15,16 +15,18 @@
 			<input type="text" id="email" name="email" value="${funcionarioEdicao.email}"/><br />
 			<label for="celular">Celular: </label>
 			<input type="text" id="celular" name="celular" value="${funcionarioEdicao.celular}"/><br />
-			
+
 			<label for="sexo">Sexo: </label>
-			<c:if test="${funcionarioEdicao.sexo=='M'}">
-			<input type="radio" id="sexo" name="sexo" value="M" checked>Masculino
-			<input type="radio" id="sexo"  name="sexo" value="F">Feminino<br>
-			</c:if>
-			<c:if test="${funcionarioEdicao.sexo=='F'}">
-			<input type="radio" id="sexo" name="sexo" value="M">Masculino
-			<input type="radio" id="sexo"  name="sexo" value="F" checked>Feminino<br>
-			</c:if>
+			<c:choose>
+				<c:when test="${funcionarioEdicao.sexo=='F'}">
+					<input type="radio" id="sexo" name="sexo" value="M">Masculino
+					<input type="radio" id="sexo"  name="sexo" value="F" checked>Feminino<br>
+				</c:when>
+				<c:otherwise>
+					<input type="radio" id="sexo" name="sexo" value="M" checked>Masculino
+					<input type="radio" id="sexo"  name="sexo" value="F">Feminino<br>
+				</c:otherwise>
+			</c:choose>
 			
 			<label for="login">Login: </label>
 			<input type="text" id="login" name="login" value="${funcionarioEdicao.login}"/><br />

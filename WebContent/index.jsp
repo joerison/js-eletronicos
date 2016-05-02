@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 <html>
 <head>
 <script src="/projetoltpiv/js/jquery-2.2.3.min.js"></script>
@@ -9,7 +8,7 @@
 
 	<h1>Pagina inicial</h1>
 	<a href="corporativo">Cooperativo</a>
-	<a href="publico">PÃºblico</a>
+	<a href="publico">Público</a>
 
 	<p>A</p>
 	<p>B</p>

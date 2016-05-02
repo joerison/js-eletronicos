@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 	<body>
 
-	<a href="/projetoltpiv/index.jsp">InÃ­cio</a><br /><br />
+	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 		<form action="cliente" method="post">
 		
 			<label for="nome">Nome: </label>
@@ -17,14 +16,16 @@
 			<input type="text" id="celular" name="celular" value="${cliente.celular}"/><br />
 
 			<label for="sexo">Sexo: </label>
-			<c:if test="${cliente.sexo=='M'}">
-			<input type="radio" id="sexo" name="sexo" value="M" checked>Masculino
-			<input type="radio" id="sexo"  name="sexo" value="F">Feminino<br>
-			</c:if>
-			<c:if test="${cliente.sexo=='F'}">
-			<input type="radio" id="sexo" name="sexo" value="M">Masculino
-			<input type="radio" id="sexo"  name="sexo" value="F" checked>Feminino<br>
-			</c:if>
+			<c:choose>
+				<c:when test="${cliente.sexo=='F'}">
+					<input type="radio" id="sexo" name="sexo" value="M">Masculino
+					<input type="radio" id="sexo" name="sexo" value="F" checked>Feminino<br>
+				</c:when>
+				<c:otherwise>
+					<input type="radio" id="sexo" name="sexo" value="M" checked>Masculino
+					<input type="radio" id="sexo" name="sexo" value="F">Feminino<br>
+				</c:otherwise>
+			</c:choose>
 			
 			<input type="hidden" name="op" value="alterar"/><br />
 			<input type="submit"value="enviar" />

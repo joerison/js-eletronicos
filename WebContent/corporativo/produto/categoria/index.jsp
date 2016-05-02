@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -9,7 +8,7 @@
 <title>Todas Categorias</title>
 </head>
 <body>
-	<a href="/projetoltpiv/index.jsp">InÃ­cio</a><br /><br />
+	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 	
 		<form action="categoria" method="get">
 			<label for="busca">Busca: </label>
