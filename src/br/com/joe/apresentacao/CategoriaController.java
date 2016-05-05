@@ -1,4 +1,4 @@
-package controller;
+package br.com.joe.apresentacao;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import dao.ClienteDao;
-import model.Cliente;
+import br.com.joe.modelo.CategoriaDAO;
+import br.com.joe.vo.Categoria;
 
 @SuppressWarnings("serial")
-public class ClienteController extends HttpServlet {
+public class CategoriaController extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(ClienteController.class);
+	private static Logger log = Logger.getLogger(CategoriaController.class);
 
-	private String INDEX = "cliente/index.jsp";
-	private String CADASTRAR = "cliente/cadastrar.jsp";
-	private String ALTERAR = "cliente/alterar.jsp";
+	private String INDEX = "/corporativo/produto/categoria/index.jsp";
+	private String CADASTRAR = "/corporativo/produto/categoria/cadastrar.jsp";
+	private String ALTERAR = "/corporativo/produto/categoria/alterar.jsp";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ClienteDao clienteDao = new ClienteDao();
+		CategoriaDAO categoriaDao = new CategoriaDAO();
 		
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
@@ -32,15 +32,15 @@ public class ClienteController extends HttpServlet {
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
-				List<Cliente> clientes = clienteDao.buscar(req.getParameter("busca"));
-				req.setAttribute("clientes", clientes);
+				List<Categoria> categorias = categoriaDao.buscar(req.getParameter("busca"));
+				req.setAttribute("categorias", categorias);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Cliente cliente = clienteDao.obterClientePorId(Integer.parseInt(req.getParameter("clienteId")));
-				req.getSession().setAttribute("cliente", cliente);
+				Categoria categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
+				req.getSession().setAttribute("categoria", categoria);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				clienteDao.remover(Integer.parseInt(req.getParameter("clienteId")));
+				categoriaDao.remover(Integer.parseInt(req.getParameter("categoriaId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -55,27 +55,19 @@ public class ClienteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		ClienteDao clienteDao = new ClienteDao();
+		CategoriaDAO categoriaDao = new CategoriaDAO();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Cliente cliente = new Cliente();
-				cliente.setNome(req.getParameter("nome"));
-				cliente.setCpf(req.getParameter("cpf"));
-				cliente.setEmail(req.getParameter("email"));
-				cliente.setCelular(req.getParameter("celular"));
-				cliente.setSexo(req.getParameter("sexo"));
-				clienteDao.adicionar(cliente);
+				Categoria categoria = new Categoria();
+				categoria.setNome(req.getParameter("nome"));
+				categoriaDao.adicionar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
-				cliente.setNome(req.getParameter("nome"));
-				cliente.setCpf(req.getParameter("cpf"));
-				cliente.setEmail(req.getParameter("email"));
-				cliente.setCelular(req.getParameter("celular"));
-				cliente.setSexo(req.getParameter("sexo"));
-				clienteDao.atualizar(cliente);
+				Categoria categoria = (Categoria) req.getSession().getAttribute("categoria");
+				categoria.setNome(req.getParameter("nome"));
+				categoriaDao.atualizar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

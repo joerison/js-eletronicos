@@ -1,4 +1,4 @@
-package util;
+package br.com.joe.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

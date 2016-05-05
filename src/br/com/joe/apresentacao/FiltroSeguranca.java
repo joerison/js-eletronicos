@@ -1,4 +1,4 @@
-package controller;
+package br.com.joe.apresentacao;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import model.Funcionario;
+import br.com.joe.vo.Funcionario;
 
 public class FiltroSeguranca implements Filter {
 

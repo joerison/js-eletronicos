@@ -2,7 +2,7 @@
 <web-app>
 	<servlet>
 		<servlet-name>produtoController</servlet-name>
-		<servlet-class>controller.ProdutoController</servlet-class>
+		<servlet-class>br.com.joe.apresentacao.ProdutoController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>produtoController</servlet-name>
@@ -10,7 +10,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>categoriaController</servlet-name>
-		<servlet-class>controller.CategoriaController</servlet-class>
+		<servlet-class>br.com.joe.apresentacao.CategoriaController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>categoriaController</servlet-name>
@@ -18,7 +18,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>clienteController</servlet-name>
-		<servlet-class>controller.ClienteController</servlet-class>
+		<servlet-class>br.com.joe.apresentacao.ClienteController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>clienteController</servlet-name>
@@ -26,7 +26,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>funcionarioController</servlet-name>
-		<servlet-class>controller.FuncionarioController</servlet-class>
+		<servlet-class>br.com.joe.apresentacao.FuncionarioController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>funcionarioController</servlet-name>
@@ -34,7 +34,7 @@
 	</servlet-mapping>
 	<filter>
 		<filter-name>filtroSeguranca</filter-name>
-		<filter-class>controller.FiltroSeguranca</filter-class>
+		<filter-class>br.com.joe.apresentacao.FiltroSeguranca</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>filtroSeguranca</filter-name>
@@ -42,7 +42,7 @@
 	</filter-mapping>
 	<servlet>
 		<servlet-name>validacaoDeAcesso</servlet-name>
-		<servlet-class>controller.ValidacaoDeAcesso</servlet-class>
+		<servlet-class>br.com.joe.apresentacao.ValidacaoDeAcesso</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>validacaoDeAcesso</servlet-name>

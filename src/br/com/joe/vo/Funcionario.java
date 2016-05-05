@@ -1,4 +1,4 @@
-package model;
+package br.com.joe.vo;
 
 /**
  * @author joe

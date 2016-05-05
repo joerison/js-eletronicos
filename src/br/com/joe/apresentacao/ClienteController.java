@@ -1,4 +1,4 @@
-package controller;
+package br.com.joe.apresentacao;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,43 +10,38 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import dao.CategoriaDao;
-import dao.ProdutoDao;
-import model.Categoria;
-import model.Produto;
+import br.com.joe.bo.ClienteBO;
+import br.com.joe.vo.Cliente;
 
 @SuppressWarnings("serial")
-public class ProdutoController extends HttpServlet {
+public class ClienteController extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(ProdutoController.class);
+	private static Logger log = Logger.getLogger(ClienteController.class);
 
-	private String INDEX = "produto/index.jsp";
-	private String CADASTRAR = "produto/cadastrar.jsp";
-	private String ALTERAR = "produto/alterar.jsp";
-
+	private String INDEX = "cliente/index.jsp";
+	private String CADASTRAR = "cliente/cadastrar.jsp";
+	private String ALTERAR = "cliente/alterar.jsp";
+	private ClienteBO clientebo = new ClienteBO();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ProdutoDao produtoDao = new ProdutoDao();
-		
-		CategoriaDao categoriaDao = new CategoriaDao();
-		List<Categoria> categorias = categoriaDao.buscar("%");
-		req.setAttribute("categorias", categorias);
 		
 		String operacao = req.getParameter("op");
+		
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
-				List<Produto> produtos = produtoDao.buscar(req.getParameter("busca"));
-				req.setAttribute("produtos", produtos);
+				List<Cliente> clientes = clientebo.buscar(req.getParameter("busca"));
+				req.setAttribute("clientes", clientes);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Produto produto = produtoDao.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId")));
-				req.getSession().setAttribute("produto", produto);
+				Cliente cliente = clientebo.obterCliente(Integer.parseInt(req.getParameter("clienteId")));
+				req.getSession().setAttribute("cliente", cliente);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				produtoDao.remover(Integer.parseInt(req.getParameter("produtoId")));
+				clientebo.remover(Integer.parseInt(req.getParameter("clienteId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -61,27 +56,27 @@ public class ProdutoController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		ProdutoDao produtoDao = new ProdutoDao();
-		CategoriaDao categoriaDao = new CategoriaDao();
-		Categoria categoria;
-		
+
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Produto produto = new Produto();
-				produto.setNome(req.getParameter("nome"));
-				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
-				produto.setCategoria(categoria);
-				produtoDao.adicionar(produto);
+				Cliente cliente = new Cliente();
+				cliente.setNome(req.getParameter("nome"));
+				cliente.setCpf(req.getParameter("cpf"));
+				cliente.setEmail(req.getParameter("email"));
+				cliente.setCelular(req.getParameter("celular"));
+				cliente.setSexo(req.getParameter("sexo"));
+				
+				clientebo.adicionar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Produto produto = (Produto) req.getSession().getAttribute("produto");
-				produto.setNome(req.getParameter("nome"));
-				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
-				produto.setCategoria(categoria);
-				produtoDao.atualizar(produto);
+				Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
+				cliente.setNome(req.getParameter("nome"));
+				cliente.setCpf(req.getParameter("cpf"));
+				cliente.setEmail(req.getParameter("email"));
+				cliente.setCelular(req.getParameter("celular"));
+				cliente.setSexo(req.getParameter("sexo"));
+				clientebo.alterar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

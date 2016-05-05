@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
-import dao.ClienteDao;
-import dao.FuncionarioDao;
-import dao.ProdutoDao;
-import dao.VendaDao;
-import model.Cliente;
-import model.Funcionario;
-import model.Produto;
-import model.Venda;
+import br.com.joe.bo.ClienteBO;
+import br.com.joe.modelo.FuncionarioDAO;
+import br.com.joe.modelo.ProdutoDAO;
+import br.com.joe.modelo.VendaDAO;
+import br.com.joe.vo.Cliente;
+import br.com.joe.vo.Funcionario;
+import br.com.joe.vo.Produto;
+import br.com.joe.vo.Venda;
 
 public class Teste {
 	
 	public static void main(String[] args) {
 		
-		VendaDao vendaDao = new VendaDao();
+		VendaDAO vendaDao = new VendaDAO();
 		Venda venda = vendaDao.obterVendaPorId(14);
 		System.out.println(venda.getDesconto());
 		System.out.println(venda.getCliente().getNome());
@@ -23,17 +23,17 @@ public class Teste {
 	}
 	
 	public void inserirVenda(){
-		ClienteDao clienteDao = new ClienteDao();
-		Cliente cliente = clienteDao.obterClientePorId(1);
+		ClienteBO clienteBo = new ClienteBO();
+		Cliente cliente = clienteBo.obterCliente(1);
 		
-		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
 		Funcionario funcionario = funcionarioDao.obterFuncionarioPorId(1);
 		
-		ProdutoDao produtoDao = new ProdutoDao();
+		ProdutoDAO produtoDao = new ProdutoDAO();
 		Produto produtoA = produtoDao.obterProdutoPorId(4);
 		Produto produtoB = produtoDao.obterProdutoPorId(5);
 	
-		VendaDao vendaDao = new VendaDao();
+		VendaDAO vendaDao = new VendaDAO();
 		
 		ArrayList<Produto> produtos = new ArrayList<>();
 		produtos.add(produtoA);

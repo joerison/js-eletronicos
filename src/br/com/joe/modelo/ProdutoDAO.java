@@ -1,4 +1,4 @@
-package dao;
+package br.com.joe.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,18 +9,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import model.Categoria;
-import model.Produto;
-import util.ConnectionFactory;
+import br.com.joe.util.ConnectionFactory;
+import br.com.joe.vo.Categoria;
+import br.com.joe.vo.Produto;
 
-public class ProdutoDao {
+public class ProdutoDAO {
 
-	private static Logger log = Logger.getLogger(ProdutoDao.class);
+	private static Logger log = Logger.getLogger(ProdutoDAO.class);
 
 	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
-	public ProdutoDao() {
+	public ProdutoDAO() {
 		conexao = connectionFactory.getConnection();
 	}
 
@@ -70,7 +70,7 @@ public class ProdutoDao {
 
 	public Produto obterProdutoPorId(int id) {
 		log.debug("obtendo produto id " + id);
-		CategoriaDao categoriaDao = new CategoriaDao();
+		CategoriaDAO categoriaDao = new CategoriaDAO();
 		Categoria categoria;
 		
 		Produto produto = new Produto();

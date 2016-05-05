@@ -1,4 +1,4 @@
-package dao;
+package br.com.joe.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,17 +9,17 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import model.Categoria;
-import util.ConnectionFactory;
+import br.com.joe.util.ConnectionFactory;
+import br.com.joe.vo.Categoria;
 
-public class CategoriaDao {
+public class CategoriaDAO {
 
-	private static Logger log = Logger.getLogger(CategoriaDao.class);
+	private static Logger log = Logger.getLogger(CategoriaDAO.class);
 
 	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
-	public CategoriaDao() {
+	public CategoriaDAO() {
 		conexao = connectionFactory.getConnection();
 	}
 

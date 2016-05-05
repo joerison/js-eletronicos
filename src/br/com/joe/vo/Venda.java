@@ -1,4 +1,4 @@
-package model;
+package br.com.joe.vo;
 
 import java.util.ArrayList;
 

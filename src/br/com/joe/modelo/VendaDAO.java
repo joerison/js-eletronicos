@@ -1,4 +1,4 @@
-package dao;
+package br.com.joe.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,18 +10,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import model.Produto;
-import model.Venda;
-import util.ConnectionFactory;
+import br.com.joe.util.ConnectionFactory;
+import br.com.joe.vo.Produto;
+import br.com.joe.vo.Venda;
 
-public class VendaDao {
+public class VendaDAO {
 
-	private static Logger log = Logger.getLogger(VendaDao.class);
+	private static Logger log = Logger.getLogger(VendaDAO.class);
 
 	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
-	public VendaDao() {
+	public VendaDAO() {
 		conexao = connectionFactory.getConnection();
 	}
 
@@ -99,9 +99,9 @@ public class VendaDao {
 		log.debug("obtendo venda id " + id);
 		Venda venda = new Venda();
 		try {
-			ClienteDao clienteDao = new ClienteDao();
-			FuncionarioDao funcionarioDao = new FuncionarioDao();
-			ProdutoDao produtoDao = new ProdutoDao();
+			ClienteDAO clienteDao = new ClienteDAO();
+			FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+			ProdutoDAO produtoDao = new ProdutoDAO();
 			String sql = "SELECT * FROM venda where id = ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setInt(1, id);

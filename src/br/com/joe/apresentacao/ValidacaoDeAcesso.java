@@ -1,4 +1,4 @@
-package controller;
+package br.com.joe.apresentacao;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import dao.FuncionarioDao;
-import model.Funcionario;
+import br.com.joe.modelo.FuncionarioDAO;
+import br.com.joe.vo.Funcionario;
 
 @SuppressWarnings("serial")
 public class ValidacaoDeAcesso extends HttpServlet {
@@ -69,7 +69,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		}
 
 		Funcionario funcionario = null;
-		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
 
 		log.debug("validando o login");
 		funcionario = funcionarioDao.obterFuncionarioPorLogin(login);

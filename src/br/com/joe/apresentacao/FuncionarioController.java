@@ -1,4 +1,4 @@
-package controller;
+package br.com.joe.apresentacao;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import dao.FuncionarioDao;
-import model.Funcionario;
+import br.com.joe.modelo.FuncionarioDAO;
+import br.com.joe.vo.Funcionario;
 
 @SuppressWarnings("serial")
 public class FuncionarioController extends HttpServlet {
@@ -25,7 +25,7 @@ public class FuncionarioController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
 		
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
@@ -57,7 +57,7 @@ public class FuncionarioController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		FuncionarioDao funcionarioDao = new FuncionarioDao();
+		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
