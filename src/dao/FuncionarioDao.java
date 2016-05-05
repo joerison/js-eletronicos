@@ -16,10 +16,11 @@ public class FuncionarioDao {
 
 	private static Logger log = Logger.getLogger(FuncionarioDao.class);
 
+	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
 	public FuncionarioDao() {
-		conexao = ConnectionFactory.getConnection();
+		conexao = connectionFactory.getConnection();
 	}
 
 	public void adicionar(Funcionario funcionario) {

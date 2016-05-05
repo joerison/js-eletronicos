@@ -16,10 +16,11 @@ public class ClienteDao {
 
 	private static Logger log = Logger.getLogger(ClienteDao.class);
 
+	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
 	public ClienteDao() {
-		conexao = ConnectionFactory.getConnection();
+		conexao = connectionFactory.getConnection();
 	}
 
 	public void adicionar(Cliente cliente) {

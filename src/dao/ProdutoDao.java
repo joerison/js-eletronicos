@@ -17,10 +17,11 @@ public class ProdutoDao {
 
 	private static Logger log = Logger.getLogger(ProdutoDao.class);
 
+	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
 	public ProdutoDao() {
-		conexao = ConnectionFactory.getConnection();
+		conexao = connectionFactory.getConnection();
 	}
 
 	public void adicionar(Produto produto) {

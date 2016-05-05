@@ -18,10 +18,11 @@ public class VendaDao {
 
 	private static Logger log = Logger.getLogger(VendaDao.class);
 
+	private ConnectionFactory connectionFactory = new ConnectionFactory();
 	private Connection conexao;
 
 	public VendaDao() {
-		conexao = ConnectionFactory.getConnection();
+		conexao = connectionFactory.getConnection();
 	}
 
 	public void adicionar(Venda venda) {

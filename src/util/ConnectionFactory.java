@@ -10,7 +10,7 @@ public class ConnectionFactory {
 
 	private static Logger log = Logger.getLogger(ConnectionFactory.class);
 
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
