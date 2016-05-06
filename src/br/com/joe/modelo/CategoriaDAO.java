@@ -23,50 +23,37 @@ public class CategoriaDAO {
 		conexao = connectionFactory.getConnection();
 	}
 
-	public void adicionar(Categoria categoria) {
+	public void adicionar(Categoria categoria) throws SQLException {
 		log.debug("adicionando categoria" + categoria.getNome());
 		String sql = "INSERT INTO categoria (nome) values (?)";
-		try {
-			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, categoria.getNome());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		PreparedStatement stmt = conexao.prepareStatement(sql);
+		stmt.setString(1, categoria.getNome());
+		stmt.execute();
+		stmt.close();
 	}
 
-	public void remover(int id) {
+	public void remover(int id) throws SQLException {
 		log.debug("excluindo categoria id " + id);
 		String sql = "DELETE FROM categoria where id = ?";
-		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setInt(1, id);
 			stmt.execute();
 			stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
-	public void atualizar(Categoria categoria) {
+	public void atualizar(Categoria categoria) throws SQLException {
 		log.debug("atualizando categoria: " + categoria.getId() + " - " + categoria.getNome());
 		String sql = "UPDATE categoria set nome = ? where id = ?";
-		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, categoria.getNome());
 			stmt.setInt(2, categoria.getId());
 			stmt.execute();
 			stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
-	public Categoria obterCategoriaPorId(int id) {
+	public Categoria obterCategoriaPorId(int id) throws SQLException {
 		log.debug("obtendo categoria id " + id);
 		Categoria categoria = new Categoria();
-		try {
 			String sql = "SELECT * FROM categoria where id = ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -78,15 +65,11 @@ public class CategoriaDAO {
 			rs.close();
 			stmt.close();
 			return categoria;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
-	public List<Categoria> buscar(String busca) {
+	public List<Categoria> buscar(String busca) throws SQLException {
 		log.debug("listando todos categorias");
 		List<Categoria> categorias = new ArrayList<Categoria>();
-		try {
 			String sql = "SELECT * FROM categoria where nome like ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, "%" + busca + "%");
@@ -100,8 +83,5 @@ public class CategoriaDAO {
 			rs.close();
 			stmt.close();
 			return categorias;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 }

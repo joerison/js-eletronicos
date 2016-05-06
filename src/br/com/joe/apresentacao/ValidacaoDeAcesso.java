@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.modelo.FuncionarioDAO;
+import br.com.joe.bo.FuncionarioBO;
 import br.com.joe.vo.Funcionario;
 
 @SuppressWarnings("serial")
@@ -69,10 +69,10 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		}
 
 		Funcionario funcionario = null;
-		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+		FuncionarioBO funcionarioBO = new FuncionarioBO();
 
 		log.debug("validando o login");
-		funcionario = funcionarioDao.obterFuncionarioPorLogin(login);
+		funcionario = funcionarioBO.obterFuncionarioPorLogin(login);
 
 		if (funcionario == null) {
 			return null;

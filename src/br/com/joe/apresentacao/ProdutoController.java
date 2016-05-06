@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.modelo.CategoriaDAO;
-import br.com.joe.modelo.ProdutoDAO;
+import br.com.joe.bo.CategoriaBO;
+import br.com.joe.bo.ProdutoBO;
 import br.com.joe.vo.Categoria;
 import br.com.joe.vo.Produto;
 
@@ -26,10 +26,10 @@ public class ProdutoController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ProdutoDAO produtoDao = new ProdutoDAO();
+		ProdutoBO produtoBO = new ProdutoBO();
 		
-		CategoriaDAO categoriaDao = new CategoriaDAO();
-		List<Categoria> categorias = categoriaDao.buscar("%");
+		CategoriaBO categoriaBO = new CategoriaBO();
+		List<Categoria> categorias = categoriaBO.buscar("%");
 		req.setAttribute("categorias", categorias);
 		
 		String operacao = req.getParameter("op");
@@ -38,15 +38,15 @@ public class ProdutoController extends HttpServlet {
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
-				List<Produto> produtos = produtoDao.buscar(req.getParameter("busca"));
+				List<Produto> produtos = produtoBO.buscar(req.getParameter("busca"));
 				req.setAttribute("produtos", produtos);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Produto produto = produtoDao.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId")));
+				Produto produto = produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId")));
 				req.getSession().setAttribute("produto", produto);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				produtoDao.remover(Integer.parseInt(req.getParameter("produtoId")));
+				produtoBO.remover(Integer.parseInt(req.getParameter("produtoId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -61,8 +61,8 @@ public class ProdutoController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		ProdutoDAO produtoDao = new ProdutoDAO();
-		CategoriaDAO categoriaDao = new CategoriaDAO();
+		ProdutoBO produtoDao = new ProdutoBO();
+		CategoriaBO categoriaDao = new CategoriaBO();
 		Categoria categoria;
 		
 		if (operacao != null) {

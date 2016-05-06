@@ -3,13 +3,16 @@ package br.com.joe.bo;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import br.com.joe.modelo.ClienteDAO;
 import br.com.joe.vo.Cliente;
 
 public class ClienteBO {
-
+	private static Logger log = Logger.getLogger(ClienteBO.class);
+	
 	public boolean adicionar(Cliente cliente) {
-
+		log.debug("adicionando cliente" + cliente.getNome());
 		try {
 			ClienteDAO clienteDao = new ClienteDAO();
 			// alguma regra, nessse caso vai ser validacao do cpf
@@ -25,49 +28,47 @@ public class ClienteBO {
 	}
 
 	public Cliente obterCliente(int id) {
-		Cliente cliente = null;
+		log.debug("obtendo cliente id " + id);
 		try {
 			ClienteDAO clienteDAO = new ClienteDAO();
-			cliente = clienteDAO.obterClientePorId(id);
-			return cliente;
+			return clienteDAO.obterClientePorId(id);
 		} catch (SQLException e) {
-			new RuntimeException(e);
+			return null;
 		}
-		return cliente;
 	}
 
 	public List<Cliente> buscar(String busca) {
-		List<Cliente> clientes = null;
+		log.debug("listando todos clientes");
 		ClienteDAO clienteDao = new ClienteDAO();
 		try {
-			clientes = clienteDao.buscar(busca);
+			return clienteDao.buscar(busca);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return null;
 		}
-		return clientes;
+		
 	}
 
 	public boolean remover(int clienteId) {
+		log.debug("excluindo cliente id " + clienteId);
 		ClienteDAO clienteDAO = new ClienteDAO();
 		// regras
 		try {
 			clienteDAO.remover(clienteId);
 			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
 
 	}
 	
 	public boolean alterar(Cliente cliente) {
+		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
 		ClienteDAO clienteDAO = new ClienteDAO();
 		// regras
 		try {
 			clienteDAO.atualizar(cliente);
 			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
 

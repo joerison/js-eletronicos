@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.modelo.FuncionarioDAO;
+import br.com.joe.bo.FuncionarioBO;
 import br.com.joe.vo.Funcionario;
 
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public class FuncionarioController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+		FuncionarioBO funcionarioBO = new FuncionarioBO();
 		
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
@@ -33,16 +33,16 @@ public class FuncionarioController extends HttpServlet {
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
-				List<Funcionario> funcionarios = funcionarioDao.buscar(req.getParameter("busca"));
+				List<Funcionario> funcionarios = funcionarioBO.buscar(req.getParameter("busca"));
 				req.setAttribute("funcionarios", funcionarios);
 				req.getRequestDispatcher(LISTAR).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionarioEdicao = funcionarioDao
+				Funcionario funcionarioEdicao = funcionarioBO
 						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
 				req.getSession().setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				funcionarioDao.remover(Integer.parseInt(req.getParameter("funcionarioId")));
+				funcionarioBO.remover(Integer.parseInt(req.getParameter("funcionarioId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -57,7 +57,7 @@ public class FuncionarioController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+		FuncionarioBO funcionarioDao = new FuncionarioBO();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");

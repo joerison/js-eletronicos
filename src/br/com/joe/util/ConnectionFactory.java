@@ -14,7 +14,7 @@ public class ConnectionFactory {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			String url = "jdbc:mysql://localhost/exercicio?user=root&password=root";
+			String url = "jdbc:mysql://localhost/projetoltpiv?user=root&password=root";
 			conn = DriverManager.getConnection(url);
 			log.debug("Conexão aberta");
 		} catch (SQLException e) {

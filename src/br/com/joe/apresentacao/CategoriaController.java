@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.modelo.CategoriaDAO;
+import br.com.joe.bo.CategoriaBO;
 import br.com.joe.vo.Categoria;
 
 @SuppressWarnings("serial")
@@ -24,7 +24,7 @@ public class CategoriaController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		CategoriaDAO categoriaDao = new CategoriaDAO();
+		CategoriaBO categoriaBO = new CategoriaBO();
 		
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
@@ -32,15 +32,15 @@ public class CategoriaController extends HttpServlet {
 			if (operacao.equals("cadastrar")) {
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
 			} else if (operacao.equals("buscar")) {
-				List<Categoria> categorias = categoriaDao.buscar(req.getParameter("busca"));
+				List<Categoria> categorias = categoriaBO.buscar(req.getParameter("busca"));
 				req.setAttribute("categorias", categorias);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Categoria categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
+				Categoria categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
 				req.getSession().setAttribute("categoria", categoria);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				categoriaDao.remover(Integer.parseInt(req.getParameter("categoriaId")));
+				categoriaBO.remover(Integer.parseInt(req.getParameter("categoriaId")));
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -55,7 +55,7 @@ public class CategoriaController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		CategoriaDAO categoriaDao = new CategoriaDAO();
+		CategoriaBO categoriaDao = new CategoriaBO();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
