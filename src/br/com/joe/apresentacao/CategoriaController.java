@@ -37,7 +37,7 @@ public class CategoriaController extends HttpServlet {
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Categoria categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
-				req.getSession().setAttribute("categoria", categoria);
+				req.setAttribute("categoria", categoria);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
 				categoriaBO.remover(Integer.parseInt(req.getParameter("categoriaId")));
@@ -55,19 +55,19 @@ public class CategoriaController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		CategoriaBO categoriaDao = new CategoriaBO();
+		CategoriaBO categoriaBO = new CategoriaBO();
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Categoria categoria = new Categoria();
 				categoria.setNome(req.getParameter("nome"));
-				categoriaDao.adicionar(categoria);
+				categoriaBO.adicionar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Categoria categoria = (Categoria) req.getSession().getAttribute("categoria");
+				Categoria categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("id")));
 				categoria.setNome(req.getParameter("nome"));
-				categoriaDao.atualizar(categoria);
+				categoriaBO.atualizar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

@@ -6,6 +6,7 @@
 	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 		<form action="categoria" method="post">
 		
+			<input type="hidden" name="id" value="${categoria.id}"/>
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome" value="${categoria.nome}"/><br />
 			<input type="hidden" name="op" value="alterar"/><br />

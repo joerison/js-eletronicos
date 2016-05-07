@@ -5,6 +5,8 @@
 
 	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 		<form action="produto" method="post">
+			
+			<input type="hidden" name="id" value="${produto.id}"/>
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome" value="${produto.nome}"/><br />
 			<label for="preco">Preco: </label>

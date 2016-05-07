@@ -22,12 +22,12 @@ public class ClienteController extends HttpServlet {
 	private String CADASTRAR = "cliente/cadastrar.jsp";
 	private String ALTERAR = "cliente/alterar.jsp";
 	private ClienteBO clientebo = new ClienteBO();
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		String operacao = req.getParameter("op");
-		
+
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
@@ -38,7 +38,7 @@ public class ClienteController extends HttpServlet {
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Cliente cliente = clientebo.obterCliente(Integer.parseInt(req.getParameter("clienteId")));
-				req.getSession().setAttribute("cliente", cliente);
+				req.setAttribute("cliente", cliente);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
 				clientebo.remover(Integer.parseInt(req.getParameter("clienteId")));
@@ -66,11 +66,11 @@ public class ClienteController extends HttpServlet {
 				cliente.setEmail(req.getParameter("email"));
 				cliente.setCelular(req.getParameter("celular"));
 				cliente.setSexo(req.getParameter("sexo"));
-				
+
 				clientebo.adicionar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Cliente cliente = (Cliente) req.getSession().getAttribute("cliente");
+				Cliente cliente = clientebo.obterCliente(Integer.parseInt(req.getParameter("id")));
 				cliente.setNome(req.getParameter("nome"));
 				cliente.setCpf(req.getParameter("cpf"));
 				cliente.setEmail(req.getParameter("email"));

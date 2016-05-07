@@ -6,7 +6,7 @@
 	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
 		<form action="funcionario" method="post">
 		
-		
+			<input type="hidden" name="id" value="${funcionarioEdicao.id}"/><br />
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome" value="${funcionarioEdicao.nome}"/><br />
 			<label for="cpf">Cpf: </label>

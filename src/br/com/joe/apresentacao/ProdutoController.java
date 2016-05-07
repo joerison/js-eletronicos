@@ -27,11 +27,11 @@ public class ProdutoController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ProdutoBO produtoBO = new ProdutoBO();
-		
+
 		CategoriaBO categoriaBO = new CategoriaBO();
 		List<Categoria> categorias = categoriaBO.buscar("%");
 		req.setAttribute("categorias", categorias);
-		
+
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
@@ -43,7 +43,7 @@ public class ProdutoController extends HttpServlet {
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Produto produto = produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId")));
-				req.getSession().setAttribute("produto", produto);
+				req.setAttribute("produto", produto);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
 				produtoBO.remover(Integer.parseInt(req.getParameter("produtoId")));
@@ -61,27 +61,27 @@ public class ProdutoController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-		ProdutoBO produtoDao = new ProdutoBO();
-		CategoriaBO categoriaDao = new CategoriaBO();
+		ProdutoBO produtoBO = new ProdutoBO();
+		CategoriaBO categoriaBO = new CategoriaBO();
 		Categoria categoria;
-		
+
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Produto produto = new Produto();
 				produto.setNome(req.getParameter("nome"));
 				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
+				categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
 				produto.setCategoria(categoria);
-				produtoDao.adicionar(produto);
+				produtoBO.adicionar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Produto produto = (Produto) req.getSession().getAttribute("produto");
+				Produto produto = produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("id")));
 				produto.setNome(req.getParameter("nome"));
 				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaDao.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
+				categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
 				produto.setCategoria(categoria);
-				produtoDao.atualizar(produto);
+				produtoBO.atualizar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

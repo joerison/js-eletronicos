@@ -26,7 +26,7 @@ public class FuncionarioController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		FuncionarioBO funcionarioBO = new FuncionarioBO();
-		
+
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
@@ -39,7 +39,7 @@ public class FuncionarioController extends HttpServlet {
 			} else if (operacao.equals("alterar")) {
 				Funcionario funcionarioEdicao = funcionarioBO
 						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
-				req.getSession().setAttribute("funcionarioEdicao", funcionarioEdicao);
+				req.setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
 				funcionarioBO.remover(Integer.parseInt(req.getParameter("funcionarioId")));
@@ -73,7 +73,8 @@ public class FuncionarioController extends HttpServlet {
 				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionario = (Funcionario) req.getSession().getAttribute("funcionarioEdicao");
+				Funcionario funcionario = funcionarioDao
+						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("id")));
 				funcionario.setNome(req.getParameter("nome"));
 				funcionario.setCpf(req.getParameter("cpf"));
 				funcionario.setEmail(req.getParameter("email"));
