@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.bo.FuncionarioBO;
+import br.com.joe.negocio.FuncionarioBO;
 import br.com.joe.vo.Funcionario;
 
 @SuppressWarnings("serial")

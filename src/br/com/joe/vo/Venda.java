@@ -2,29 +2,28 @@ package br.com.joe.vo;
 
 import java.util.ArrayList;
 
+import br.com.joe.ItemVenda;
+
 public class Venda {
 
 	private int id;
 	private Cliente cliente;
 	private Funcionario funcionario;
-	private ArrayList<Produto> produtos;
-	private Double desconto;
-	private Double total;
-	private Double totalComDesconto;
+	private ArrayList<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
+	private Double desconto = 0.0;
+	private Double total = 0.0;
 
 	public Venda() {
-
 	}
 
-	public Venda(int id, Cliente cliente, Funcionario funcionario, ArrayList<Produto> produtos, Double desconto,
-			Double total, Double totalComDesconto) {
+	public Venda(int id, Cliente cliente, Funcionario funcionario, ArrayList<ItemVenda> itensVenda, Double desconto,
+			Double total) {
 		this.id = id;
 		this.cliente = cliente;
 		this.funcionario = funcionario;
-		this.produtos = produtos;
+		this.itensVenda = itensVenda;
 		this.desconto = desconto;
 		this.total = total;
-		this.totalComDesconto = totalComDesconto;
 	}
 
 	public Double getDesconto() {
@@ -41,14 +40,6 @@ public class Venda {
 
 	public void setTotal(Double total) {
 		this.total = total;
-	}
-
-	public Double getTotalComDesconto() {
-		return totalComDesconto;
-	}
-
-	public void setTotalComDesconto(Double totalComDesconto) {
-		this.totalComDesconto = totalComDesconto;
 	}
 
 	public int getId() {
@@ -75,12 +66,12 @@ public class Venda {
 		this.funcionario = funcionario;
 	}
 
-	public ArrayList<Produto> getProdutos() {
-		return produtos;
+	public ArrayList<ItemVenda> getItensVenda() {
+		return itensVenda;
 	}
 
-	public void setProdutos(ArrayList<Produto> produtos) {
-		this.produtos = produtos;
+	public void setItensVenda(ArrayList<ItemVenda> itensVenda) {
+		this.itensVenda = itensVenda;
 	}
 
 }

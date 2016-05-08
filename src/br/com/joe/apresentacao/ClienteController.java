@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.bo.ClienteBO;
+import br.com.joe.negocio.ClienteBO;
 import br.com.joe.vo.Cliente;
 
 @SuppressWarnings("serial")

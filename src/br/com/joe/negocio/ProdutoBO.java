@@ -1,4 +1,4 @@
-package br.com.joe.bo;
+package br.com.joe.negocio;
 
 import java.sql.SQLException;
 import java.util.List;

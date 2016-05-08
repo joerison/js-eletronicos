@@ -1,10 +1,10 @@
-package br.com.joe.bo;
+package br.com.joe.negocio;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import br.com.joe.ItemVenda;
 import br.com.joe.modelo.VendaDAO;
 import br.com.joe.vo.Venda;
 
@@ -15,6 +15,14 @@ public class VendaBO {
 
 	public boolean adicionar(Venda venda) {
 		log.debug("adicionando venda" + venda.getId());
+
+		// atribuindo totais referente a venda
+		for (ItemVenda vendaItem : venda.getItensVenda()) {
+			vendaItem.setTotal(vendaItem.getQtd() * vendaItem.getProduto().getPreco());
+			venda.setTotal((venda.getTotal() + vendaItem.getTotal()));
+		}
+		venda.setTotal(venda.getTotal() - venda.getDesconto());
+
 		try {
 			vendaDAO.adicionar(venda);
 			return true;
@@ -24,21 +32,12 @@ public class VendaBO {
 	}
 
 	public boolean remover(int id) {
-		log.debug("excluindo venda id " + id);
+		log.debug("removendo venda id " + id);
 		try {
 			vendaDAO.remover(id);
 			return true;
 		} catch (SQLException e) {
-			return false;
-		}
-	}
-
-	public boolean atualizar(Venda venda) {
-		log.debug("atualizando venda: " + venda.getId());
-		try {
-			vendaDAO.atualizar(venda);
-			return true;
-		} catch (SQLException e) {
+			log.error(e);
 			return false;
 		}
 	}
@@ -47,15 +46,6 @@ public class VendaBO {
 		log.debug("obtendo venda id " + id);
 		try {
 			return vendaDAO.obterVendaPorId(id);
-		} catch (SQLException e) {
-			return null;
-		}
-	}
-
-	public List<Venda> buscar(String busca) {
-		log.debug("listando todos vendas");
-		try {
-			return vendaDAO.buscar(busca);
 		} catch (SQLException e) {
 			return null;
 		}

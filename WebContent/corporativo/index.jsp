@@ -8,6 +8,7 @@
 <body>
 <br />
 	<a href="/projetoltpiv/index.jsp">Início</a> | 
+	<a href="/projetoltpiv/corporativo/venda/index.jsp">Venda</a> | 
 	<a href="/projetoltpiv/corporativo/cliente">Clientes</a> | 
 	<a href="/projetoltpiv/corporativo/funcionario">Funcionários</a> | 
 	<a href="/projetoltpiv/corporativo/produto">Produtos</a> |

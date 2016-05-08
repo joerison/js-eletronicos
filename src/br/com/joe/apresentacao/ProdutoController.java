@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.bo.CategoriaBO;
-import br.com.joe.bo.ProdutoBO;
+import br.com.joe.negocio.CategoriaBO;
+import br.com.joe.negocio.ProdutoBO;
 import br.com.joe.vo.Categoria;
 import br.com.joe.vo.Produto;
 
