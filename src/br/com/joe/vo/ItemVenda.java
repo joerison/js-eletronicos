@@ -1,6 +1,4 @@
-package br.com.joe;
-
-import br.com.joe.vo.Produto;
+package br.com.joe.vo;
 
 public class ItemVenda {
 

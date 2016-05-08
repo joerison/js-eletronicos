@@ -9,6 +9,7 @@ import br.com.joe.negocio.VendaBO;
 import br.com.joe.util.ConnectionFactory;
 import br.com.joe.vo.Cliente;
 import br.com.joe.vo.Funcionario;
+import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Produto;
 import br.com.joe.vo.Venda;
 

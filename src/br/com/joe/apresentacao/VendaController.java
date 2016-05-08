@@ -1,22 +1,23 @@
 package br.com.joe.apresentacao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.Carrinho;
-import br.com.joe.ItemVenda;
 import br.com.joe.negocio.ClienteBO;
 import br.com.joe.negocio.ProdutoBO;
 import br.com.joe.negocio.VendaBO;
 import br.com.joe.vo.Cliente;
 import br.com.joe.vo.Funcionario;
+import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Produto;
 import br.com.joe.vo.Venda;
 
@@ -30,41 +31,45 @@ public class VendaController extends HttpServlet {
 	private static String ADICIONARCLIENTE = "/corporativo/venda/selecionar-cliente.jsp";
 	private static String CONSULTARVENDA = "/corporativo/venda/consultar-venda.jsp";
 	private static String INDEX = "/corporativo/venda/index.jsp";
-
-	private Carrinho carrinho = Carrinho.getCarrinho();
-
+	
+	ArrayList<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		HttpSession session = req.getSession();
+		
 		String operacao = req.getParameter("op");
 
+		log.debug("SESSA NOVA: " + session.isNew());
+		
 		if (operacao.equals("adicionarItem")) {
 			log.debug("adicionando item ao carrinho");
 			ProdutoBO produtoBO = new ProdutoBO();
 			ItemVenda itemCarrinho = new ItemVenda();
 			itemCarrinho.setProduto(produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId"))));
 			itemCarrinho.setQtd(Integer.parseInt(req.getParameter("qtd")));
-			carrinho.getVenda().getItensVenda().add(itemCarrinho);
-			req.setAttribute("cliente", carrinho.getVenda().getCliente());
-			req.setAttribute("itensCarrinho", carrinho.getVenda().getItensVenda());
+			itensVenda.add(itemCarrinho);
+			session.setAttribute("itensCarrinho", itensVenda);
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("adicionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
 			Cliente cliente = clienteBO.obterCliente(Integer.parseInt(req.getParameter("clienteId")));
-			carrinho.getVenda().setCliente(cliente);
-			req.setAttribute("cliente", carrinho.getVenda().getCliente());
-			req.setAttribute("itensCarrinho", carrinho.getVenda().getItensVenda());
+			session.setAttribute("cliente", cliente);
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("salvarVenda")) {
-			carrinho.getVenda().setFuncionario((Funcionario) req.getSession().getAttribute("funcionario"));
+			Venda venda = new Venda();
+			venda.setFuncionario((Funcionario) session.getAttribute("funcionario"));
+			venda.setCliente((Cliente) session.getAttribute("cliente"));
+			venda.setItensVenda(itensVenda);
 			VendaBO vendaBO = new VendaBO();
-			carrinho.getVenda().setDesconto(Double.parseDouble(req.getParameter("desconto")));
-			log.debug(carrinho.getVenda().getItensVenda().size());
+			venda.setDesconto(Double.parseDouble(req.getParameter("desconto")));
+
 			// convertendo data atual completa gerada pelo pacote util para a data do SQL
-			carrinho.getVenda().setData(new java.sql.Date(new java.util.Date().getTime()));
-			vendaBO.adicionar(carrinho.getVenda());
+			venda.setData(new java.sql.Date(new java.util.Date().getTime()));
+			vendaBO.adicionar(venda);
 			req.getRequestDispatcher(INDEX).forward(req, resp);
-			carrinho.setVenda(new Venda());
+			session.removeAttribute("itensCarrinho");
+			session.removeAttribute("cliente");
 		} else if (operacao.equals("consultar")) {
 			if (!req.getParameter("vendaId").equals("")) {
 				VendaBO vendaBO = new VendaBO();
@@ -91,8 +96,7 @@ public class VendaController extends HttpServlet {
 		String operacao = req.getParameter("op");
 
 		if (operacao.equals("preparaVenda")) {
-			req.setAttribute("cliente", carrinho.getVenda().getCliente());
-			req.setAttribute("itensCarrinho", carrinho.getVenda().getItensVenda());
+			/* Caso precise carregar algum dado antes de exibir a tela para cadastrar a venda */
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("selecionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
@@ -105,9 +109,7 @@ public class VendaController extends HttpServlet {
 			req.setAttribute("produtos", produtos);
 			req.getRequestDispatcher(ADICIONARITENS).forward(req, resp);
 		} else if(operacao.equals("excluirItem")){
-			carrinho.getVenda().getItensVenda().remove(Integer.parseInt(req.getParameter("produtoIndex")));
-			req.setAttribute("cliente", carrinho.getVenda().getCliente());
-			req.setAttribute("itensCarrinho", carrinho.getVenda().getItensVenda());
+			itensVenda.remove(Integer.parseInt(req.getParameter("produtoIndex")));
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		}
 

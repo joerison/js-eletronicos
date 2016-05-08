@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.ItemVenda;
 import br.com.joe.modelo.VendaDAO;
+import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Venda;
 
 public class VendaBO {

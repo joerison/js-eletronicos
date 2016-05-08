@@ -11,8 +11,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.com.joe.ItemVenda;
 import br.com.joe.util.ConnectionFactory;
+import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Produto;
 import br.com.joe.vo.Venda;
 

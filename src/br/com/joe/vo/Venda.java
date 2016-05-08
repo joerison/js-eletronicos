@@ -3,8 +3,6 @@ package br.com.joe.vo;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import br.com.joe.ItemVenda;
-
 public class Venda {
 
 	private int id;
