@@ -1,5 +1,6 @@
 package br.com.joe.vo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import br.com.joe.ItemVenda;
@@ -12,18 +13,21 @@ public class Venda {
 	private ArrayList<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
 	private Double desconto = 0.0;
 	private Double total = 0.0;
+	private Date data;
 
 	public Venda() {
 	}
 
 	public Venda(int id, Cliente cliente, Funcionario funcionario, ArrayList<ItemVenda> itensVenda, Double desconto,
-			Double total) {
+			Double total, Date data) {
+		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.funcionario = funcionario;
 		this.itensVenda = itensVenda;
 		this.desconto = desconto;
 		this.total = total;
+		this.data = data;
 	}
 
 	public Double getDesconto() {
@@ -72,6 +76,14 @@ public class Venda {
 
 	public void setItensVenda(ArrayList<ItemVenda> itensVenda) {
 		this.itensVenda = itensVenda;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 }

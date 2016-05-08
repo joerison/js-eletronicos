@@ -60,8 +60,8 @@ public class VendaController extends HttpServlet {
 			VendaBO vendaBO = new VendaBO();
 			carrinho.getVenda().setDesconto(Double.parseDouble(req.getParameter("desconto")));
 			log.debug(carrinho.getVenda().getItensVenda().size());
-			Venda venda = carrinho.getVenda();
-			log.debug(venda.getItensVenda().size());
+			// convertendo data atual completa gerada pelo pacote util para a data do SQL
+			carrinho.getVenda().setData(new java.sql.Date(new java.util.Date().getTime()));
 			vendaBO.adicionar(carrinho.getVenda());
 			req.getRequestDispatcher(INDEX).forward(req, resp);
 			carrinho.setVenda(new Venda());

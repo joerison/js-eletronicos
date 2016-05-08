@@ -1,11 +1,13 @@
 package br.com.joe.modelo;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -27,12 +29,13 @@ public class VendaDAO {
 
 	public void adicionar(Venda venda) throws SQLException {
 		log.debug("adicionando venda");
-		String sql = "INSERT INTO venda (id_cliente, id_funcionario, desconto, total) values (?, ?, ?, ?)";
+		String sql = "INSERT INTO venda (id_cliente, id_funcionario, desconto, total, data) values (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		stmt.setInt(1, venda.getCliente().getId());
 		stmt.setInt(2, venda.getFuncionario().getId());
 		stmt.setDouble(3, venda.getDesconto());
 		stmt.setDouble(4, venda.getTotal());
+		stmt.setDate(5, venda.getData());
 		stmt.execute();
 
 		/* Entender como funciona essa lógica... */
@@ -88,8 +91,9 @@ public class VendaDAO {
 			venda.setId(rs.getInt("id"));
 			venda.setCliente(clienteDao.obterClientePorId(rs.getInt("id_cliente")));
 			venda.setFuncionario(funcionarioDao.obterFuncionarioPorId(rs.getInt("id_funcionario")));
-			venda.setDesconto(Double.parseDouble(rs.getString("desconto")));
-			venda.setTotal(Double.parseDouble(rs.getString("total")));
+			venda.setDesconto(rs.getDouble("desconto"));
+			venda.setTotal(rs.getDouble("total"));
+			venda.setData(rs.getDate("data"));
 			String sqlVendaProduto = "SELECT * FROM venda_item where id_venda = ?";
 			PreparedStatement stmtVendaItem = conexao.prepareStatement(sqlVendaProduto);
 			stmtVendaItem.setInt(1, venda.getId());
@@ -109,5 +113,49 @@ public class VendaDAO {
 		rs.close();
 		stmt.close();
 		return venda;
+	}
+	
+	
+	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) throws SQLException {
+		log.debug("obtendo venda por intervalo ");
+		
+		List<Venda> vendas = new ArrayList<Venda>();
+		ClienteDAO clienteDao = new ClienteDAO();
+		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+		ProdutoDAO produtoDao = new ProdutoDAO();
+		String sql = "SELECT * FROM venda WHERE data >= ? AND data <= ?";
+		PreparedStatement stmt = conexao.prepareStatement(sql);
+		stmt.setDate(1, inicio);
+		stmt.setDate(2, fim);
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			Venda venda = new Venda();
+			venda.setId(rs.getInt("id"));
+			venda.setCliente(clienteDao.obterClientePorId(rs.getInt("id_cliente")));
+			venda.setFuncionario(funcionarioDao.obterFuncionarioPorId(rs.getInt("id_funcionario")));
+			venda.setDesconto(rs.getDouble("desconto"));
+			venda.setTotal(rs.getDouble("total"));
+			venda.setData(rs.getDate("data"));
+			String sqlVendaProduto = "SELECT * FROM venda_item where id_venda = ?";
+			PreparedStatement stmtVendaItem = conexao.prepareStatement(sqlVendaProduto);
+			stmtVendaItem.setInt(1, venda.getId());
+			ResultSet rsVendaItem = stmtVendaItem.executeQuery();
+			ArrayList<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
+			while (rsVendaItem.next()) {
+				ItemVenda itemVenda = new ItemVenda();
+				Produto produto = produtoDao
+						.obterProdutoPorId(Integer.parseInt(rsVendaItem.getString("id_produto")));
+				itemVenda.setProduto(produto);
+				itemVenda.setQtd(Integer.parseInt(rsVendaItem.getString("qtd")));
+				itemVenda.setTotal(rsVendaItem.getDouble("total"));
+				itensVenda.add(itemVenda);
+			}
+			log.debug(venda.getTotal());
+			venda.setItensVenda(itensVenda);;
+			vendas.add(venda);
+		}
+		rs.close();
+		stmt.close();
+		return vendas;
 	}
 }

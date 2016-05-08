@@ -41,6 +41,7 @@ create table venda (
 	id_funcionario INT NOT NULL,
 	desconto decimal (10,2),
 	total decimal (10,2),
+	data date,
     PRIMARY KEY (id),
 	CONSTRAINT venda_id_cliente FOREIGN KEY(id_cliente) REFERENCES cliente(id),
 	CONSTRAINT venda_id_funcionario FOREIGN KEY(id_funcionario) REFERENCES funcionario(id)

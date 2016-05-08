@@ -12,7 +12,8 @@
 	<a href="/projetoltpiv/corporativo/cliente">Clientes</a> | 
 	<a href="/projetoltpiv/corporativo/funcionario">Funcionários</a> | 
 	<a href="/projetoltpiv/corporativo/produto">Produtos</a> |
-	<a href="/projetoltpiv/corporativo/produto/categoria">Categorias</a>
+	<a href="/projetoltpiv/corporativo/produto/categoria">Categorias</a> |
+	<a href="/projetoltpiv/corporativo/relatorio/index.jsp">Relatorio de Vendas</a>
 	<br /><br />
 	<a href="/projetoltpiv/validacaoDeAcesso?logout=true">Sair</a>
 

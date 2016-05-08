@@ -1,6 +1,8 @@
 package br.com.joe.negocio;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -47,6 +49,15 @@ public class VendaBO {
 		try {
 			return vendaDAO.obterVendaPorId(id);
 		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) {
+		try {
+			return vendaDAO.obterVendasPorIntervalo(inicio, fim);
+		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}

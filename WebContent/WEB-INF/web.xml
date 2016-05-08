@@ -1,6 +1,14 @@
 <!DOCTYPE xml>
 <web-app>
 	<servlet>
+		<servlet-name>relatorioController</servlet-name>
+		<servlet-class>br.com.joe.apresentacao.RelatorioController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>relatorioController</servlet-name>
+		<url-pattern>/corporativo/relatorio</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>vendaController</servlet-name>
 		<servlet-class>br.com.joe.apresentacao.VendaController</servlet-class>
 	</servlet>

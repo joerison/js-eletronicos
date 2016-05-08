@@ -15,8 +15,8 @@ public class Teste {
 
 	public static void main(String[] args) {
 
-		inserirVenda();
-
+		//inserirVenda();
+		System.out.println(new java.sql.Date(new java.util.Date().getTime()));
 		//consultarVenda(1);
 
 	}
