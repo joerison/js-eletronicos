@@ -6,6 +6,7 @@ import br.com.joe.negocio.ClienteBO;
 import br.com.joe.negocio.FuncionarioBO;
 import br.com.joe.negocio.ProdutoBO;
 import br.com.joe.negocio.VendaBO;
+import br.com.joe.util.ConnectionFactory;
 import br.com.joe.vo.Cliente;
 import br.com.joe.vo.Funcionario;
 import br.com.joe.vo.Produto;
@@ -16,8 +17,10 @@ public class Teste {
 	public static void main(String[] args) {
 
 		//inserirVenda();
-		System.out.println(new java.sql.Date(new java.util.Date().getTime()));
 		//consultarVenda(1);
+		
+		ConnectionFactory con = new ConnectionFactory();
+		con.getConnection();
 
 	}
 
