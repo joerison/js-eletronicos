@@ -10,10 +10,10 @@
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<table>
 				<c:set var="contador" value="0"/>
-				<c:forEach var="item" items="${itensCarrinho}">
+				<c:forEach var="itemVenda" items="${itensVenda}">
 					<tr>
 						<td colspan="1"><input type="checkbox" name="${categoria.nome}"
-							value="${item.produto.id}">${item.produto.nome}</td>
+							value="${itemVenda.produto.id}">${itemVenda.produto.nome}</td>
 						<td colspan="1"><a href="/projetoltpiv/corporativo/venda?op=excluirItem&produtoIndex=${contador}">Remover</a></td>
 					</tr>
 					<c:set var="contador" value="${count + 1}"/>

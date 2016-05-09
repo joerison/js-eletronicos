@@ -6,7 +6,7 @@
 </head>
 <body>
 
-	<h1>Pagina inicial2</h1>
+	<h1>Pagina inicial</h1>
 	<a href="corporativo">Cooperativo</a>
 	<a href="publico">Público</a>
 

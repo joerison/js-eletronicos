@@ -32,24 +32,21 @@ public class VendaController extends HttpServlet {
 	private static String CONSULTARVENDA = "/corporativo/venda/consultar-venda.jsp";
 	private static String INDEX = "/corporativo/venda/index.jsp";
 	
-	ArrayList<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
+	ArrayList<ItemVenda> itensVenda = null;
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		HttpSession session = req.getSession();
-		
 		String operacao = req.getParameter("op");
 
-		log.debug("SESSA NOVA: " + session.isNew());
-		
 		if (operacao.equals("adicionarItem")) {
 			log.debug("adicionando item ao carrinho");
 			ProdutoBO produtoBO = new ProdutoBO();
-			ItemVenda itemCarrinho = new ItemVenda();
-			itemCarrinho.setProduto(produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId"))));
-			itemCarrinho.setQtd(Integer.parseInt(req.getParameter("qtd")));
-			itensVenda.add(itemCarrinho);
-			session.setAttribute("itensCarrinho", itensVenda);
+			ItemVenda itemVenda = new ItemVenda();
+			itemVenda.setProduto(produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId"))));
+			itemVenda.setQtd(Integer.parseInt(req.getParameter("qtd")));
+			itensVenda.add(itemVenda);
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("adicionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
@@ -64,11 +61,12 @@ public class VendaController extends HttpServlet {
 			VendaBO vendaBO = new VendaBO();
 			venda.setDesconto(Double.parseDouble(req.getParameter("desconto")));
 
-			// convertendo data atual completa gerada pelo pacote util para a data do SQL
+			// convertendo data atual completa gerada pelo pacote util para a
+			// data do SQL
 			venda.setData(new java.sql.Date(new java.util.Date().getTime()));
 			vendaBO.adicionar(venda);
 			req.getRequestDispatcher(INDEX).forward(req, resp);
-			session.removeAttribute("itensCarrinho");
+			session.removeAttribute("itensVenda");
 			session.removeAttribute("cliente");
 		} else if (operacao.equals("consultar")) {
 			if (!req.getParameter("vendaId").equals("")) {
@@ -76,7 +74,7 @@ public class VendaController extends HttpServlet {
 				Venda vendaConsulta = vendaBO.obterVendaPorId(Integer.parseInt(req.getParameter("vendaId")));
 				req.setAttribute("vendaConsulta", vendaConsulta);
 				req.getRequestDispatcher(CONSULTARVENDA).forward(req, resp);
-			}else{
+			} else {
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			}
 		} else if (operacao.equals("excluir")) {
@@ -90,13 +88,27 @@ public class VendaController extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
+		HttpSession session = req.getSession();
+		log.debug("chamando get");
 		String operacao = req.getParameter("op");
 
+		itensVenda = ((ArrayList<ItemVenda>) session.getAttribute("itensVenda"));
+
+		if (itensVenda == null) {
+			log.debug("Gerando um carrinho para a sessao: " + session.getId());
+			itensVenda = new ArrayList<ItemVenda>();
+			session.setAttribute("itensVenda", itensVenda);
+		}
+		
 		if (operacao.equals("preparaVenda")) {
-			/* Caso precise carregar algum dado antes de exibir a tela para cadastrar a venda */
+			/*
+			 * Caso precise carregar algum dado antes de exibir a tela para
+			 * cadastrar a venda
+			 */
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("selecionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
@@ -108,7 +120,7 @@ public class VendaController extends HttpServlet {
 			List<Produto> produtos = produtoBO.buscar("");
 			req.setAttribute("produtos", produtos);
 			req.getRequestDispatcher(ADICIONARITENS).forward(req, resp);
-		} else if(operacao.equals("excluirItem")){
+		} else if (operacao.equals("excluirItem")) {
 			itensVenda.remove(Integer.parseInt(req.getParameter("produtoIndex")));
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		}
