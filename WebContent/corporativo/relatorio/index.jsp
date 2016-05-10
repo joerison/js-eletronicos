@@ -1,6 +1,7 @@
 <html>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 
 	<form action="/projetoltpiv/corporativo/relatorio">
 		<label for="dtInicio">Data inicial:</label>

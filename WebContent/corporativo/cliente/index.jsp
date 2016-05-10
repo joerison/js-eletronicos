@@ -8,7 +8,9 @@
 <title>Todos clientes</title>
 </head>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+
+<br /><br />
 	
 		<form action="cliente" method="get">
 			<label for="busca">Busca: </label>

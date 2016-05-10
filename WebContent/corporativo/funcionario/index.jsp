@@ -8,7 +8,8 @@
 <title>Todos funcionários</title>
 </head>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 	
 	<form action="funcionario" method="get">
 		<label for="busca">Busca: </label>

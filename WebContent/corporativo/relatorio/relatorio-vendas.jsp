@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a>
+			<jsp:include page="/menu.jsp" />
 	<br />
 	<br />
 	<table border="1">

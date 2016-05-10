@@ -8,7 +8,8 @@
 <title>Todas Categorias</title>
 </head>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 	
 		<form action="categoria" method="get">
 			<label for="busca">Busca: </label>

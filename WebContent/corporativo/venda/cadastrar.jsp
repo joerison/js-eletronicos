@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 	<body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 	
 	<a href="/projetoltpiv/corporativo/venda?op=selecionarItens">selecionar item</a><br/>
 	<a href="/projetoltpiv/corporativo/venda?op=selecionarCliente">selecionar Cliente</a><br/>

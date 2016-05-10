@@ -5,7 +5,8 @@
 <html>
 	<body>
 
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 		
 		Venda ID: <b>${vendaConsulta.id}</b> <br/>
 		Cliente: <b>${vendaConsulta.cliente.nome}</b>  <br/>

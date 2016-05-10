@@ -1,6 +1,7 @@
 <html>
 <body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 
 	<form action="/projetoltpiv/corporativo/venda?op=consultar" method="POST">
 		<label for="vendaId">Venda: </label> 

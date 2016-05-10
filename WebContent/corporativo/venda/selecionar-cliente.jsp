@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 	<body>
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+			<jsp:include page="/menu.jsp" />
+<br /><br />
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<select name="clienteId">
 			<c:forEach var="cliente" items="${clientes}">

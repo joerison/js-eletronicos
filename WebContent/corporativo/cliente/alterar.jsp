@@ -3,7 +3,8 @@
 <html>
 	<body>
 
-	<a href="/projetoltpiv/index.jsp">Início</a><br /><br />
+		<jsp:include page="/menu.jsp" />
+<br /><br />
 		<form action="cliente" method="post">
 		
 			<input type="hidden" name="id" value="${cliente.id}"/><br />

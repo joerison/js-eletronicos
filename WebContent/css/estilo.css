@@ -1,14 +1,66 @@
-label {
-	color: red;
+/* MENU */
+#top-menu, #top-menu li ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
 }
 
-p {
-	color: red;
-	margin: 5px;
-	cursor: pointer;
+#top-menu > li {
+  float: left;
+  position: relative;
 }
 
-p:hover {
-	background: yellow;
+#top-menu li a {
+  display: block;
 }
+
+#top-menu li ul {
+  display: none;
+  z-index: 100;
+  width: 140px;
+  position: absolute;
+}
+
+#top-menu li:hover ul {
+  display: block
+}
+
+#top-menu > li {
+  background-color: #F5F5F5;
+  margin: 0 1px 0 0;
+}
+
+#top-menu li:hover {
+  background-color: #E8E8E8;
+}
+
+#top-menu > li > a {
+  color: #000000;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #CCCCCC;
+}
+
+#top-menu li ul {
+  background-color: #ffffff;
+  border-top: 1px solid #CCCCCC;
+  border-left: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+}
+
+#top-menu li ul li {
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#top-menu li ul li a {
+  color: #000000;
+  text-decoration: none;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+#top-menu li ul li a:hover {
+  text-decoration: none;
 }
