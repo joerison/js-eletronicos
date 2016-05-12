@@ -1,5 +1,7 @@
 package br.com.joe.vo;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author joe
  *
@@ -16,6 +18,17 @@ public class Funcionario {
 	private String senha;
 
 	public Funcionario() {
+		
+	}
+
+	public Funcionario(HttpServletRequest req) {
+		this.nome = req.getParameter("nome");
+		this.cpf = req.getParameter("cpf");
+		this.email = req.getParameter("email");
+		this.celular = req.getParameter("celular");
+		this.sexo = req.getParameter("sexo");
+		this.login = req.getParameter("login");
+		this.senha = req.getParameter("senha");
 	}
 
 	public Funcionario(int id, String nome, String cpf, String email, String celular, String sexo, String login,

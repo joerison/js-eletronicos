@@ -69,10 +69,6 @@ public class ProdutoController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Produto produto = new Produto();
-				produto.setNome(req.getParameter("nome"));
-				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
-				produto.setCategoria(categoria);
 				produtoBO.adicionar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {

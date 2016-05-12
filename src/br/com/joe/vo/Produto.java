@@ -1,5 +1,9 @@
 package br.com.joe.vo;
 
+import javax.servlet.http.HttpServletRequest;
+
+import br.com.joe.negocio.CategoriaBO;
+
 public class Produto {
 
 	private int id;
@@ -11,11 +15,11 @@ public class Produto {
 
 	}
 
-	public Produto(int id, String nome, Double preco, Categoria categoria) {
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-		this.categoria = categoria;
+	public Produto(HttpServletRequest req) {
+		CategoriaBO categoriaBO = new CategoriaBO();
+		this.nome = req.getParameter("nome");
+		this.setPreco(Double.parseDouble(req.getParameter("preco")));
+		this.categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
 	}
 
 	public int getId() {

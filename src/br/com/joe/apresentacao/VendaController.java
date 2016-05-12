@@ -16,7 +16,6 @@ import br.com.joe.negocio.ClienteBO;
 import br.com.joe.negocio.ProdutoBO;
 import br.com.joe.negocio.VendaBO;
 import br.com.joe.vo.Cliente;
-import br.com.joe.vo.Funcionario;
 import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Produto;
 import br.com.joe.vo.Venda;
@@ -54,10 +53,7 @@ public class VendaController extends HttpServlet {
 			session.setAttribute("cliente", cliente);
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("salvarVenda")) {
-			Venda venda = new Venda();
-			venda.setFuncionario((Funcionario) session.getAttribute("funcionario"));
-			venda.setCliente((Cliente) session.getAttribute("cliente"));
-			venda.setItensVenda(itensVenda);
+			Venda venda = new Venda(session, itensVenda);
 			VendaBO vendaBO = new VendaBO();
 			venda.setDesconto(Double.parseDouble(req.getParameter("desconto")));
 

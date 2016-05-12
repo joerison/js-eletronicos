@@ -62,14 +62,7 @@ public class FuncionarioController extends HttpServlet {
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Funcionario funcionario = new Funcionario();
-				funcionario.setNome(req.getParameter("nome"));
-				funcionario.setCpf(req.getParameter("cpf"));
-				funcionario.setEmail(req.getParameter("email"));
-				funcionario.setCelular(req.getParameter("celular"));
-				funcionario.setSexo(req.getParameter("sexo"));
-				funcionario.setLogin(req.getParameter("login"));
-				funcionario.setSenha(req.getParameter("senha"));
+				Funcionario funcionario = new Funcionario(req);
 				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {

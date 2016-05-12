@@ -60,8 +60,7 @@ public class CategoriaController extends HttpServlet {
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Categoria categoria = new Categoria();
-				categoria.setNome(req.getParameter("nome"));
+				Categoria categoria = new Categoria(req);
 				categoriaBO.adicionar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {

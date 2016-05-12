@@ -1,5 +1,7 @@
 package br.com.joe.vo;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Categoria {
 
 	private int id;
@@ -7,6 +9,10 @@ public class Categoria {
 
 	public Categoria() {
 
+	}
+
+	public Categoria(HttpServletRequest req) {
+		this.nome = req.getParameter("nome");
 	}
 
 	public Categoria(int id, String nome) {

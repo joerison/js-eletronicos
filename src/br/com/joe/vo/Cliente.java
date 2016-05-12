@@ -1,5 +1,7 @@
 package br.com.joe.vo;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Cliente {
 
 	private int id;
@@ -10,6 +12,15 @@ public class Cliente {
 	private String sexo;
 
 	public Cliente() {
+
+	}
+
+	public Cliente(HttpServletRequest req) {
+		this.nome = req.getParameter("nome");
+		this.cpf = req.getParameter("cpf");
+		this.email = req.getParameter("email");
+		this.celular = req.getParameter("celular");
+		this.sexo = req.getParameter("sexo");
 	}
 
 	public Cliente(int id, String nome, String cpf, String email, String celular, String sexo) {

@@ -60,13 +60,7 @@ public class ClienteController extends HttpServlet {
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Cliente cliente = new Cliente();
-				cliente.setNome(req.getParameter("nome"));
-				cliente.setCpf(req.getParameter("cpf"));
-				cliente.setEmail(req.getParameter("email"));
-				cliente.setCelular(req.getParameter("celular"));
-				cliente.setSexo(req.getParameter("sexo"));
-
+				Cliente cliente = new Cliente(req);
 				clientebo.adicionar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
