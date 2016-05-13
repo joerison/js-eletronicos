@@ -47,7 +47,7 @@ public class ClienteDAO {
 	}
 
 	public void atualizar(Cliente cliente) throws SQLException {
-		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
+		log.debug("atualizando cliente: " + cliente.getId());
 		String sql = "UPDATE cliente set nome = ?, cpf= ?, email = ?, celular = ?, sexo = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setString(1, cliente.getNome());
@@ -81,7 +81,7 @@ public class ClienteDAO {
 	}
 
 	public List<Cliente> buscar(String busca) throws SQLException {
-		log.debug("listando todos clientes");
+		log.debug("buscando clientes");
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		String sql = "SELECT * FROM cliente where nome like ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);

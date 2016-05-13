@@ -48,7 +48,7 @@ public class FuncionarioDAO {
 	}
 
 	public void atualizar(Funcionario funcionario) throws SQLException {
-		log.debug("atualizando funcionario: " + funcionario.getId() + " - " + funcionario.getLogin());
+		log.debug("atualizando funcionario: " + funcionario.getId());
 		String sql = "UPDATE funcionario set nome = ?, cpf = ?, email = ?, celular = ?, sexo = ?, login = ?, senha = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setString(1, funcionario.getNome());

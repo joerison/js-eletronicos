@@ -34,7 +34,7 @@ public class ProdutoBO {
 	}
 
 	public boolean atualizar(Produto produto) {
-		log.debug("atualizando produto: " + produto.getId() + " - " + produto.getNome());
+		log.debug("atualizando produto: " + produto.getId());
 		try {
 			produtoDAO.atualizar(produto);
 			return true;
@@ -53,7 +53,7 @@ public class ProdutoBO {
 	}
 
 	public List<Produto> buscar(String busca) {
-		log.debug("listando todos produtos");
+		log.debug("buscando produtos");
 		try {
 			return produtoDAO.buscar(busca);
 		} catch (SQLException e) {

@@ -53,6 +53,7 @@ public class VendaBO {
 	}
 
 	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) {
+		log.debug("obtendo venda por intervalo");
 		try {
 			return vendaDAO.obterVendasPorIntervalo(inicio, fim);
 		} catch (SQLException e) {

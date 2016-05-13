@@ -46,7 +46,7 @@ public class ProdutoDAO {
 	}
 
 	public void atualizar(Produto produto) throws SQLException {
-		log.debug("atualizando produto: " + produto.getId() + " - " + produto.getNome());
+		log.debug("atualizando produto: " + produto.getId());
 		String sql = "UPDATE produto set nome = ?, preco = ?, id_categoria = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setString(1, produto.getNome());
@@ -62,12 +62,13 @@ public class ProdutoDAO {
 		CategoriaDAO categoriaDao = new CategoriaDAO();
 		Categoria categoria;
 
-		Produto produto = new Produto();
+		Produto produto = null;
 		String sql = "SELECT * FROM produto where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setInt(1, id);
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
+			produto = new Produto();
 			produto.setId(rs.getInt("id"));
 			produto.setNome(rs.getString("nome"));
 			produto.setPreco(Double.parseDouble(rs.getString("preco")));
@@ -80,7 +81,7 @@ public class ProdutoDAO {
 	}
 
 	public List<Produto> buscar(String busca) throws SQLException {
-		log.debug("listando todos produtos");
+		log.debug("buscando produtos");
 		List<Produto> produtos = new ArrayList<Produto>();
 		String sql = "SELECT * FROM produto where nome like ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);

@@ -24,7 +24,6 @@ public class ValidacaoDeAcesso extends HttpServlet {
 	private String LOGIN = "/login.jsp";
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		log.debug("chamando doGet");
 		if (!invalidarSessao(req, res)) {
 			doPost(req, res);
 		}else{
@@ -33,7 +32,6 @@ public class ValidacaoDeAcesso extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		log.debug("chamando doPost");
 		RequestDispatcher rd;
 
 		String login = req.getParameter("login");
@@ -57,7 +55,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		String logout = (String) req.getParameter("logout");
 		if ("true".equals(logout)) {
 			req.getSession().invalidate();
-			log.debug("invalidado sessão do funcionario");
+			log.debug("invalidado a sessão do funcionario");
 			return true;
 		} else
 			return false;

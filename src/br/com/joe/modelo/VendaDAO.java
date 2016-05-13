@@ -117,8 +117,7 @@ public class VendaDAO {
 	
 	
 	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) throws SQLException {
-		log.debug("obtendo venda por intervalo ");
-		
+		log.debug("obtendo vendas por intervalo ");
 		List<Venda> vendas = new ArrayList<Venda>();
 		ClienteDAO clienteDao = new ClienteDAO();
 		FuncionarioDAO funcionarioDao = new FuncionarioDAO();

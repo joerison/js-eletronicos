@@ -38,7 +38,7 @@ public class ClienteBO {
 	}
 
 	public List<Cliente> buscar(String busca) {
-		log.debug("listando todos clientes");
+		log.debug("buscando clientes");
 		ClienteDAO clienteDao = new ClienteDAO();
 		try {
 			return clienteDao.buscar(busca);
@@ -64,7 +64,6 @@ public class ClienteBO {
 	public boolean alterar(Cliente cliente) {
 		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
 		ClienteDAO clienteDAO = new ClienteDAO();
-		// regras
 		try {
 			clienteDAO.atualizar(cliente);
 			return true;

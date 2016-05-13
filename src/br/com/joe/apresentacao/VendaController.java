@@ -88,7 +88,6 @@ public class VendaController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		HttpSession session = req.getSession();
-		log.debug("chamando get");
 		String operacao = req.getParameter("op");
 
 		itensVenda = ((ArrayList<ItemVenda>) session.getAttribute("itensVenda"));

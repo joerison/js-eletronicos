@@ -42,7 +42,7 @@ public class CategoriaDAO {
 	}
 
 	public void atualizar(Categoria categoria) throws SQLException {
-		log.debug("atualizando categoria: " + categoria.getId() + " - " + categoria.getNome());
+		log.debug("atualizando categoria: " + categoria.getId());
 		String sql = "UPDATE categoria set nome = ? where id = ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, categoria.getNome());
@@ -68,7 +68,7 @@ public class CategoriaDAO {
 	}
 
 	public List<Categoria> buscar(String busca) throws SQLException {
-		log.debug("listando todos categorias");
+		log.debug("buscando categorias");
 		List<Categoria> categorias = new ArrayList<Categoria>();
 			String sql = "SELECT * FROM categoria where nome like ?";
 			PreparedStatement stmt = conexao.prepareStatement(sql);

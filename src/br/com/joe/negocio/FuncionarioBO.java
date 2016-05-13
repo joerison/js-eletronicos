@@ -34,7 +34,7 @@ public class FuncionarioBO {
 	}
 
 	public boolean atualizar(Funcionario funcionario) {
-		log.debug("atualizando funcionario: " + funcionario.getId() + " - " + funcionario.getLogin());
+		log.debug("atualizando funcionario: " + funcionario.getId());
 		try {
 			funcionarioDAO.atualizar(funcionario);
 			return true;

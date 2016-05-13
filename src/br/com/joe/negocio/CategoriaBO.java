@@ -35,7 +35,7 @@ public class CategoriaBO {
 	}
 
 	public boolean atualizar(Categoria categoria) {
-		log.debug("atualizando categoria: " + categoria.getId() + " - " + categoria.getNome());
+		log.debug("atualizando categoria: " + categoria.getId());
 		try {
 			categoriaDAO.atualizar(categoria);
 			return true;
@@ -54,7 +54,7 @@ public class CategoriaBO {
 	}
 
 	public List<Categoria> buscar(String busca) {
-		log.debug("listando todos categorias");
+		log.debug("buscando categorias");
 		try {
 			return categoriaDAO.buscar(busca);
 		} catch (SQLException e) {
