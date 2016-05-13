@@ -41,11 +41,10 @@ public class VendaController extends HttpServlet {
 
 		if (operacao.equals("adicionarItem")) {
 			log.debug("adicionando item ao carrinho");
-			ProdutoBO produtoBO = new ProdutoBO();
-			ItemVenda itemVenda = new ItemVenda();
-			itemVenda.setProduto(produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId"))));
-			itemVenda.setQtd(Integer.parseInt(req.getParameter("qtd")));
+			
+			ItemVenda itemVenda = new ItemVenda(req);
 			itensVenda.add(itemVenda);
+			
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("adicionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
