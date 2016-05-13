@@ -12,6 +12,7 @@ public class Categoria {
 	}
 
 	public Categoria(HttpServletRequest req) {
+		this.id = Integer.parseInt(req.getParameter("id"));
 		this.nome = req.getParameter("nome");
 	}
 

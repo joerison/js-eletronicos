@@ -64,12 +64,7 @@ public class ClienteController extends HttpServlet {
 				clientebo.adicionar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Cliente cliente = clientebo.obterCliente(Integer.parseInt(req.getParameter("id")));
-				cliente.setNome(req.getParameter("nome"));
-				cliente.setCpf(req.getParameter("cpf"));
-				cliente.setEmail(req.getParameter("email"));
-				cliente.setCelular(req.getParameter("celular"));
-				cliente.setSexo(req.getParameter("sexo"));
+				Cliente cliente = new Cliente(req);
 				clientebo.alterar(cliente);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {

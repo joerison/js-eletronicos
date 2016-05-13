@@ -22,6 +22,7 @@ public class Funcionario {
 	}
 
 	public Funcionario(HttpServletRequest req) {
+		this.id = Integer.parseInt(req.getParameter("id"));
 		this.nome = req.getParameter("nome");
 		this.cpf = req.getParameter("cpf");
 		this.email = req.getParameter("email");

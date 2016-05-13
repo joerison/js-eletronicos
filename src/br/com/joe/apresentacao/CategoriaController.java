@@ -64,8 +64,7 @@ public class CategoriaController extends HttpServlet {
 				categoriaBO.adicionar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Categoria categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("id")));
-				categoria.setNome(req.getParameter("nome"));
+				Categoria categoria = new Categoria(req);
 				categoriaBO.atualizar(categoria);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {

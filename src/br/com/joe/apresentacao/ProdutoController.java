@@ -62,8 +62,6 @@ public class ProdutoController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operacao = req.getParameter("op");
 		ProdutoBO produtoBO = new ProdutoBO();
-		CategoriaBO categoriaBO = new CategoriaBO();
-		Categoria categoria;
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
@@ -72,11 +70,7 @@ public class ProdutoController extends HttpServlet {
 				produtoBO.adicionar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Produto produto = produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("id")));
-				produto.setNome(req.getParameter("nome"));
-				produto.setPreco(Double.parseDouble(req.getParameter("preco")));
-				categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
-				produto.setCategoria(categoria);
+				Produto produto = new Produto(req);
 				produtoBO.atualizar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {

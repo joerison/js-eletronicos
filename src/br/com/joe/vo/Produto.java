@@ -17,6 +17,7 @@ public class Produto {
 
 	public Produto(HttpServletRequest req) {
 		CategoriaBO categoriaBO = new CategoriaBO();
+		this.id = Integer.parseInt(req.getParameter("id"));
 		this.nome = req.getParameter("nome");
 		this.setPreco(Double.parseDouble(req.getParameter("preco")));
 		this.categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));

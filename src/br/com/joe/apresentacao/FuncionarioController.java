@@ -66,15 +66,7 @@ public class FuncionarioController extends HttpServlet {
 				funcionarioDao.adicionar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionario = funcionarioDao
-						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("id")));
-				funcionario.setNome(req.getParameter("nome"));
-				funcionario.setCpf(req.getParameter("cpf"));
-				funcionario.setEmail(req.getParameter("email"));
-				funcionario.setCelular(req.getParameter("celular"));
-				funcionario.setSexo(req.getParameter("sexo"));
-				funcionario.setLogin(req.getParameter("login"));
-				funcionario.setSenha(req.getParameter("senha"));
+				Funcionario funcionario = new Funcionario(req);
 				funcionarioDao.atualizar(funcionario);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {

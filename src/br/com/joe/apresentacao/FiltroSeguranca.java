@@ -36,8 +36,6 @@ public class FiltroSeguranca implements Filter {
 		HttpSession session = req.getSession();
 		Funcionario user = (Funcionario) session.getAttribute("funcionario");
 
-		log.debug("SESSAO NOVA: " + session.isNew());
-		
 		log.debug("verificando se existe usuario na sessao");
 		if (user == null) {
 			RequestDispatcher rd = req.getRequestDispatcher(LOGIN);
