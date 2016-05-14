@@ -13,7 +13,7 @@
 			<label for="qtd">Qtd: </label>
 			<input type="number" id="qtd" name="qtd"/>
 			<input type="hidden" name="op" value="adicionarItem"/><br />
-			<input type="submit"value="enviar" />
+			<input type="submit"value="Adicionar" />
 		</form>
 	</body>
 </html>

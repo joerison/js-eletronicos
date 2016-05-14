@@ -18,7 +18,7 @@
 			<input type="radio" id="sexo" name="sexo" value="M">Masculino
 			<input type="radio" id="sexo"  name="sexo" value="F">Feminino<br>
 			<input type="hidden" name="op" value="cadastrar"/><br />
-			<input type="submit"value="enviar" />
+			<input type="submit"value="Cadastrar" />
 		</form>
 	</body>
 </html>

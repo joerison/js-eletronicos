@@ -23,7 +23,7 @@
 			<label for="senha">Senha: </label>
 			<input type="text" id="senha" name="senha"/><br />
 			<input type="hidden" name="op" value="cadastrar"/><br />
-			<input type="submit"value="Salvar" />
+			<input type="submit"value="Cadastrar" />
 		</form>
 	</body>
 </html>

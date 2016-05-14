@@ -27,7 +27,7 @@
 				</c:forEach>	  
 			</select>
 			<input type="hidden" name="op" value="alterar"/><br />
-			<input type="submit"value="enviar" />
+			<input type="submit"value="Alterar" />
 		</form>
 	</body>
 </html>

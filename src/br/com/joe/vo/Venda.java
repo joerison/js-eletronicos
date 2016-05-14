@@ -3,8 +3,6 @@ package br.com.joe.vo;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpSession;
-
 public class Venda {
 
 	private int id;
@@ -16,24 +14,6 @@ public class Venda {
 	private Date data;
 
 	public Venda() {
-	}
-
-	public Venda(HttpSession session, ArrayList<ItemVenda> itensVenda) {
-		this.funcionario = (Funcionario) session.getAttribute("funcionario");
-		this.cliente = (Cliente) session.getAttribute("cliente");
-		this.itensVenda = itensVenda;
-	}
-
-	public Venda(int id, Cliente cliente, Funcionario funcionario, ArrayList<ItemVenda> itensVenda, Double desconto,
-			Double total, Date data) {
-		super();
-		this.id = id;
-		this.cliente = cliente;
-		this.funcionario = funcionario;
-		this.itensVenda = itensVenda;
-		this.desconto = desconto;
-		this.total = total;
-		this.data = data;
 	}
 
 	public Double getDesconto() {

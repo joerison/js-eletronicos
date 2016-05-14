@@ -11,7 +11,7 @@
 			</c:forEach>	  
 			</select>
 			<input type="hidden" name="op" value="adicionarCliente"/><br />
-			<input type="submit"value="enviar" />
+			<input type="submit"value="Adicionar" />
 		</form>
 	</body>
 </html>
