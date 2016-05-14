@@ -34,7 +34,7 @@
 						<c:url value="funcionario">
 						<c:param name="op" value="excluir"/>
 						<c:param name="funcionarioId" value="${funcionario.id}"/>
-						</c:url>">Excluir</a></td>
+						</c:url>" onclick="return (confirm ('Confirma exclusao?'));">Excluir</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -6,7 +6,7 @@
 			<jsp:include page="/menu.jsp" />
 
 <br /><br />
-		<form action="funcionario" method="post">
+		<form action="funcionario" method="post" onsubmit="return (confirm ('Confirma alteracao?'));">
 		
 			<input type="hidden" name="id" value="${funcionarioEdicao.id}"/><br />
 			<label for="nome">Nome: </label>
@@ -33,7 +33,7 @@
 			<label for="login">Login: </label>
 			<input type="text" id="login" name="login" value="${funcionarioEdicao.login}"/><br />
 			<label for="senha">Senha: </label>
-			<input type="text" id="senha" name="senha" value="${funcionarioEdicao.senha}"/><br />
+			<input type="password" id="senha" name="senha" value="${funcionarioEdicao.senha}"/><br />
 			<input type="hidden" name="op" value="alterar"/><br />
 			<input type="submit"value="Alterar" />
 		</form>

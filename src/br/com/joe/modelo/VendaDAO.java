@@ -38,15 +38,14 @@ public class VendaDAO {
 		stmt.setDate(5, venda.getData());
 		stmt.execute();
 
-		/* Entender como funciona essa lógica... */
 		try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
 			if (generatedKeys.next()) {
 				venda.setId(generatedKeys.getInt(1));
+				log.debug("Venda ID gerado: " + venda.getId());
 			} else {
-				throw new SQLException("Creating user failed, no ID obtained.");
+				log.error("Nenhum id obtido");
 			}
 		}
-		log.debug("Venda ID gerado: " + venda.getId());
 		stmt.close();
 
 		sql = "INSERT INTO venda_item (id_venda, id_produto, qtd, total) values (?, ?, ?, ?)";

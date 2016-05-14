@@ -7,6 +7,7 @@
 <br /><br />
 		<form action="produto" method="post">
 			<label for="nome">Nome: </label>
+			<input type="hidden" value=0 name="id"/>
 			<input type="text" id="nome" name="nome"/><br />
 			<label for="preco">Preco: </label>
 			<input type="text" id="preco" name="preco"/><br />

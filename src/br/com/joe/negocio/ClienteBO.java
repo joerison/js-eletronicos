@@ -10,18 +10,13 @@ import br.com.joe.vo.Cliente;
 
 public class ClienteBO {
 	private static Logger log = Logger.getLogger(ClienteBO.class);
-	
+
 	public boolean adicionar(Cliente cliente) {
 		log.debug("adicionando cliente" + cliente.getNome());
 		try {
 			ClienteDAO clienteDao = new ClienteDAO();
-			// alguma regra, nessse caso vai ser validacao do cpf
-			// if (cliente.getCpf() > 18) {
 			clienteDao.adicionar(cliente);
 			return true;
-			// } else {
-			// return false;
-			// }
 		} catch (SQLException e) {
 			return false;
 		}
@@ -45,22 +40,20 @@ public class ClienteBO {
 		} catch (SQLException e) {
 			return null;
 		}
-		
+
 	}
 
 	public boolean remover(int clienteId) {
 		log.debug("excluindo cliente id " + clienteId);
 		ClienteDAO clienteDAO = new ClienteDAO();
-		// regras
 		try {
 			clienteDAO.remover(clienteId);
 			return true;
 		} catch (SQLException e) {
 			return false;
 		}
-
 	}
-	
+
 	public boolean alterar(Cliente cliente) {
 		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
 		ClienteDAO clienteDAO = new ClienteDAO();

@@ -6,6 +6,7 @@
 	<jsp:include page="/menu.jsp" />
 		<br /><br />
 		<form action="cliente" method="post">
+			<input type="hidden" value=0 name="id"/>
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome"/><br />
 			<label for="cpf">CPF: </label>

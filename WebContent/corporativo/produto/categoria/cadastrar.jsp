@@ -7,6 +7,7 @@
 
 <br /><br />
 		<form action="categoria" method="post">
+			<input type="hidden" value=0 name="id"/>
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome"/><br />
 			<input type="hidden" name="op" value="cadastrar"/><br />

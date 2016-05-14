@@ -18,7 +18,6 @@ public class VendaBO {
 	public boolean adicionar(Venda venda) {
 		log.debug("adicionando venda" + venda.getId());
 
-		// calculando total da venda
 		for (ItemVenda vendaItem : venda.getItensVenda()) {
 			venda.setTotal((venda.getTotal() + vendaItem.getTotal()));
 		}

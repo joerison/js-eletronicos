@@ -29,7 +29,7 @@
 		Desconto: ${vendaConsulta.desconto} <br/>
 		Total: ${vendaConsulta.total}
 		
-		<form action="/projetoltpiv/corporativo/venda" method="post">
+		<form action="/projetoltpiv/corporativo/venda" method="post" onsubmit="return (confirm ('Confirma exclusao?'));">
 			<input type="hidden" name="op" value="excluir"/><br />
 			<input type="hidden" name="vendaId" value="${vendaConsulta.id}"/><br />
 			<input type="submit"value="Excluir venda" />

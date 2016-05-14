@@ -66,7 +66,7 @@ public class ProdutoController extends HttpServlet {
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Produto produto = new Produto();
+				Produto produto = new Produto(req);
 				produtoBO.adicionar(produto);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {

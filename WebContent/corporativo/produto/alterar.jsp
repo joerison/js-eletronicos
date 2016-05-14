@@ -6,7 +6,7 @@
 
 			<jsp:include page="/menu.jsp" />
 <br /><br />
-		<form action="produto" method="post">
+		<form action="produto" method="post" onsubmit="return (confirm ('Confirma alteracao?'));">
 			
 			<input type="hidden" name="id" value="${produto.id}"/>
 			<label for="nome">Nome: </label>
