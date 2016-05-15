@@ -46,7 +46,11 @@ public class ProdutoController extends HttpServlet {
 				req.setAttribute("produto", produto);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				produtoBO.remover(Integer.parseInt(req.getParameter("produtoId")));
+				if(produtoBO.remover(Integer.parseInt(req.getParameter("produtoId")))){
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
@@ -67,11 +71,19 @@ public class ProdutoController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Produto produto = new Produto(req);
-				produtoBO.adicionar(produto);
+				if(produtoBO.adicionar(produto)){
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Produto produto = new Produto(req);
-				produtoBO.atualizar(produto);
+				if(produtoBO.atualizar(produto)){
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

@@ -41,8 +41,13 @@ public class ClienteController extends HttpServlet {
 				req.setAttribute("cliente", cliente);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				clientebo.remover(Integer.parseInt(req.getParameter("clienteId")));
+				if (clientebo.remover(Integer.parseInt(req.getParameter("clienteId")))) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+
 			} else {
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
@@ -61,11 +66,19 @@ public class ClienteController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Cliente cliente = new Cliente(req);
-				clientebo.adicionar(cliente);
+				if (clientebo.adicionar(cliente)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Cliente cliente = new Cliente(req);
-				clientebo.alterar(cliente);
+				if (clientebo.alterar(cliente)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

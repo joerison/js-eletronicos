@@ -15,10 +15,14 @@ public class CategoriaBO {
 
 	public boolean adicionar(Categoria categoria) {
 		log.debug("adicionando categoria" + categoria.getNome());
-		try {
-			categoriaDAO.adicionar(categoria);
-			return true;
-		} catch (SQLException e) {
+		if (!categoria.getNome().equals("")) {
+			try {
+				categoriaDAO.adicionar(categoria);
+				return true;
+			} catch (SQLException e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 

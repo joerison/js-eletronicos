@@ -23,6 +23,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 	private String CORPORATIVO = "/corporativo/index.jsp";
 	private String LOGIN = "/login.jsp";
 	
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		if (!invalidarSessao(req, res)) {
 			doPost(req, res);
@@ -30,7 +31,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 			res.sendRedirect(INDEX);
 		}
 	}
-
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		RequestDispatcher rd;
 
@@ -40,6 +41,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 		Funcionario funcionario = validateLogin(login, senha);
 
 		if (funcionario == null) {
+			req.setAttribute("mensagem", Mensagens.erroLogin);
 			log.debug("o login e senha informados nao foram capazes de gerar um objeto Funcionario");
 			rd = req.getRequestDispatcher(LOGIN);
 		} else {

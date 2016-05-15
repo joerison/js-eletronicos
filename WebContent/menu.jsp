@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=iso-8859-1"
 	pageEncoding="iso-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <html>
 <head>
 <script src="/projetoltpiv/js/jquery-2.2.3.min.js"></script>
@@ -20,4 +22,8 @@
 		</li>
 		<li><a href="/projetoltpiv/validacaoDeAcesso?logout=true">Sair</a></li>
 	</ul>
+	<br /><br />
+	<c:if test="${not empty mensagem}">
+		<span class="erro">${mensagem}</span>
+	</c:if>
 </body>

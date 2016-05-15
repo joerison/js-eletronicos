@@ -25,7 +25,7 @@ public class CategoriaController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		CategoriaBO categoriaBO = new CategoriaBO();
-		
+
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
@@ -36,12 +36,18 @@ public class CategoriaController extends HttpServlet {
 				req.setAttribute("categorias", categorias);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Categoria categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
+				Categoria categoria = categoriaBO
+						.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
 				req.setAttribute("categoria", categoria);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				categoriaBO.remover(Integer.parseInt(req.getParameter("categoriaId")));
+				if (categoriaBO.remover(Integer.parseInt(req.getParameter("categoriaId")))) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroRemover);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+
 			} else {
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
@@ -61,11 +67,19 @@ public class CategoriaController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Categoria categoria = new Categoria(req);
-				categoriaBO.adicionar(categoria);
+				if (categoriaBO.adicionar(categoria)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Categoria categoria = new Categoria(req);
-				categoriaBO.atualizar(categoria);
+				if (categoriaBO.atualizar(categoria)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAtualizar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");

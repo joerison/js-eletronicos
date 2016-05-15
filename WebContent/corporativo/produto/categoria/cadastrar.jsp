@@ -11,7 +11,7 @@
 			<label for="nome">Nome: </label>
 			<input type="text" id="nome" name="nome"/><br />
 			<input type="hidden" name="op" value="cadastrar"/><br />
-			<input type="submit"value="enviar" />
+			<input type="submit" value="Cadastrar" />
 		</form>
 	</body>
 </html>

@@ -30,9 +30,9 @@ public class VendaController extends HttpServlet {
 	private static String ADICIONARCLIENTE = "/corporativo/venda/selecionar-cliente.jsp";
 	private static String CONSULTARVENDA = "/corporativo/venda/consultar-venda.jsp";
 	private static String INDEX = "/corporativo/venda/index.jsp";
-	
+
 	private Venda venda = null;
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -41,10 +41,10 @@ public class VendaController extends HttpServlet {
 
 		if (operacao.equals("adicionarItem")) {
 			log.debug("adicionando item ao carrinho");
-			
+
 			ItemVenda itemVenda = new ItemVenda(req);
 			venda.getItensVenda().add(itemVenda);
-			
+
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("adicionarCliente")) {
 			ClienteBO clienteBO = new ClienteBO();
@@ -56,7 +56,11 @@ public class VendaController extends HttpServlet {
 			venda.setDesconto(Double.parseDouble(req.getParameter("desconto")));
 			venda.setFuncionario((Funcionario) session.getAttribute("funcionario"));
 			venda.setData(new java.sql.Date(new java.util.Date().getTime()));
-			vendaBO.adicionar(venda);
+			if (vendaBO.adicionar(venda)) {
+				req.setAttribute("mensagem", Mensagens.sucesso);
+			} else {
+				req.setAttribute("mensagem", Mensagens.erroAdicionar);
+			}
 			req.getRequestDispatcher(INDEX).forward(req, resp);
 			session.removeAttribute("venda");
 		} else if (operacao.equals("consultar")) {
@@ -71,9 +75,9 @@ public class VendaController extends HttpServlet {
 		} else if (operacao.equals("excluir")) {
 			VendaBO vendaBO = new VendaBO();
 			if (vendaBO.remover(Integer.parseInt(req.getParameter("vendaId")))) {
-				log.debug("venda removida com sucesso");
+				req.setAttribute("mensagem", Mensagens.sucesso);
 			} else {
-				log.debug("ouve um problema na remocao");
+				req.setAttribute("mensagem", Mensagens.erroAdicionar);
 			}
 			req.getRequestDispatcher(INDEX).forward(req, resp);
 		}
@@ -92,7 +96,7 @@ public class VendaController extends HttpServlet {
 			venda = new Venda();
 			session.setAttribute("venda", venda);
 		}
-		
+
 		if (operacao.equals("preparaVenda")) {
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA).forward(req, resp);
 		} else if (operacao.equals("selecionarCliente")) {

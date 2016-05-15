@@ -42,8 +42,14 @@ public class FuncionarioController extends HttpServlet {
 				req.setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
 			} else if (operacao.equals("excluir")) {
-				funcionarioBO.remover(Integer.parseInt(req.getParameter("funcionarioId")));
+
+				if (funcionarioBO.remover(Integer.parseInt(req.getParameter("funcionarioId")))) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+
 			} else {
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
@@ -63,11 +69,19 @@ public class FuncionarioController extends HttpServlet {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
 				Funcionario funcionario = new Funcionario(req);
-				funcionarioDao.adicionar(funcionario);
+				if (funcionarioDao.adicionar(funcionario)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
 				Funcionario funcionario = new Funcionario(req);
-				funcionarioDao.atualizar(funcionario);
+				if (funcionarioDao.atualizar(funcionario)) {
+					req.setAttribute("mensagem", Mensagens.sucesso);
+				} else {
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {
 				log.debug("operacao desconhecida");
