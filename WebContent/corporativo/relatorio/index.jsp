@@ -9,7 +9,8 @@
 		<label for="dtFim">Data final:</label>
 		<input type="date" name="dtFim" id="dtFim" />
 		<input type="hidden" name="op" value="relatorioVendas" />
-		<input type="submit" value="Relatorio de Vendas"/>
+		<br /><br />
+		<input type="submit" value="Emitir Relatorio"/>
 	</form>
 </body>
 </html>

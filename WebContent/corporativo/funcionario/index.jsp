@@ -17,12 +17,11 @@
 		<input type="hidden" name="op" value="buscar">
 		<input type="submit" value="Procurar" />
 	</form>
-	
-		<table>
+		<br />
+		<table border=1>
 			<c:forEach var="funcionario" items="${funcionarios}">
 				<tr>
-					<td colspan="1"><input type="checkbox" name="checkboxFuncionario"
-						value="${funcionario.id}">${funcionario.nome}</td>
+					<td colspan="1">${funcionario.nome}</td>
 					<td colspan="1"><a
 						href="
 						<c:url value="funcionario">
@@ -38,7 +37,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-
+		<br />
 	<a href="funcionario?op=cadastrar">Cadastrar Funcionario</a>
 </body>
 </html>

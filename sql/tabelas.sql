@@ -60,14 +60,15 @@ create table venda_item(
 
 insert into funcionario values (NULL, "Joerison Silva", "04061269178","joerison@gmail.com","8560-8939",'M',"joe", "joe");
 
-INSERT INTO cliente values (NULL,"Fernando Souza", "123.456.789-01", "fernandosouza@email.com", "8888-8888", 'M');
-INSERT INTO cliente values (NULL,"Fernanda Silva", "789.456.789-01", "fernandasilva@email.com", "9999-9999", 'F');
+INSERT INTO cliente values (NULL,"Fernando Souza", "123.456.789-01", "fernandosouza45645@email.com", "8888-8888", 'M');
+INSERT INTO cliente values (NULL,"Carolina Silva", "789.456.789-01", "carolinasilva90899@email.com", "9999-9999", 'F');
 
 insert into categoria values (NULL, "Console");
 insert into categoria values (NULL, "Periferico");
 insert into categoria values (NULL, "Jogo");
 
-INSERT INTO produto  values (NULL,"Xbox 360", '1100,234', 1);
-INSERT INTO produto  values (NULL,"Zelda", '150,234', 2);
-INSERT INTO produto  values (NULL,"Mario", '110,234', 3);
+INSERT INTO produto  values (NULL,"Xbox 360", '1100.00', 1);
+INSERT INTO produto  values (NULL,"Teclado", '50.00', 2);
+INSERT INTO produto  values (NULL,"Zelda", '150.00', 3);
+INSERT INTO produto  values (NULL,"Mario", '110.00', 3);
 

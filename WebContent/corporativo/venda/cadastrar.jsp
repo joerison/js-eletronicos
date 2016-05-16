@@ -7,13 +7,13 @@
 			<jsp:include page="/menu.jsp" />
 <br /><br />
 	
-	<a href="/projetoltpiv/corporativo/venda?op=selecionarItens">selecionar item</a><br/>
-	<a href="/projetoltpiv/corporativo/venda?op=selecionarCliente">selecionar Cliente</a><br/>
+	<a href="/projetoltpiv/corporativo/venda?op=selecionarItens">Incluir Item</a><br/>
+	<a href="/projetoltpiv/corporativo/venda?op=selecionarCliente">Selecionar Cliente</a><br/>
 		Cliente: ${venda.cliente.nome} <br/>
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<table border=1>
 				<tr>
-					<td colspan="5" style="text-align: center">Itens selecionados</td>
+					<td colspan="5" style="text-align: center">Itens Incluidos</td>
 				</tr>
 				<tr>
 				<td>Nome</td>

@@ -17,12 +17,11 @@
 			<input type="hidden" name="op" value="buscar">
 			<input type="submit" value="Procurar" />
 		</form>
-	
-		<table>
+		<br />
+		<table border=1>
 			<c:forEach var="produto" items="${produtos}">
 				<tr>
-					<td colspan="1"><input type="checkbox" name="${produto.nome}"
-						value="${produto.nome}">${produto.nome}</td>
+					<td colspan="1">${produto.nome}</td>
 					<td colspan="1"><a
 						href="
 						<c:url value="produto">
@@ -38,7 +37,8 @@
 				</tr>
 			</c:forEach>
 		</table>
-	<a href="produto?op=cadastrar">Cadastrar produto</a>
+		<br />
+	<a href="produto?op=cadastrar">Cadastrar Produto</a>
 
 </body>
 </html>
