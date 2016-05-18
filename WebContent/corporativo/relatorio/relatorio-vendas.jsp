@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <body>
-	<jsp:include page="/menu.jsp" />
+	<jsp:include page="/corporativo/menu.jsp" />
 	<br />
 	<br />
 

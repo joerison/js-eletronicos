@@ -5,7 +5,7 @@
 <html>
 	<body>
 
-			<jsp:include page="/menu.jsp" />
+			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
 		
 		Venda ID: <b>${vendaConsulta.id}</b> <br/>

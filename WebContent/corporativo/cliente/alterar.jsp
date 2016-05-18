@@ -4,7 +4,7 @@
 <html>
 	<body>
 
-		<jsp:include page="/menu.jsp" />
+		<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
 		<form action="cliente" method="post" onsubmit="return (confirm ('Confirma alteracao?'));">
 		

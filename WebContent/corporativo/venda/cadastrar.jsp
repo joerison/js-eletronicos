@@ -4,7 +4,7 @@
 <%! double subtotal = 0.0; %>
 <html>
 	<body>
-			<jsp:include page="/menu.jsp" />
+			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
 	
 	<a href="/projetoltpiv/corporativo/venda?op=selecionarItens">Incluir Item</a><br/>

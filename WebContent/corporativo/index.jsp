@@ -8,6 +8,6 @@
 <title>Corporativo</title>
 </head>
 <body>
-	<jsp:include page="/menu.jsp" />
+	<jsp:include page="/corporativo/menu.jsp" />
 </body>
 </html>

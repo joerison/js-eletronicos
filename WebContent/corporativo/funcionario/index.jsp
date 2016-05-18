@@ -8,7 +8,7 @@
 <title>Todos funcionários</title>
 </head>
 <body>
-			<jsp:include page="/menu.jsp" />
+			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
 	
 	<form action="funcionario" method="get">
