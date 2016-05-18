@@ -6,9 +6,31 @@
 	<body>
 			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
-	
-	<a href="/projetoltpiv/corporativo/venda?op=selecionarItens">Incluir Item</a><br/>
-	<a href="/projetoltpiv/corporativo/venda?op=selecionarCliente">Selecionar Cliente</a><br/>
+		
+		<form action="/projetoltpiv/corporativo/venda" method="post">
+			<label for="clientes">Clientes: </label>
+			<select name="clienteId">
+			<c:forEach var="cliente" items="${clientes}">
+			  <option value="${cliente.id}">${cliente.nome}</option>
+			</c:forEach>	  
+			</select>
+			<input type="hidden" name="op" value="adicionarCliente"/>
+			<input type="submit"value="Selecionar" />
+		</form>
+		
+		<form action="/projetoltpiv/corporativo/venda" method="post">
+			<label for="produtos">Produtos: </label>
+			<select name="produtoId">
+			<c:forEach var="produto" items="${produtos}">
+			  <option value="${produto.id}">${produto.nome}</option>
+			</c:forEach>	  
+			</select>
+			<label for="qtd">Qtd: </label>
+			<input type="number" id="qtd" value="1" name="qtd"/>
+			<input type="hidden" name="op" value="adicionarItem"/>
+			<input type="submit"value="Adicionar" />
+		</form>
+		
 		Cliente: ${venda.cliente.nome} <br/>
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<table border=1>
@@ -16,11 +38,11 @@
 					<td colspan="5" style="text-align: center">Itens Incluidos</td>
 				</tr>
 				<tr>
-				<td>Nome</td>
-				<td>Qtd</td>
-				<td>Und R$</td>
-				<td>Subtotal</td>
-				<td>Remover</td>
+				<th>Nome</th>
+				<th>Qtd</th>
+				<th>Und R$</th>
+				<th>Subtotal</th>
+				<th>Remover</th>
 				</tr>
 				<c:set var="contador" value="0"/>
 				<c:forEach var="itemVenda" items="${venda.itensVenda}">

@@ -20,13 +20,20 @@ public class VendaBO {
 
 		for (ItemVenda vendaItem : venda.getItensVenda()) {
 			venda.setTotal((venda.getTotal() + vendaItem.getTotal()));
+			if (vendaItem.getQtd() < 1) {
+				return false;
+			}
 		}
 		venda.setTotal(venda.getTotal() - venda.getDesconto());
 
-		try {
-			vendaDAO.adicionar(venda);
-			return true;
-		} catch (SQLException e) {
+		if (!(venda.getCliente() == null)) {
+			try {
+				vendaDAO.adicionar(venda);
+				return true;
+			} catch (SQLException e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
