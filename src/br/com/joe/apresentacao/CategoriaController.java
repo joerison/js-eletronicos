@@ -23,34 +23,42 @@ public class CategoriaController extends HttpServlet {
 	private String ALTERAR = "/corporativo/produto/categoria/alterar.jsp";
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		CategoriaBO categoriaBO = new CategoriaBO();
-
+		Categoria categoria;
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
+			switch (operacao) {
+			case "cadastrar":
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
-			} else if (operacao.equals("buscar")) {
-				List<Categoria> categorias = categoriaBO.buscar(req.getParameter("busca"));
+				break;
+			case "buscar":
+				List<Categoria> categorias = categoriaBO.buscar(req
+						.getParameter("busca"));
 				req.setAttribute("categorias", categorias);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Categoria categoria = categoriaBO
-						.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoriaId")));
+				break;
+			case "alterar":
+				categoria = categoriaBO.obterCategoriaPorId(Integer
+						.parseInt(req.getParameter("categoriaId")));
 				req.setAttribute("categoria", categoria);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
-			} else if (operacao.equals("excluir")) {
-				if (categoriaBO.remover(Integer.parseInt(req.getParameter("categoriaId")))) {
+				break;
+			case "excluir":
+				if (categoriaBO.remover(Integer.parseInt(req
+						.getParameter("categoriaId")))) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroRemover);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");
@@ -59,31 +67,37 @@ public class CategoriaController extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String operacao = req.getParameter("op");
 		CategoriaBO categoriaBO = new CategoriaBO();
-
+		Categoria categoria;
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
-				Categoria categoria = new Categoria(req);
+
+			switch (operacao) {
+			case "cadastrar":
+				categoria = new Categoria(req);
 				if (categoriaBO.adicionar(categoria)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Categoria categoria = new Categoria(req);
+				break;
+			case "alterar":
+				categoria = new Categoria(req);
 				if (categoriaBO.atualizar(categoria)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAtualizar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");

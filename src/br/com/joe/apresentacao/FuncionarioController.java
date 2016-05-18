@@ -24,36 +24,46 @@ public class FuncionarioController extends HttpServlet {
 	private String LISTAR = "funcionario/index.jsp";
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		FuncionarioBO funcionarioBO = new FuncionarioBO();
+		Funcionario funcionarioEdicao;
 
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
+
+			switch (operacao) {
+			case "cadastrar":
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
-			} else if (operacao.equals("buscar")) {
-				List<Funcionario> funcionarios = funcionarioBO.buscar(req.getParameter("busca"));
+				break;
+			case "buscar":
+				List<Funcionario> funcionarios = funcionarioBO.buscar(req
+						.getParameter("busca"));
 				req.setAttribute("funcionarios", funcionarios);
 				req.getRequestDispatcher(LISTAR).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Funcionario funcionarioEdicao = funcionarioBO
-						.obterFuncionarioPorId(Integer.parseInt(req.getParameter("funcionarioId")));
+				break;
+			case "alterar":
+				funcionarioEdicao = funcionarioBO.obterFuncionarioPorId(Integer
+						.parseInt(req.getParameter("funcionarioId")));
 				req.setAttribute("funcionarioEdicao", funcionarioEdicao);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
-			} else if (operacao.equals("excluir")) {
-
-				if (funcionarioBO.remover(Integer.parseInt(req.getParameter("funcionarioId")))) {
+				break;
+			case "excluir":
+				if (funcionarioBO.remover(Integer.parseInt(req
+						.getParameter("funcionarioId")))) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
+
 		} else {
 			log.debug("nao consta operacao");
 			req.getRequestDispatcher(INDEX).forward(req, resp);
@@ -61,14 +71,16 @@ public class FuncionarioController extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String operacao = req.getParameter("op");
 		FuncionarioBO funcionarioDao = new FuncionarioBO();
+		Funcionario funcionario;
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
 			if (operacao.equals("cadastrar")) {
-				Funcionario funcionario = new Funcionario(req);
+				funcionario = new Funcionario(req);
 				if (funcionarioDao.adicionar(funcionario)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
@@ -76,7 +88,7 @@ public class FuncionarioController extends HttpServlet {
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else if (operacao.equals("alterar")) {
-				Funcionario funcionario = new Funcionario(req);
+				funcionario = new Funcionario(req);
 				if (funcionarioDao.atualizar(funcionario)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {

@@ -25,36 +25,49 @@ public class ProdutoController extends HttpServlet {
 	private String ALTERAR = "produto/alterar.jsp";
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		ProdutoBO produtoBO = new ProdutoBO();
 
 		CategoriaBO categoriaBO = new CategoriaBO();
 		List<Categoria> categorias = categoriaBO.buscar("%");
 		req.setAttribute("categorias", categorias);
+		Produto produto;
 
 		String operacao = req.getParameter("op");
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
+
+			switch (operacao) {
+			case "cadastrar":
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
-			} else if (operacao.equals("buscar")) {
-				List<Produto> produtos = produtoBO.buscar(req.getParameter("busca"));
+				break;
+			case "buscar":
+				List<Produto> produtos = produtoBO.buscar(req
+						.getParameter("busca"));
 				req.setAttribute("produtos", produtos);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Produto produto = produtoBO.obterProdutoPorId(Integer.parseInt(req.getParameter("produtoId")));
+				break;
+			case "alterar":
+				produto = produtoBO.obterProdutoPorId(Integer.parseInt(req
+						.getParameter("produtoId")));
 				req.setAttribute("produto", produto);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
-			} else if (operacao.equals("excluir")) {
-				if(produtoBO.remover(Integer.parseInt(req.getParameter("produtoId")))){
+				break;
+			case "excluir":
+				if (produtoBO.remover(Integer.parseInt(req
+						.getParameter("produtoId")))) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else {
+				break;
+
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");
@@ -63,31 +76,38 @@ public class ProdutoController extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String operacao = req.getParameter("op");
 		ProdutoBO produtoBO = new ProdutoBO();
+		Produto produto;
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
-				Produto produto = new Produto(req);
-				if(produtoBO.adicionar(produto)){
+
+			switch (operacao) {
+			case "cadastrar":
+				produto = new Produto(req);
+				if (produtoBO.adicionar(produto)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Produto produto = new Produto(req);
-				if(produtoBO.atualizar(produto)){
+				break;
+			case "alterar":
+				produto = new Produto(req);
+				if (produtoBO.atualizar(produto)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAtualizar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");

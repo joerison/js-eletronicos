@@ -26,7 +26,15 @@ public class RelatorioController extends HttpServlet {
 		String operacao = req.getParameter("op");
 		VendaBO vendaBO = new VendaBO();
 
-		if (operacao.equals("relatorioVendas")) {
+		switch (operacao) {
+		case "preparaRelatorioVendas":
+			req.setAttribute("dtInicio",
+					new java.sql.Date(new java.util.Date().getTime()));
+			req.setAttribute("dtFim",
+					new java.sql.Date(new java.util.Date().getTime()));
+			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
+			break;
+		case "relatorioVendas":
 			log.debug("obtendo historico de vendas");
 
 			java.sql.Date dtInicio = java.sql.Date.valueOf(req
@@ -39,10 +47,9 @@ public class RelatorioController extends HttpServlet {
 			req.setAttribute("dtFim", dtFim);
 			req.setAttribute("historicoVendas", historicoVendas);
 			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
-		} else if (operacao.equals("preparaRelatorioVendas")) {
-			req.setAttribute("dtInicio", new java.sql.Date(new java.util.Date().getTime()));
-			req.setAttribute("dtFim", new java.sql.Date(new java.util.Date().getTime()));
-			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
+			break;
+		default:
+			break;
 		}
 
 	}

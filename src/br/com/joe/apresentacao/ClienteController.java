@@ -24,33 +24,44 @@ public class ClienteController extends HttpServlet {
 	private ClienteBO clientebo = new ClienteBO();
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		String operacao = req.getParameter("op");
+		Cliente cliente;
 
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
+
+			switch (operacao) {
+			case "cadastrar":
 				req.getRequestDispatcher(CADASTRAR).forward(req, resp);
-			} else if (operacao.equals("buscar")) {
-				List<Cliente> clientes = clientebo.buscar(req.getParameter("busca"));
+				break;
+			case "buscar":
+				List<Cliente> clientes = clientebo.buscar(req
+						.getParameter("busca"));
 				req.setAttribute("clientes", clientes);
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Cliente cliente = clientebo.obterCliente(Integer.parseInt(req.getParameter("clienteId")));
+				break;
+			case "alterar":
+				cliente = clientebo.obterCliente(Integer.parseInt(req
+						.getParameter("clienteId")));
 				req.setAttribute("cliente", cliente);
 				req.getRequestDispatcher(ALTERAR).forward(req, resp);
-			} else if (operacao.equals("excluir")) {
-				if (clientebo.remover(Integer.parseInt(req.getParameter("clienteId")))) {
+				break;
+			case "excluir":
+				if (clientebo.remover(Integer.parseInt(req
+						.getParameter("clienteId")))) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");
@@ -59,30 +70,36 @@ public class ClienteController extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String operacao = req.getParameter("op");
-
+		Cliente cliente;
 		if (operacao != null) {
 			log.debug("consultando operacao");
-			if (operacao.equals("cadastrar")) {
-				Cliente cliente = new Cliente(req);
+
+			switch (operacao) {
+			case "cadastrar":
+				cliente = new Cliente(req);
 				if (clientebo.adicionar(cliente)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else if (operacao.equals("alterar")) {
-				Cliente cliente = new Cliente(req);
+				break;
+			case "alterar":
+				cliente = new Cliente(req);
 				if (clientebo.alterar(cliente)) {
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
-			} else {
+				break;
+			default:
 				log.debug("operacao desconhecida");
 				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
 			}
 		} else {
 			log.debug("nao consta operacao");
