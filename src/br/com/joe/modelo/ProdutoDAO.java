@@ -91,6 +91,7 @@ public class ProdutoDAO {
 			Produto produto = new Produto();
 			produto.setId(rs.getInt("id"));
 			produto.setNome(rs.getString("nome"));
+			produto.setPreco(rs.getDouble("preco"));
 			produtos.add(produto);
 		}
 		rs.close();

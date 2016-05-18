@@ -17,10 +17,11 @@ import br.com.joe.vo.Venda;
 public class RelatorioController extends HttpServlet {
 
 	private static Logger log = Logger.getLogger(RelatorioController.class);
-	private static String RELATORIOVENDAS = "relatorio/relatorio-vendas.jsp";
+	private static String RELATORIO_VENDAS = "relatorio/relatorio-vendas.jsp";
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		String operacao = req.getParameter("op");
 		VendaBO vendaBO = new VendaBO();
@@ -28,11 +29,20 @@ public class RelatorioController extends HttpServlet {
 		if (operacao.equals("relatorioVendas")) {
 			log.debug("obtendo historico de vendas");
 
-			java.sql.Date dtInicio = java.sql.Date.valueOf(req.getParameter("dtInicio"));
-			java.sql.Date dtFim = java.sql.Date.valueOf(req.getParameter("dtFim"));
-			List<Venda> historicoVendas = vendaBO.obterVendasPorIntervalo(dtInicio, dtFim);
+			java.sql.Date dtInicio = java.sql.Date.valueOf(req
+					.getParameter("dtInicio"));
+			java.sql.Date dtFim = java.sql.Date.valueOf(req
+					.getParameter("dtFim"));
+			List<Venda> historicoVendas = vendaBO.obterVendasPorIntervalo(
+					dtInicio, dtFim);
+			req.setAttribute("dtInicio", dtInicio);
+			req.setAttribute("dtFim", dtFim);
 			req.setAttribute("historicoVendas", historicoVendas);
-			req.getRequestDispatcher(RELATORIOVENDAS).forward(req, resp);
+			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
+		} else if (operacao.equals("preparaRelatorioVendas")) {
+			req.setAttribute("dtInicio", new java.sql.Date(new java.util.Date().getTime()));
+			req.setAttribute("dtFim", new java.sql.Date(new java.util.Date().getTime()));
+			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 		}
 
 	}

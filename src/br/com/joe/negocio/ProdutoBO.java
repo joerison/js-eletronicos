@@ -15,10 +15,14 @@ public class ProdutoBO {
 
 	public boolean adicionar(Produto produto) {
 		log.debug("adicionando produto" + produto.getNome());
-		try {
-			produtoDAO.adicionar(produto);
-			return true;
-		} catch (SQLException e) {
+		if (produto.getPreco() >= 0) {
+			try {
+				produtoDAO.adicionar(produto);
+				return true;
+			} catch (SQLException e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -35,10 +39,14 @@ public class ProdutoBO {
 
 	public boolean atualizar(Produto produto) {
 		log.debug("atualizando produto: " + produto.getId());
-		try {
-			produtoDAO.atualizar(produto);
-			return true;
-		} catch (SQLException e) {
+		if (produto.getPreco() >= 0) {
+			try {
+				produtoDAO.atualizar(produto);
+				return true;
+			} catch (SQLException e) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}

@@ -19,7 +19,13 @@
 			<input type="submit" value="Procurar" />
 		</form>
 		<br />
+		<c:if test="${clientes!=null}">
 		<table border=1>
+			<tr>
+				<th>Nome</th>
+				<th>Alterar</th>
+				<th>Excluir</th>
+			</tr>
 			<c:forEach var="cliente" items="${clientes}">
 				<tr>
 					<td colspan="1">${cliente.nome}</td>
@@ -38,6 +44,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		</c:if>
 		<br />
 	<a href="cliente?op=cadastrar">Cadastrar Cliente</a>
 

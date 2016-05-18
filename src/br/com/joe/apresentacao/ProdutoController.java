@@ -82,7 +82,7 @@ public class ProdutoController extends HttpServlet {
 				if(produtoBO.atualizar(produto)){
 					req.setAttribute("mensagem", Mensagens.sucesso);
 				} else {
-					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+					req.setAttribute("mensagem", Mensagens.erroAtualizar);
 				}
 				req.getRequestDispatcher(INDEX).forward(req, resp);
 			} else {

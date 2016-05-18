@@ -18,7 +18,13 @@
 		<input type="submit" value="Procurar" />
 	</form>
 		<br />
+		<c:if test="${funcionarios!=null}">
 		<table border=1>
+			<tr>
+				<th>Nome</th>
+				<th>Alterar</th>
+				<th>Excluir</th>
+			</tr>
 			<c:forEach var="funcionario" items="${funcionarios}">
 				<tr>
 					<td colspan="1">${funcionario.nome}</td>
@@ -37,6 +43,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		</c:if>
 		<br />
 	<a href="funcionario?op=cadastrar">Cadastrar Funcionario</a>
 </body>

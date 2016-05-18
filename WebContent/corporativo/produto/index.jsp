@@ -18,10 +18,18 @@
 			<input type="submit" value="Procurar" />
 		</form>
 		<br />
+		<c:if test="${produtos!=null}">
 		<table border=1>
+		<tr>
+			<th>Nome</th>
+			<th>Preco (R$)</th>
+			<th>Alterar</th>
+			<th>Excluir</th>
+		</tr>
 			<c:forEach var="produto" items="${produtos}">
 				<tr>
 					<td colspan="1">${produto.nome}</td>
+					<td colspan="1">${produto.preco}</td>
 					<td colspan="1"><a
 						href="
 						<c:url value="produto">
@@ -37,6 +45,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		</c:if>
 		<br />
 	<a href="produto?op=cadastrar">Cadastrar Produto</a>
 
