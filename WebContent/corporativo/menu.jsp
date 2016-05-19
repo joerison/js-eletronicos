@@ -5,6 +5,7 @@
 <html>
 <head>
 <script src="/projetoltpiv/js/jquery-2.2.3.min.js"></script>
+<script src="/projetoltpiv/js/scripts.js"></script>
 <link rel="stylesheet" href="/projetoltpiv/css/estilo.css">
 </head>
 <body>

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import br.com.joe.negocio.ClienteBO;
 import br.com.joe.negocio.ProdutoBO;
 import br.com.joe.negocio.VendaBO;
+import br.com.joe.util.Validacao;
 import br.com.joe.vo.Cliente;
 import br.com.joe.vo.Funcionario;
 import br.com.joe.vo.ItemVenda;
@@ -59,7 +60,23 @@ public class VendaController extends HttpServlet {
 			break;
 		case "salvarVenda":
 			vendaBO = new VendaBO();
-			venda.setDesconto(Double.parseDouble(req.getParameter("desconto")));
+			Validacao validacao = new Validacao();
+
+			if (!validacao.numeroValido(req.getParameter("desconto"))) {
+				if (!req.getParameter("desconto").equals("")) {
+					log.debug("VAZIO: "
+							+ req.getParameter("desconto").equals(""));
+					log.debug("EH NUMERO: "
+							+ validacao.numeroValido(req.getParameter("desconto")));
+					log.debug(req.getParameter("desconto"));
+					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+					req.getRequestDispatcher(INDEX).forward(req, resp);
+					break;
+				}
+			} else {
+				venda.setDesconto(Double.parseDouble(req
+						.getParameter("desconto")));
+			}
 			venda.setFuncionario((Funcionario) session
 					.getAttribute("funcionario"));
 			venda.setData(new java.sql.Date(new java.util.Date().getTime()));

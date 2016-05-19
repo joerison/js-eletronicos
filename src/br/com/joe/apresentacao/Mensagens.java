@@ -6,6 +6,7 @@ public class Mensagens {
 	public static String erroAdicionar = "Nao foi possivel adicionar";
 	public static String erroAtualizar = "Nao foi possivel atualizar";
 	public static String erroRemover = "Nao foi possivel remover";
+	public static String erroNoProcessamento = "Erro ao processar a solicitacao";
 	public static String sucesso = "Sucesso na operacao";
 	
 }

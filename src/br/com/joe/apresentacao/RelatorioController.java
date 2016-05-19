@@ -1,6 +1,7 @@
 package br.com.joe.apresentacao;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,26 +29,33 @@ public class RelatorioController extends HttpServlet {
 
 		switch (operacao) {
 		case "preparaRelatorioVendas":
-			req.setAttribute("dtInicio",
-					new java.sql.Date(new java.util.Date().getTime()));
-			req.setAttribute("dtFim",
-					new java.sql.Date(new java.util.Date().getTime()));
+			java.util.Date data = new java.util.Date();
+
+			SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
+
+			req.setAttribute("dtInicio", dt1.format(data));
+			req.setAttribute("dtFim", dt1.format(data));
 			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 			break;
 		case "relatorioVendas":
 			log.debug("obtendo historico de vendas");
-
-			java.sql.Date dtInicio = java.sql.Date.valueOf(req
-					.getParameter("dtInicio"));
-			java.sql.Date dtFim = java.sql.Date.valueOf(req
-					.getParameter("dtFim"));
 			List<Venda> historicoVendas = vendaBO.obterVendasPorIntervalo(
-					dtInicio, dtFim);
-			req.setAttribute("dtInicio", dtInicio);
-			req.setAttribute("dtFim", dtFim);
+					req.getParameter("dtInicio"), req.getParameter("dtFim"));
+
+			if (historicoVendas == null) {
+				req.setAttribute("mensagem", Mensagens.erroNoProcessamento);
+				req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
+				break;
+			}
+
+			// mantendo o estado da pesquisa
+			req.setAttribute("dtInicio", req.getParameter("dtInicio"));
+			req.setAttribute("dtFim", req.getParameter("dtFim"));
+
 			req.setAttribute("historicoVendas", historicoVendas);
 			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 			break;
+
 		default:
 			break;
 		}

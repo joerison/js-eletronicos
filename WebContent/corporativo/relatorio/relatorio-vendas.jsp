@@ -5,12 +5,11 @@
 	<jsp:include page="/corporativo/menu.jsp" />
 	<br />
 	<br />
-
 	<form action="/projetoltpiv/corporativo/relatorio">
 		<label for="dtInicio">Data inicial:</label>
-		<input type="date"  value="${dtInicio}" name="dtInicio" id="dtInicio" /> 
+		<input type="text"  value="${dtInicio}" name="dtInicio" id="dtInicio" /> 
 		<label for="dtFim">Data	final:</label> 
-		<input type="date" value="${dtFim}" name="dtFim" id="dtFim" /> 
+		<input type="text" value="${dtFim}" name="dtFim" id="dtFim" /> 
 		<input type="hidden" name="op" value="relatorioVendas" /> <br />
 		<br /> <input type="submit" value="Emitir Relatorio" />
 	</form>

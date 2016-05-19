@@ -1,12 +1,12 @@
 package br.com.joe.negocio;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import br.com.joe.modelo.VendaDAO;
+import br.com.joe.util.Validacao;
 import br.com.joe.vo.ItemVenda;
 import br.com.joe.vo.Venda;
 
@@ -59,12 +59,22 @@ public class VendaBO {
 		}
 	}
 
-	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) {
+	public List<Venda> obterVendasPorIntervalo(String inicio, String fim) {
 		log.debug("obtendo venda por intervalo");
-		try {
-			return vendaDAO.obterVendasPorIntervalo(inicio, fim);
-		} catch (SQLException e) {
-			log.error(e.getMessage());
+		Validacao validacao = new Validacao();
+
+		java.sql.Date dtInicio = validacao.converterData(inicio);
+		java.sql.Date dtFim = validacao.converterData(fim);
+
+		if (dtInicio != null && dtFim != null) {
+			try {
+				return vendaDAO.obterVendasPorIntervalo(dtInicio, dtFim);
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return null;
+			}
+		} else {
+			log.error("data invalida");
 			return null;
 		}
 	}

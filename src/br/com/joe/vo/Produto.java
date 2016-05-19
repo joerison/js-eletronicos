@@ -21,7 +21,7 @@ public class Produto {
 		this.id = Integer.parseInt(req.getParameter("id"));
 		this.nome = req.getParameter("nome");
 		Validacao validacao = new Validacao();
-		if (validacao.ehNumero(req.getParameter("preco"))) {
+		if (validacao.numeroValido(req.getParameter("preco"))) {
 			this.preco = Double.parseDouble(req.getParameter("preco"));
 		}
 		this.categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req
