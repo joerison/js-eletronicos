@@ -7,7 +7,6 @@
 
 			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
-		
 		Venda ID: <b>${vendaConsulta.id}</b> <br/>
 		Cliente: <b>${vendaConsulta.cliente.nome}</b>  <br/>
 		Data Venda: <b><fmt:formatDate value="${vendaConsulta.data}" pattern="dd/MM/yyyy" /></b>  <br/>

@@ -15,7 +15,7 @@ public class ProdutoBO {
 
 	public boolean adicionar(Produto produto) {
 		log.debug("adicionando produto" + produto.getNome());
-		if (fereRegra(produto) || existeCampoObrigatorioNulo(produto)) {
+		if (!(existeCampoObrigatorioNulo(produto) || fereRegra(produto))) {
 			try {
 				produtoDAO.adicionar(produto);
 				return true;
@@ -41,7 +41,7 @@ public class ProdutoBO {
 
 	public boolean atualizar(Produto produto) {
 		log.debug("atualizando produto: " + produto.getId());
-		if (fereRegra(produto) || existeCampoObrigatorioNulo(produto)) {
+		if (!(existeCampoObrigatorioNulo(produto) || fereRegra(produto))) {
 			try {
 				produtoDAO.atualizar(produto);
 				return true;

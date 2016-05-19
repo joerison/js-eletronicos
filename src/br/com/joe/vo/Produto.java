@@ -3,6 +3,7 @@ package br.com.joe.vo;
 import javax.servlet.http.HttpServletRequest;
 
 import br.com.joe.negocio.CategoriaBO;
+import br.com.joe.util.Validacao;
 
 public class Produto {
 
@@ -19,8 +20,12 @@ public class Produto {
 		CategoriaBO categoriaBO = new CategoriaBO();
 		this.id = Integer.parseInt(req.getParameter("id"));
 		this.nome = req.getParameter("nome");
-		this.preco = Double.parseDouble(req.getParameter("preco"));
-		this.categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req.getParameter("categoria")));
+		Validacao validacao = new Validacao();
+		if (validacao.ehNumero(req.getParameter("preco"))) {
+			this.preco = Double.parseDouble(req.getParameter("preco"));
+		}
+		this.categoria = categoriaBO.obterCategoriaPorId(Integer.parseInt(req
+				.getParameter("categoria")));
 	}
 
 	public int getId() {
@@ -54,5 +59,4 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
 }
