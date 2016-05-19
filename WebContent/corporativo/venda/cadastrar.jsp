@@ -10,7 +10,7 @@
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<label for="clientes">Clientes: </label>
 			<select name="clienteId">
-			<c:forEach var="cliente" items="${clientes}">
+			<c:forEach var="cliente" items="${clientes_disponiveis}">
 			  <option value="${cliente.id}">${cliente.nome}</option>
 			</c:forEach>	  
 			</select>
@@ -21,7 +21,7 @@
 		<form action="/projetoltpiv/corporativo/venda" method="post">
 			<label for="produtos">Produtos: </label>
 			<select name="produtoId">
-			<c:forEach var="produto" items="${produtos}">
+			<c:forEach var="produto" items="${produtos_disponiveis}">
 			  <option value="${produto.id}">${produto.nome}</option>
 			</c:forEach>	  
 			</select>

@@ -114,11 +114,11 @@ public class VendaController extends HttpServlet {
 		switch (operacao) {
 		case "preparaVenda":
 			ClienteBO clienteBO = new ClienteBO();
-			List<Cliente> clientes = clienteBO.buscar("");
+			List<Cliente> clientes_disponiveis = clienteBO.buscar("");
 			ProdutoBO produtoBO = new ProdutoBO();
-			List<Produto> produtos = produtoBO.buscar("");
-			session.setAttribute("produtos", produtos);
-			session.setAttribute("clientes", clientes);
+			List<Produto> produtos_disponiveis = produtoBO.buscar("");
+			session.setAttribute("produtos_disponiveis", produtos_disponiveis);
+			session.setAttribute("clientes_disponiveis", clientes_disponiveis);
 			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA)
 					.forward(req, resp);
 			break;
