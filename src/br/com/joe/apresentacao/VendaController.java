@@ -1,6 +1,7 @@
 package br.com.joe.apresentacao;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,8 +27,8 @@ public class VendaController extends HttpServlet {
 
 	private static Logger log = Logger.getLogger(VendaController.class);
 
-	private static String PREPARA_CADASTRAR_VENDA = "venda/cadastrar.jsp";
-	private static String CONSULTARVENDA = "/corporativo/venda/consultar-venda.jsp";
+	private static String CADASTRAR_VENDA = "venda/cadastrar.jsp";
+	private static String CONSULTAR_VENDA = "/corporativo/venda/consultar-venda.jsp";
 	private static String INDEX = "/corporativo/venda/index.jsp";
 
 	private Venda venda = null;
@@ -47,7 +48,7 @@ public class VendaController extends HttpServlet {
 			ItemVenda itemVenda = new ItemVenda(req);
 			venda.getItensVenda().add(itemVenda);
 
-			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA)
+			req.getRequestDispatcher(CADASTRAR_VENDA)
 					.forward(req, resp);
 			break;
 		case "adicionarCliente":
@@ -55,7 +56,7 @@ public class VendaController extends HttpServlet {
 			Cliente cliente = clienteBO.obterCliente(Integer.parseInt(req
 					.getParameter("clienteId")));
 			venda.setCliente(cliente);
-			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA)
+			req.getRequestDispatcher(CADASTRAR_VENDA)
 					.forward(req, resp);
 			break;
 		case "salvarVenda":
@@ -67,9 +68,11 @@ public class VendaController extends HttpServlet {
 					log.debug("VAZIO: "
 							+ req.getParameter("desconto").equals(""));
 					log.debug("EH NUMERO: "
-							+ validacao.numeroValido(req.getParameter("desconto")));
+							+ validacao.numeroValido(req
+									.getParameter("desconto")));
 					log.debug(req.getParameter("desconto"));
 					req.setAttribute("mensagem", Mensagens.erroAdicionar);
+					inicializarData(req);
 					req.getRequestDispatcher(INDEX).forward(req, resp);
 					break;
 				}
@@ -85,29 +88,11 @@ public class VendaController extends HttpServlet {
 			} else {
 				req.setAttribute("mensagem", Mensagens.erroAdicionar);
 			}
+			inicializarData(req);
 			req.getRequestDispatcher(INDEX).forward(req, resp);
 			session.removeAttribute("venda");
 			break;
-		case "consultar":
-			if (!req.getParameter("vendaId").equals("")) {
-				vendaBO = new VendaBO();
-				Venda vendaConsulta = vendaBO.obterVendaPorId(Integer
-						.parseInt(req.getParameter("vendaId")));
-				req.setAttribute("vendaConsulta", vendaConsulta);
-				req.getRequestDispatcher(CONSULTARVENDA).forward(req, resp);
-			} else {
-				req.getRequestDispatcher(INDEX).forward(req, resp);
-			}
-			break;
-		case "excluir":
-			vendaBO = new VendaBO();
-			if (vendaBO.remover(Integer.parseInt(req.getParameter("vendaId")))) {
-				req.setAttribute("mensagem", Mensagens.sucesso);
-			} else {
-				req.setAttribute("mensagem", Mensagens.erroAdicionar);
-			}
-			req.getRequestDispatcher(INDEX).forward(req, resp);
-			break;
+
 		default:
 			break;
 		}
@@ -129,6 +114,11 @@ public class VendaController extends HttpServlet {
 		}
 
 		switch (operacao) {
+
+		case "preparaIndex":
+			inicializarData(req);
+			req.getRequestDispatcher(INDEX).forward(req, resp);
+			break;
 		case "preparaVenda":
 			ClienteBO clienteBO = new ClienteBO();
 			List<Cliente> clientes_disponiveis = clienteBO.buscar("");
@@ -136,17 +126,69 @@ public class VendaController extends HttpServlet {
 			List<Produto> produtos_disponiveis = produtoBO.buscar("");
 			session.setAttribute("produtos_disponiveis", produtos_disponiveis);
 			session.setAttribute("clientes_disponiveis", clientes_disponiveis);
-			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA)
+			req.getRequestDispatcher(CADASTRAR_VENDA)
 					.forward(req, resp);
 			break;
 		case "excluirItem":
 			venda.getItensVenda().remove(
 					Integer.parseInt(req.getParameter("produtoIndex")));
-			req.getRequestDispatcher(PREPARA_CADASTRAR_VENDA)
+			req.getRequestDispatcher(CADASTRAR_VENDA)
 					.forward(req, resp);
+			break;
+		case "consultarVendas":
+			log.debug("obtendo historico de vendas");
+			VendaBO vendaBO = new VendaBO();
+
+			List<Venda> vendas = vendaBO.obterVendasPorIntervalo(
+					req.getParameter("dtInicio"), req.getParameter("dtFim"));
+
+			if (vendas == null) {
+				req.setAttribute("mensagem", Mensagens.erroNoProcessamento);
+				inicializarData(req);
+				req.getRequestDispatcher(INDEX).forward(req, resp);
+				break;
+			}
+
+			// mantendo o estado da pesquisa
+			req.setAttribute("dtInicio", req.getParameter("dtInicio"));
+			req.setAttribute("dtFim", req.getParameter("dtFim"));
+
+			req.setAttribute("vendas", vendas);
+			req.getRequestDispatcher(INDEX).forward(req, resp);
+			break;
+		case "consultarVenda":
+			if (!req.getParameter("vendaId").equals("")) {
+				vendaBO = new VendaBO();
+				Venda vendaConsulta = vendaBO.obterVendaPorId(Integer
+						.parseInt(req.getParameter("vendaId")));
+				req.setAttribute("vendaConsulta", vendaConsulta);
+				req.getRequestDispatcher(CONSULTAR_VENDA).forward(req, resp);
+			} else {
+				req.getRequestDispatcher(INDEX).forward(req, resp);
+			}
+			break;
+		case "excluirVenda":
+			vendaBO = new VendaBO();
+			if (vendaBO.remover(Integer.parseInt(req.getParameter("vendaId")))) {
+				req.setAttribute("mensagem", Mensagens.sucesso);
+			} else {
+				req.setAttribute("mensagem", Mensagens.erroAdicionar);
+			}
+			
+			inicializarData(req);
+			req.getRequestDispatcher(INDEX).forward(req, resp);
 			break;
 		default:
 			break;
 		}
+	}
+	
+	public void inicializarData(HttpServletRequest req){
+		java.util.Date data = new java.util.Date();
+
+		SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
+
+		req.setAttribute("dtInicio", dt1.format(data));
+		req.setAttribute("dtFim", dt1.format(data));
 	}
 }

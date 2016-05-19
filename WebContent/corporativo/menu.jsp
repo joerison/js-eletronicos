@@ -18,7 +18,7 @@
 				<li><a href="/projetoltpiv/corporativo/produto">Produtos</a></li>
 				<li><a href="/projetoltpiv/corporativo/produto/categoria">Categorias</a></li>
 			</ul></li>
-		<li><a href="/projetoltpiv/corporativo/venda/index.jsp">Venda</a>
+		<li><a href="/projetoltpiv/corporativo/venda?op=preparaIndex">Venda</a>
 		<li><a href="/projetoltpiv/corporativo/relatorio?op=preparaRelatorioVendas">Relatório de Vendas</a>
 		</li>
 		<li><a href="/projetoltpiv/validacaoDeAcesso?logout=true">Sair</a></li>

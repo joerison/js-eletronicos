@@ -9,6 +9,7 @@
 <br /><br />
 		Venda ID: <b>${vendaConsulta.id}</b> <br/>
 		Cliente: <b>${vendaConsulta.cliente.nome}</b>  <br/>
+		Funcionario: <b>${vendaConsulta.funcionario.nome}</b>  <br/>
 		Data Venda: <b><fmt:formatDate value="${vendaConsulta.data}" pattern="dd/MM/yyyy" /></b>  <br/>
 		<br/>
 		<table border=1>
@@ -27,12 +28,5 @@
 		</table>
 		Desconto: ${vendaConsulta.desconto} <br/>
 		Total: ${vendaConsulta.total}
-		
-		<form action="/projetoltpiv/corporativo/venda" method="post" onsubmit="return (confirm ('Confirma exclusao?'));">
-			<input type="hidden" name="op" value="excluir"/><br />
-			<input type="hidden" name="vendaId" value="${vendaConsulta.id}"/><br />
-			<input type="submit"value="Excluir venda" />
-		</form>
-		
 	</body>
 </html>
