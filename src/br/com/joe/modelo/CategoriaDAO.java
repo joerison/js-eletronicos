@@ -55,7 +55,9 @@ public class CategoriaDAO {
 		log.debug("obtendo categoria id " + id);
 		Categoria categoria = new Categoria();
 			String sql = "SELECT * FROM categoria where id = ?";
+			log.debug("OBJETO conexao" + conexao);
 			PreparedStatement stmt = conexao.prepareStatement(sql);
+			log.debug("OBJETO STMT" + stmt);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

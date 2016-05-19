@@ -122,7 +122,9 @@ public class VendaDAO {
 		FuncionarioDAO funcionarioDao = new FuncionarioDAO();
 		ProdutoDAO produtoDao = new ProdutoDAO();
 		String sql = "SELECT * FROM venda WHERE data >= ? AND data <= ?";
+		log.debug("OBJETO conexao" + conexao);
 		PreparedStatement stmt = conexao.prepareStatement(sql);
+		log.debug("OBJETO STMT" + stmt);
 		stmt.setDate(1, inicio);
 		stmt.setDate(2, fim);
 		ResultSet rs = stmt.executeQuery();

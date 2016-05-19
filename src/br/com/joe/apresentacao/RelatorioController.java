@@ -52,6 +52,15 @@ public class RelatorioController extends HttpServlet {
 			req.setAttribute("dtInicio", req.getParameter("dtInicio"));
 			req.setAttribute("dtFim", req.getParameter("dtFim"));
 
+			Double totalDesconto = 0.0;
+			Double totalVenda = 0.0;
+			for (Venda venda : historicoVendas){
+				totalVenda += venda.getTotal();
+				totalDesconto += venda.getDesconto();
+			}
+			
+			req.setAttribute("totalVenda", totalVenda);
+			req.setAttribute("totalDesconto", totalDesconto);
 			req.setAttribute("historicoVendas", historicoVendas);
 			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 			break;

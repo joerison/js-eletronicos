@@ -13,8 +13,9 @@
 		<input type="hidden" name="op" value="relatorioVendas" /> <br />
 		<br /> <input type="submit" value="Emitir Relatorio" />
 	</form>
-	<br />
 	<c:if test="${historicoVendas!=null}">
+	Total acumulado:  <b>${totalVenda}</b><br />
+	Total desconto: <b>${totalDesconto}</b><br /><br />
 		<table border="1">
 			<tr>
 				<th>Venda ID</th>
