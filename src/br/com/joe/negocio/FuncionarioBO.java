@@ -15,10 +15,15 @@ public class FuncionarioBO {
 
 	public boolean adicionar(Funcionario funcionario) {
 		log.debug("adicionando funcionario" + funcionario.getLogin());
-		try {
-			funcionarioDAO.adicionar(funcionario);
-			return true;
-		} catch (SQLException e) {
+		if (!existeCampoObrigatorioNulo(funcionario)) {
+			try {
+				funcionarioDAO.adicionar(funcionario);
+				return true;
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -29,16 +34,22 @@ public class FuncionarioBO {
 			funcionarioDAO.remover(id);
 			return true;
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return false;
 		}
 	}
 
 	public boolean atualizar(Funcionario funcionario) {
 		log.debug("atualizando funcionario: " + funcionario.getId());
-		try {
-			funcionarioDAO.atualizar(funcionario);
-			return true;
-		} catch (SQLException e) {
+		if (!existeCampoObrigatorioNulo(funcionario)) {
+			try {
+				funcionarioDAO.atualizar(funcionario);
+				return true;
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -48,6 +59,7 @@ public class FuncionarioBO {
 		try {
 			return funcionarioDAO.obterFuncionarioPorId(id);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -57,6 +69,7 @@ public class FuncionarioBO {
 		try {
 			return funcionarioDAO.obterFuncionarioPorLogin(login);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -66,7 +79,22 @@ public class FuncionarioBO {
 		try {
 			return funcionarioDAO.buscar(busca);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
+
+	public boolean existeCampoObrigatorioNulo(Funcionario funcionario) {
+		if (funcionario.getNome().equals("") || funcionario.getCpf().equals("")
+				|| funcionario.getEmail().equals("")
+				|| funcionario.getCelular().equals("")
+				|| funcionario.getSexo().equals("")
+				|| funcionario.getLogin().equals("")
+				|| funcionario.getSenha().equals("")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

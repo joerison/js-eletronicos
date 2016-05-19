@@ -15,11 +15,12 @@ public class ProdutoBO {
 
 	public boolean adicionar(Produto produto) {
 		log.debug("adicionando produto" + produto.getNome());
-		if (produto.getPreco() >= 0) {
+		if (fereRegra(produto) || existeCampoObrigatorioNulo(produto)) {
 			try {
 				produtoDAO.adicionar(produto);
 				return true;
 			} catch (SQLException e) {
+				log.error(e.getMessage());
 				return false;
 			}
 		} else {
@@ -33,17 +34,19 @@ public class ProdutoBO {
 			produtoDAO.remover(id);
 			return true;
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return false;
 		}
 	}
 
 	public boolean atualizar(Produto produto) {
 		log.debug("atualizando produto: " + produto.getId());
-		if (produto.getPreco() >= 0) {
+		if (fereRegra(produto) || existeCampoObrigatorioNulo(produto)) {
 			try {
 				produtoDAO.atualizar(produto);
 				return true;
 			} catch (SQLException e) {
+				log.error(e.getMessage());
 				return false;
 			}
 		} else {
@@ -56,6 +59,7 @@ public class ProdutoBO {
 		try {
 			return produtoDAO.obterProdutoPorId(id);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -65,7 +69,25 @@ public class ProdutoBO {
 		try {
 			return produtoDAO.buscar(busca);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
+		}
+	}
+
+	public boolean fereRegra(Produto produto) {
+		if (produto.getPreco() < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean existeCampoObrigatorioNulo(Produto produto) {
+		if (produto.getCategoria() == null || produto.getNome().equals("")
+				|| produto.getPreco() == null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

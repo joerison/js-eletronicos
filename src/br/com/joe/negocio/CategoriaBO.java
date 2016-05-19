@@ -15,11 +15,12 @@ public class CategoriaBO {
 
 	public boolean adicionar(Categoria categoria) {
 		log.debug("adicionando categoria" + categoria.getNome());
-		if (!categoria.getNome().equals("")) {
+		if (!existeCampoObrigatorioNulo(categoria)) {
 			try {
 				categoriaDAO.adicionar(categoria);
 				return true;
 			} catch (SQLException e) {
+				log.error(e.getMessage());
 				return false;
 			}
 		} else {
@@ -34,16 +35,22 @@ public class CategoriaBO {
 			categoriaDAO.remover(id);
 			return true;
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return false;
 		}
 	}
 
 	public boolean atualizar(Categoria categoria) {
 		log.debug("atualizando categoria: " + categoria.getId());
-		try {
-			categoriaDAO.atualizar(categoria);
-			return true;
-		} catch (SQLException e) {
+		if (!existeCampoObrigatorioNulo(categoria)) {
+			try {
+				categoriaDAO.atualizar(categoria);
+				return true;
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -53,6 +60,7 @@ public class CategoriaBO {
 		try {
 			return categoriaDAO.obterCategoriaPorId(id);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -62,7 +70,16 @@ public class CategoriaBO {
 		try {
 			return categoriaDAO.buscar(busca);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
+		}
+	}
+
+	public boolean existeCampoObrigatorioNulo(Categoria categoria) {
+		if (categoria.getNome().equals("")) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

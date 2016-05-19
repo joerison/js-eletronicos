@@ -18,19 +18,19 @@ public class VendaBO {
 	public boolean adicionar(Venda venda) {
 		log.debug("adicionando venda" + venda.getId());
 
-		for (ItemVenda vendaItem : venda.getItensVenda()) {
-			venda.setTotal((venda.getTotal() + vendaItem.getTotal()));
-			if (vendaItem.getQtd() < 1) {
-				return false;
-			}
-		}
-		venda.setTotal(venda.getTotal() - venda.getDesconto());
-
-		if (!(venda.getCliente() == null)) {
+		if (!existeCampoObrigatorioNulo(venda)) {
 			try {
+				for (ItemVenda vendaItem : venda.getItensVenda()) {
+					venda.setTotal((venda.getTotal() + vendaItem.getTotal()));
+					if (vendaItem.getQtd() < 1) {
+						return false;
+					}
+				}
+				venda.setTotal(venda.getTotal() - venda.getDesconto());
 				vendaDAO.adicionar(venda);
 				return true;
 			} catch (SQLException e) {
+				log.error(e.getMessage());
 				return false;
 			}
 		} else {
@@ -54,6 +54,7 @@ public class VendaBO {
 		try {
 			return vendaDAO.obterVendaPorId(id);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -65,6 +66,14 @@ public class VendaBO {
 		} catch (SQLException e) {
 			log.error(e.getMessage());
 			return null;
+		}
+	}
+
+	public boolean existeCampoObrigatorioNulo(Venda venda) {
+		if (venda.getCliente() == null || venda.getItensVenda().size() == 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

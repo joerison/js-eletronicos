@@ -13,11 +13,16 @@ public class ClienteBO {
 
 	public boolean adicionar(Cliente cliente) {
 		log.debug("adicionando cliente" + cliente.getNome());
-		try {
-			ClienteDAO clienteDao = new ClienteDAO();
-			clienteDao.adicionar(cliente);
-			return true;
-		} catch (SQLException e) {
+		if (!existeCampoObrigatorioNulo(cliente)) {
+			try {
+				ClienteDAO clienteDao = new ClienteDAO();
+				clienteDao.adicionar(cliente);
+				return true;
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return false;
+			}
+		} else {
 			return false;
 		}
 	}
@@ -28,6 +33,7 @@ public class ClienteBO {
 			ClienteDAO clienteDAO = new ClienteDAO();
 			return clienteDAO.obterClientePorId(id);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}
@@ -38,6 +44,7 @@ public class ClienteBO {
 		try {
 			return clienteDao.buscar(busca);
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return null;
 		}
 
@@ -50,19 +57,36 @@ public class ClienteBO {
 			clienteDAO.remover(clienteId);
 			return true;
 		} catch (SQLException e) {
+			log.error(e.getMessage());
 			return false;
 		}
 	}
 
 	public boolean alterar(Cliente cliente) {
-		log.debug("atualizando cliente: " + cliente.getId() + " - " + cliente.getNome());
+		log.debug("atualizando cliente: " + cliente.getId() + " - "
+				+ cliente.getNome());
 		ClienteDAO clienteDAO = new ClienteDAO();
-		try {
-			clienteDAO.atualizar(cliente);
-			return true;
-		} catch (SQLException e) {
+		if (!existeCampoObrigatorioNulo(cliente)) {
+			try {
+				clienteDAO.atualizar(cliente);
+				return true;
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+				return false;
+			}
+		} else {
 			return false;
 		}
+	}
 
+	public boolean existeCampoObrigatorioNulo(Cliente cliente) {
+		if (cliente.getNome().equals("") || cliente.getCpf().equals("")
+				|| cliente.getEmail().equals("")
+				|| cliente.getCelular().equals("")
+				|| cliente.getSexo().equals("")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
