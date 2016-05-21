@@ -5,7 +5,7 @@
 	<jsp:include page="/corporativo/menu.jsp" />
 	<br />
 	<br />
-	<form action="/projetoltpiv/corporativo/relatorio">
+	<form action="/js-eletronicos/corporativo/relatorio">
 		<label for="dtInicio">Data inicial:</label>
 		<input type="text"  value="${dtInicio}" name="dtInicio" id="dtInicio" /> 
 		<label for="dtFim">Data	final:</label> 

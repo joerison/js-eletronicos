@@ -5,6 +5,6 @@
 	<h1>JS Eletrônicos</h1>
 	<a href="corporativo">Corporativo</a>
 	<a href="publico">Público</a>
-	<script src="/projetoltpiv/js/scripts.js"></script>
+	<script src="/js-eletronicos/js/scripts.js"></script>
 </body>
 </html>

@@ -19,7 +19,7 @@ public class ValidacaoDeAcesso extends HttpServlet {
 
 	private static Logger log = Logger.getLogger(ValidacaoDeAcesso.class);
 
-	private String INDEX = "/projetoltpiv/index.jsp";
+	private String INDEX = "/js-eletronicos/index.jsp";
 	private String CORPORATIVO = "/corporativo/index.jsp";
 	private String LOGIN = "/login.jsp";
 	

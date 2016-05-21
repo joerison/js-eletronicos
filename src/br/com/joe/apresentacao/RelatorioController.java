@@ -29,12 +29,7 @@ public class RelatorioController extends HttpServlet {
 
 		switch (operacao) {
 		case "preparaRelatorioVendas":
-			java.util.Date data = new java.util.Date();
-
-			SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
-
-			req.setAttribute("dtInicio", dt1.format(data));
-			req.setAttribute("dtFim", dt1.format(data));
+			inicializarData(req);
 			req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 			break;
 		case "relatorioVendas":
@@ -44,6 +39,7 @@ public class RelatorioController extends HttpServlet {
 
 			if (historicoVendas == null) {
 				req.setAttribute("mensagem", Mensagens.erroNoProcessamento);
+				inicializarData(req);
 				req.getRequestDispatcher(RELATORIO_VENDAS).forward(req, resp);
 				break;
 			}
@@ -58,7 +54,6 @@ public class RelatorioController extends HttpServlet {
 				totalVenda += venda.getTotal();
 				totalDesconto += venda.getDesconto();
 			}
-			
 			req.setAttribute("totalVenda", totalVenda);
 			req.setAttribute("totalDesconto", totalDesconto);
 			req.setAttribute("historicoVendas", historicoVendas);
@@ -69,5 +64,14 @@ public class RelatorioController extends HttpServlet {
 			break;
 		}
 
+	}
+	
+	public void inicializarData(HttpServletRequest req){
+		java.util.Date data = new java.util.Date();
+
+		SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
+
+		req.setAttribute("dtInicio", dt1.format(data));
+		req.setAttribute("dtFim", dt1.format(data));
 	}
 }

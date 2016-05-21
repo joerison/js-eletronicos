@@ -7,7 +7,7 @@
 			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
 		
-		<form action="/projetoltpiv/corporativo/venda" method="post">
+		<form action="/js-eletronicos/corporativo/venda" method="post">
 			<label for="clientes">Clientes: </label>
 			<select name="clienteId">
 			<c:forEach var="cliente" items="${clientes_disponiveis}">
@@ -18,7 +18,7 @@
 			<input type="submit"value="Selecionar" />
 		</form>
 		
-		<form action="/projetoltpiv/corporativo/venda" method="post">
+		<form action="/js-eletronicos/corporativo/venda" method="post">
 			<label for="produtos">Produtos: </label>
 			<select name="produtoId">
 			<c:forEach var="produto" items="${produtos_disponiveis}">
@@ -32,7 +32,7 @@
 		</form>
 		
 		Cliente: ${venda.cliente.nome} <br/>
-		<form action="/projetoltpiv/corporativo/venda" method="post">
+		<form action="/js-eletronicos/corporativo/venda" method="post">
 			<table border=1>
 				<tr>
 					<td colspan="5" style="text-align: center">Itens Incluidos</td>
@@ -51,7 +51,7 @@
 						<td colspan="1">${itemVenda.qtd}</td>
 						<td colspan="1">${itemVenda.produto.preco}</td>
 						<td colspan="1">${itemVenda.total}</td>
-						<td colspan="1"><a href="/projetoltpiv/corporativo/venda?op=excluirItem&produtoIndex=${contador}">Remover</a></td>
+						<td colspan="1"><a href="/js-eletronicos/corporativo/venda?op=excluirItem&produtoIndex=${contador}">Remover</a></td>
 					</tr>
 					<c:set var="contador" value="${count + 1}"/>
 					<c:set var="total" value="${itemVenda.total + total}"/>

@@ -4,9 +4,9 @@
 <body>
 			<jsp:include page="/corporativo/menu.jsp" />
 <br /><br />
-<a href="/projetoltpiv/corporativo/venda?op=preparaVenda">Cadastrar Venda</a>
+<a href="/js-eletronicos/corporativo/venda?op=preparaVenda">Cadastrar Venda</a>
 <br /><br />
-	<form action="/projetoltpiv/corporativo/venda">
+	<form action="/js-eletronicos/corporativo/venda">
 		<label for="dtInicio">Data inicial:</label>
 		<input type="text"  value="${dtInicio}" name="dtInicio" id="dtInicio" /> 
 		<label for="dtFim">Data	final:</label> 
@@ -36,8 +36,10 @@
 						<td>${venda.total}</td>
 						<td><fmt:formatDate value="${venda.data}"
 								pattern="dd/MM/yyyy" /></td>
-						<td><a href="/projetoltpiv/corporativo/venda?op=consultarVenda&vendaId=${venda.id}">Consultar</a></td>
-						<td><a href="/projetoltpiv/corporativo/venda?op=excluirVenda&vendaId=${venda.id}">Excluir</a></td>
+						<td><a href="/js-eletronicos/corporativo/venda?op=consultarVenda&vendaId=${venda.id}">Consultar</a></td>
+						<td>
+						<a href="/js-eletronicos/corporativo/venda?op=excluirVenda&vendaId=${venda.id}" 
+						onclick="return (confirm ('Confirma exclusao?'));">Excluir</a></td>
 					<tr>
 				</c:forEach>
 		</table>
