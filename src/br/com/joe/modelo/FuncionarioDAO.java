@@ -16,14 +16,9 @@ public class FuncionarioDAO {
 
 	private static Logger log = Logger.getLogger(FuncionarioDAO.class);
 
-	private ConnectionFactory connectionFactory = new ConnectionFactory();
-	private Connection conexao;
-
-	public FuncionarioDAO() {
-		conexao = connectionFactory.getConnection();
-	}
-
 	public void adicionar(Funcionario funcionario) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("adicionando funcionario" + funcionario.getLogin());
 		String sql = "INSERT INTO funcionario (nome, cpf, email, celular, sexo, login, senha) values (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -36,18 +31,24 @@ public class FuncionarioDAO {
 		stmt.setString(7, funcionario.getSenha());
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public void remover(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("excluindo funcionario id " + id);
 		String sql = "DELETE FROM funcionario where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setInt(1, id);
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public void atualizar(Funcionario funcionario) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("atualizando funcionario: " + funcionario.getId());
 		String sql = "UPDATE funcionario set nome = ?, cpf = ?, email = ?, celular = ?, sexo = ?, login = ?, senha = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -61,9 +62,12 @@ public class FuncionarioDAO {
 		stmt.setInt(8, funcionario.getId());
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public Funcionario obterFuncionarioPorId(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("obtendo funcionario id " + id);
 		Funcionario funcionario = new Funcionario();
 		String sql = "SELECT * FROM funcionario where id = ?";
@@ -82,10 +86,13 @@ public class FuncionarioDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return funcionario;
 	}
 
 	public Funcionario obterFuncionarioPorLogin(String login) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("obtendo funcionario login " + login);
 		Funcionario funcionario = null;
 		String sql = "SELECT * FROM funcionario where login = ?";
@@ -108,10 +115,13 @@ public class FuncionarioDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return funcionario;
 	}
 
 	public List<Funcionario> buscar(String busca) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("buscando funcionario: " + busca);
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		String sql = "SELECT * FROM funcionario WHERE nome like ?";
@@ -132,6 +142,7 @@ public class FuncionarioDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return funcionarios;
 	}
 }

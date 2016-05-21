@@ -16,14 +16,9 @@ public class ClienteDAO {
 
 	private static Logger log = Logger.getLogger(ClienteDAO.class);
 
-	private ConnectionFactory connectionFactory = new ConnectionFactory();
-	private Connection conexao;
-
-	public ClienteDAO() {
-		conexao = connectionFactory.getConnection();
-	}
-
 	public void adicionar(Cliente cliente) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("adicionando cliente" + cliente.getNome());
 		String sql = "INSERT INTO cliente (nome, cpf, email, celular, sexo) values (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -34,19 +29,24 @@ public class ClienteDAO {
 		stmt.setString(5, cliente.getSexo());
 		stmt.execute();
 		stmt.close();
-
+		conexao.close();
 	}
 
 	public void remover(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("excluindo cliente id " + id);
 		String sql = "DELETE FROM cliente where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setInt(1, id);
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public void atualizar(Cliente cliente) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("atualizando cliente: " + cliente.getId());
 		String sql = "UPDATE cliente set nome = ?, cpf= ?, email = ?, celular = ?, sexo = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -58,9 +58,12 @@ public class ClienteDAO {
 		stmt.setInt(6, cliente.getId());
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public Cliente obterClientePorId(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("obtendo cliente id " + id);
 		Cliente cliente = new Cliente();
 		String sql = "SELECT * FROM cliente where id = ?";
@@ -77,10 +80,13 @@ public class ClienteDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return cliente;
 	}
 
 	public List<Cliente> buscar(String busca) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("buscando clientes");
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		String sql = "SELECT * FROM cliente where nome like ?";
@@ -99,6 +105,7 @@ public class ClienteDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return clientes;
 	}
 }

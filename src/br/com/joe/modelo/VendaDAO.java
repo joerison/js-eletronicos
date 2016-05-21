@@ -20,14 +20,9 @@ public class VendaDAO {
 
 	private static Logger log = Logger.getLogger(VendaDAO.class);
 
-	private ConnectionFactory connectionFactory = new ConnectionFactory();
-	private Connection conexao;
-
-	public VendaDAO() {
-		conexao = connectionFactory.getConnection();
-	}
-
 	public void adicionar(Venda venda) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("adicionando venda");
 		String sql = "INSERT INTO venda (id_cliente, id_funcionario, desconto, total, data) values (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -60,9 +55,12 @@ public class VendaDAO {
 			stmt.execute();
 			stmt.close();
 		}
+		conexao.close();
 	}
 
 	public void remover(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("removendo venda id " + id);
 		String sql = "DELETE FROM venda_item where id_venda = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -74,9 +72,12 @@ public class VendaDAO {
 		stmt.setInt(1, id);
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public Venda obterVendaPorId(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("obtendo venda id " + id);
 		Venda venda = new Venda();
 		ClienteDAO clienteDao = new ClienteDAO();
@@ -111,11 +112,14 @@ public class VendaDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return venda;
 	}
 	
 	
 	public List<Venda> obterVendasPorIntervalo(Date inicio, Date fim) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
 		log.debug("obtendo vendas por intervalo ");
 		List<Venda> vendas = new ArrayList<Venda>();
 		ClienteDAO clienteDao = new ClienteDAO();
@@ -156,6 +160,7 @@ public class VendaDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return vendas;
 	}
 }

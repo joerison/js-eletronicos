@@ -17,14 +17,10 @@ public class ProdutoDAO {
 
 	private static Logger log = Logger.getLogger(ProdutoDAO.class);
 
-	private ConnectionFactory connectionFactory = new ConnectionFactory();
-	private Connection conexao;
-
-	public ProdutoDAO() {
-		conexao = connectionFactory.getConnection();
-	}
-
 	public void adicionar(Produto produto) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
+		
 		log.debug("adicionando produto" + produto.getNome());
 		String sql = "INSERT INTO produto (nome, preco, id_categoria) values (?, ?, ?)";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -33,19 +29,26 @@ public class ProdutoDAO {
 		stmt.setInt(3, produto.getCategoria().getId());
 		stmt.execute();
 		stmt.close();
-
+		conexao.close();
 	}
 
 	public void remover(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
+		
 		log.debug("excluindo produto id " + id);
 		String sql = "DELETE FROM produto where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
 		stmt.setInt(1, id);
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public void atualizar(Produto produto) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
+		
 		log.debug("atualizando produto: " + produto.getId());
 		String sql = "UPDATE produto set nome = ?, preco = ?, id_categoria = ? where id = ?";
 		PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -55,9 +58,13 @@ public class ProdutoDAO {
 		stmt.setInt(4, produto.getId());
 		stmt.execute();
 		stmt.close();
+		conexao.close();
 	}
 
 	public Produto obterProdutoPorId(int id) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
+		
 		log.debug("obtendo produto id " + id);
 		CategoriaDAO categoriaDao = new CategoriaDAO();
 		Categoria categoria;
@@ -77,10 +84,14 @@ public class ProdutoDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return produto;
 	}
 
 	public List<Produto> buscar(String busca) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection conexao = connectionFactory.getConnection();
+		
 		log.debug("buscando produtos");
 		List<Produto> produtos = new ArrayList<Produto>();
 		String sql = "SELECT * FROM produto where nome like ?";
@@ -96,6 +107,7 @@ public class ProdutoDAO {
 		}
 		rs.close();
 		stmt.close();
+		conexao.close();
 		return produtos;
 	}
 }
